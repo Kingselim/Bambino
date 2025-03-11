@@ -37,8 +37,11 @@ public class AppointmentController {
         appointmentService.removeAppointment(appointmentId);
     }
 
-    @PutMapping("/modify-appointment")
-    public Appointment modifyAppointment(@RequestBody Appointment appointment) {
+    @PutMapping("/modify-appointment/{appointmentId}")
+    public Appointment modifyAppointment(@RequestBody Appointment appointment, @PathVariable("appointmentId") Long appointmentId) {
+        appointment.setIdAppointment(appointmentId); // Ensure the ID is set
         return appointmentService.modifyAppointment(appointment);
     }
+
+
 }
