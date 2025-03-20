@@ -1,9 +1,6 @@
 package tn.esprit.bambinou.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +22,18 @@ public class Appointment {
     private String Location;
     private String Status;
     private String Description;
+
+    @ManyToOne
+    @JoinColumn (name = "user_idP")
+    private User userPatient;
+    @ManyToOne
+    @JoinColumn (name = "user_idE")
+    private User userExpert;
+
+    @ManyToOne
+    @JoinColumn(name = "driver_id")  // This is the foreign key column in the Appointment table.
+    private Driver driver;
+
 
     public Long getIdAppointment() {
         return idAppointment;

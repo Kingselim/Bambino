@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -27,6 +29,10 @@ public class Nutrition {
     @OneToOne
     @JoinColumn(name ="user_id")
     private User user;
+
+    @OneToMany(mappedBy = "nutrition", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Post> posts;
+
     public Long getIdNutrition() {
         return idNutrition;
     }
@@ -99,5 +105,13 @@ public class Nutrition {
 
     public void setVitamin(float vitamin) {
         Vitamin = vitamin;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

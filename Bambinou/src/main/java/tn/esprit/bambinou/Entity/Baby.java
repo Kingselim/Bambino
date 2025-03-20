@@ -1,9 +1,6 @@
 package tn.esprit.bambinou.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +17,6 @@ public class Baby {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idBaby;
-    private Long idUser;
     private String Name;
     private Date DateOfBirth;
     private int Age;
@@ -30,6 +26,9 @@ public class Baby {
     private String FavoriteActivities;
     private String EmergencyContact;
 
+    @ManyToOne
+    @JoinColumn(name = "id_babysitting")
+    private Babysitting babysitting;
     public Long getIdBaby() {
         return idBaby;
     }
@@ -38,13 +37,7 @@ public class Baby {
         this.idBaby = idBaby;
     }
 
-    public Long getIdUser() {
-        return idUser;
-    }
 
-    public void setIdUser(Long idUser) {
-        this.idUser = idUser;
-    }
 
     public String getName() {
         return Name;

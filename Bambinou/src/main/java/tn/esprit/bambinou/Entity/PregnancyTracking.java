@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.catalina.User;
 
 import java.util.Date;
 import java.util.List;
@@ -26,8 +25,15 @@ public class PregnancyTracking {
     @Enumerated(EnumType.STRING)
     private IntervalChoice intervalChoice;
 
-   // @OneToMany(mappedBy = "pregnancyTracking", cascade = CascadeType.ALL, orphanRemoval = true)
-    //private List<Forum> Forums;
+    @ManyToOne
+    @JoinColumn (name = "user_idP")
+    private User userPatient;
+    @ManyToOne
+    @JoinColumn (name = "user_idE")
+    private User userExpert;
+
+   @OneToMany(mappedBy = "pregnancyTracking", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Forum> Forums;
     public Long getIdPregnancyTracking() {
         return idPregnancyTracking;
     }

@@ -1,13 +1,12 @@
 package tn.esprit.bambinou.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,6 +21,10 @@ public class Driver {
     private Long phoneNumber;
     private String CarModel;
     private String LicensePlate;
+
+    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Appointment> appointments;
+
 
     public Long getIdDriver() {
         return idDriver;

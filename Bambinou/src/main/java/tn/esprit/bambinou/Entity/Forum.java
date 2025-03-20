@@ -25,7 +25,9 @@ public class Forum {
     private String MoodSwings;
     private String Breathelessness;
 
-
+    @ManyToOne
+    @JoinColumn(name = "pregnancytracking_id")
+    private PregnancyTracking pregnancyTracking;
     public Long getIdForum() {
         return idForum;
     }

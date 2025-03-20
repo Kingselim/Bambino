@@ -8,6 +8,5 @@ public interface IBabysittingService {
    public Babysitting addBabysitting(Babysitting babysitting);
    public void removeBabysitting(Long id);
    public Babysitting modifyBabysitting(Babysitting babysitting);
-    List<Babysitting> getBabysittingsByUser(Long idUser);
 
 }

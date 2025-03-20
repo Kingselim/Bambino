@@ -8,5 +8,5 @@ import java.util.List;
 public interface BabyRepository extends JpaRepository<Baby, Long> {
 
     // Rechercher tous les babies par utilisateur (idUser)
-    List<Baby> findByIdUser(Long idUser);
+
 }

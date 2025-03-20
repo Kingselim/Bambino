@@ -8,5 +8,5 @@ import java.util.Optional;
 @Repository
 public interface BabysittingRepository extends JpaRepository<Babysitting, Long> {
 
-    List<Babysitting> findByIdUser(Long idUser);
+
 }

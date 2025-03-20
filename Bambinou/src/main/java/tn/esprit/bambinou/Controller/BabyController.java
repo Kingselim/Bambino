@@ -69,8 +69,5 @@ public class BabyController {
     }
 
     // http://localhost:8089/baby/user/{idUser}
-    @GetMapping("/user/{idUser}")
-    public List<Baby> getBabiesByUser(@PathVariable("idUser") Long idUser) {
-        return babyService.getBabiesByUser(idUser);
-    }
+
 }

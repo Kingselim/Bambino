@@ -40,9 +40,4 @@ public class BabysittingServiceImpl implements IBabysittingService {
         return babysittingRepository.save(babysitting);
     }
 
-    @Override
-    public List<Babysitting> getBabysittingsByUser(Long idUser) {
-        return babysittingRepository.findByIdUser(idUser);
-    }
-
 }

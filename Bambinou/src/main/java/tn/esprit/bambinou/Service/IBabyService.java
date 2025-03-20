@@ -22,6 +22,5 @@ public interface IBabyService {
     Baby modifyBaby(Baby baby);
 
     // Récupérer les babies d'un utilisateur spécifique
-    List<Baby> getBabiesByUser(Long idUser);
 }
 

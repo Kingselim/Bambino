@@ -40,9 +40,6 @@ public class BabyServiceImpl implements IBabyService {
         return babyRepository.save(baby);
     }
 
-    @Override
-    public List<Baby> getBabiesByUser(Long idUser) {
-        return babyRepository.findByIdUser(idUser);
-    }
+
 }
 
