@@ -20,16 +20,18 @@ public class BabyController {
         --------------------- format ajout d'un Baby avec JSON -----------------------
 
   {
-    "idBaby": 2,
-    "idUser": 1,
-    "name": "Sarah",
-    "favoriteActivities": "Playing, Drawing",
-    "emergencyContact": "John Doe - 123456789",
-    "medicalCondition": "None",
-    "gender": "Female",
-    "dateOfBirth": "2020-04-10",
-    "specialNeeds": "None",
-    "age": 5
+    {
+        "idBaby": 1,
+        "idUser": 1,
+        "name": "test",
+        "favoriteActivities": "Playstation",
+        "emergencyContact": "92643302",
+        "medicalCondition": "none",
+        "age": 1,
+        "gender": "Male",
+        "dateOfBirth": "2024-03-20T09:48:19.000+00:00",
+        "specialNeeds": "none"
+    }
 }
 
 
@@ -59,9 +61,10 @@ public class BabyController {
         babyService.removeBaby(id);
     }
 
-    // http://localhost:8089/baby/modify
-    @PutMapping("/modify")
-    public Baby modifyBaby(@RequestBody Baby baby) {
+    // http://localhost:8089/baby/modify/{id}
+    @PutMapping("/modify/{id}")
+    public Baby modifyBaby(@RequestBody Baby baby, @PathVariable("id") Long id_baby) {
+        baby.setIdBaby(id_baby); // Ensure the ID is set
         return babyService.modifyBaby(baby);
     }
 

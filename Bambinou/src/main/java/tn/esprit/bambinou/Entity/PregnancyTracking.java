@@ -1,9 +1,6 @@
 package tn.esprit.bambinou.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,12 +19,15 @@ public class PregnancyTracking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPregnancyTracking;
-    private Long idUser; // id patirent mteana
+    //private Long idUser; // id patirent mteana
     //private List<User> ListUser ;// list user les medecins eli aandhom acces ll tracking hetheya
     private Date DatePregnancyTracking;
     private String NamePregnancyTracking;
+    @Enumerated(EnumType.STRING)
     private IntervalChoice intervalChoice;
 
+   // @OneToMany(mappedBy = "pregnancyTracking", cascade = CascadeType.ALL, orphanRemoval = true)
+    //private List<Forum> Forums;
     public Long getIdPregnancyTracking() {
         return idPregnancyTracking;
     }
@@ -36,13 +36,13 @@ public class PregnancyTracking {
         this.idPregnancyTracking = idPregnancyTracking;
     }
 
-    public Long getIdUser() {
+    /*public Long getIdUser() {
         return idUser;
-    }
+    }*/
 
-    public void setIdUser(Long idUser) {
+    /*public void setIdUser(Long idUser) {
         this.idUser = idUser;
-    }
+    }*/
 
    /* public List<User> getListUser() {
         return ListUser;
@@ -75,4 +75,6 @@ public class PregnancyTracking {
     public void setIntervalChoice(IntervalChoice intervalChoice) {
         this.intervalChoice = intervalChoice;
     }
+
+
 }

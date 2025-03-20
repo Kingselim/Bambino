@@ -4,6 +4,7 @@ package tn.esprit.bambinou.Controller;
 import lombok.AllArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.bambinou.Entity.User;
 import tn.esprit.bambinou.Service.IuserService;
@@ -58,9 +59,19 @@ public class UserController {
     public void removeUser(@PathVariable("user-id") Long userId) {
         userService.removeUser(userId);
     }
-
+   /* //http://localhost:8089/user/modify/{id}
     @PutMapping("/modify-user")
     public User modifyUser(@RequestBody User u) {
         return userService.modifyUser(u);
-    }
+    }*/
+   // http://localhost:8089/user/modify/{id}
+   // http://localhost:8089/user/modify/{id}
+   @PutMapping("/modify/{id}")
+   public ResponseEntity<User> modifyUser(@PathVariable("id") int id, @RequestBody User user) {
+       user.setId(id); // Assure que l'ID de l'entité correspond à celui de l'URL
+       User updatedUser = userService.modifyUser(user);
+       return ResponseEntity.ok(updatedUser);
+   }
+
+
 }
