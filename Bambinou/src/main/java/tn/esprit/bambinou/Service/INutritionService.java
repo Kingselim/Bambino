@@ -9,5 +9,4 @@ public interface INutritionService {
     public Nutrition addNutrition(Nutrition nutrition);
     public void removeNutrition(Long id);
     public Nutrition modifyNutrition(Nutrition nutrition);
-    List<Nutrition> getNutritionsByUser(Long idUser);
 }

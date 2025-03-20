@@ -20,7 +20,7 @@ public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idAppointment;
-    private Long idUser;
+    //private Long idUser;
     //private List<User> ListUser;
     private String Location;
     private String Status;
@@ -34,13 +34,13 @@ public class Appointment {
         this.idAppointment = idAppointment;
     }
 
-    public Long getIdUser() {
+    /*public Long getIdUser() {
         return idUser;
     }
 
     public void setIdUser(Long idUser) {
         this.idUser = idUser;
-    }
+    }*/
 
    // public List<User> getListUser() {return ListUser;}
 

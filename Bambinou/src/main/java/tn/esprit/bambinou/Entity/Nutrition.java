@@ -1,9 +1,6 @@
 package tn.esprit.bambinou.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +15,6 @@ public class Nutrition {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idNutrition;
-    private Long idUser;
     private String Recommendation;
     private String Description;
     private int NbFollowers;
@@ -28,6 +24,9 @@ public class Nutrition {
     private float Lipide;
     private float Vitamin;
 
+    @OneToOne
+    @JoinColumn(name ="user_id")
+    private User user;
     public Long getIdNutrition() {
         return idNutrition;
     }
@@ -36,13 +35,7 @@ public class Nutrition {
         this.idNutrition = idNutrition;
     }
 
-    public Long getIdUser() {
-        return idUser;
-    }
 
-    public void setIdUser(Long idUser) {
-        this.idUser = idUser;
-    }
 
     public String getRecommendation() {
         return Recommendation;

@@ -66,8 +66,8 @@ public class NutritionController {
     }
 
     // http://localhost:8089/nutrition/user/{idUser}
-    @GetMapping("/user/{idUser}")
+  /*  @GetMapping("/user/{idUser}")
     public List<Nutrition> getNutritionsByUser(@PathVariable("idUser") Long idUser) {
         return nutritionService.getNutritionsByUser(idUser);
-    }
+    }*/
 }

@@ -39,8 +39,4 @@ public class NutritionServiceImpl implements INutritionService {
         return nutritionRepository.save(nutrition);
     }
 
-    @Override
-    public List<Nutrition> getNutritionsByUser(Long idUser) {
-        return nutritionRepository.findByIdUser(idUser);
-    }
 }
