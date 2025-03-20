@@ -11,6 +11,11 @@ import { FooterComponent } from './footer/footer.component';
 import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
 import { PregnancyTrackingComponent } from './pregnancy-tracking/pregnancy-tracking.component';
+import { BabySittingComponent } from './baby-sitting/baby-sitting.component';
+import { AlimentationComponent } from './alimentation/alimentation.component';
+import { AppointmentComponent } from './appointment/appointment.component';
+import { ShopComponent } from './shop/shop.component';
+import { CoachingComponent } from './coaching/coaching.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +23,12 @@ import { PregnancyTrackingComponent } from './pregnancy-tracking/pregnancy-track
     FooterComponent,
     AboutComponent,
     HomeComponent,
-    PregnancyTrackingComponent
+    PregnancyTrackingComponent,
+    BabySittingComponent,
+    AlimentationComponent,
+    AppointmentComponent,
+    ShopComponent,
+    CoachingComponent
   ],
   imports: [
     BrowserModule,
