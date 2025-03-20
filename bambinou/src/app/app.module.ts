@@ -11,11 +11,13 @@ import { FooterComponent } from './footer/footer.component';
 import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
 import { PregnancyTrackingComponent } from './pregnancy-tracking/pregnancy-tracking.component';
+import { BackofficeModule } from './backoffice/backoffice.module';
 import { BabySittingComponent } from './baby-sitting/baby-sitting.component';
 import { AlimentationComponent } from './alimentation/alimentation.component';
 import { AppointmentComponent } from './appointment/appointment.component';
 import { ShopComponent } from './shop/shop.component';
 import { CoachingComponent } from './coaching/coaching.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +31,9 @@ import { CoachingComponent } from './coaching/coaching.component';
     AppointmentComponent,
     ShopComponent,
     CoachingComponent
+   
+    
+    
   ],
   imports: [
     BrowserModule,
@@ -36,6 +41,7 @@ import { CoachingComponent } from './coaching/coaching.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

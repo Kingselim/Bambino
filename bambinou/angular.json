@@ -30,10 +30,10 @@
               "src/assets/css/style.css",
               "src/assets/lib/animate/animate.min.css",
               "src/assets/lib/lightbox/css/lightbox.min.css",
-              "src/assets/lib/owlcarousel/assets/owl.carousel.min.css"
-              
+              "src/assets/lib/owlcarousel/assets/owl.carousel.min.css", 
              
-              
+            
+
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
@@ -42,7 +42,16 @@
               "src/assets/lib/waypoints/waypoints.min.js",
               "src/assets/lib/lightbox/js/lightbox.min.js",
               "src/assets/lib/owlcarousel/owl.carousel.min.js",
-              "src/assets/js/main.js"
+              "src/assets/js/main.js",
+              "src/assets/BackOffice/assets/js/core/bootstrap.min.js",
+              "src/assets/BackOffice/assets/js/core/jquery-3.7.1.min.js",
+              "src/assets/BackOffice/assets/js/core/popper.min.js",
+              "src/assets/BackOffice/assets/js/demo.js",
+              "src/assets/BackOffice/assets/js/kaiadmin.js",
+              "src/assets/BackOffice/assets/js/kaiadmin.min.js",
+              "src/assets/BackOffice/assets/js/setting-demo.js",
+              "src/assets/BackOffice/assets/js/setting-demo2.js"
+              
             ]
           },
           "configurations": {
