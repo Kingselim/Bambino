@@ -106,7 +106,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
 
 
 
-   @Override
+  /* @Override
   public ResponseEntity<AppointmentResponseDTO> createApp(@RequestBody AppointmentDTO appointmentDTO) {
     // Validate and fetch User
     User user = userRepository.findById(appointmentDTO.getUserId())
@@ -168,7 +168,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
     }
 
     return ResponseEntity.ok(response);
-  }
+  } */
 
 
 

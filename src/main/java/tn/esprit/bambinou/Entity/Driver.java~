@@ -17,7 +17,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-//@JsonIgnoreProperties({"driverAppointments"})
+@JsonIgnoreProperties({"driverAppointments"})
 public class Driver {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,9 +27,9 @@ public class Driver {
     private String CarModel;
     private String LicensePlate;
 
-
+    
     @OneToMany(mappedBy = "driver", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    //@JsonIgnore
+    @JsonIgnore
     private Set<Appointment> driverAppointments = new HashSet<>();
 
 

@@ -20,6 +20,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+//@JsonIgnoreProperties({"clientAppointments"})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,6 +44,7 @@ public class User {
     private Set<RoleType> roleTypes = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    //@JsonIgnore
     private Set<Appointment> clientAppointments = new HashSet<>();
 
 

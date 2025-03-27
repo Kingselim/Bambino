@@ -2,7 +2,10 @@ package tn.esprit.bambinou.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.bambinou.DTO.AppointmentDTO;
+import tn.esprit.bambinou.DTO.AppointmentResponseDTO;
 import tn.esprit.bambinou.Entity.Appointment;
 import tn.esprit.bambinou.Service.IAppointmentService;
 
@@ -14,6 +17,7 @@ public class AppointmentController {
 
   @Autowired
   private IAppointmentService appointmentService;
+
 
   // Get all appointments
   @GetMapping("/retrieve-all-appointments")
@@ -45,4 +49,11 @@ public class AppointmentController {
   public void deleteAppointment(@PathVariable("id") int id) {
     appointmentService.deleteAppointment(id);
   }
+
+
+  @PostMapping("/create")
+  public ResponseEntity<AppointmentResponseDTO> createAppointment(@RequestBody AppointmentDTO appointmentDTO) {
+    return appointmentService.createApp(appointmentDTO);
+  }
+
 }

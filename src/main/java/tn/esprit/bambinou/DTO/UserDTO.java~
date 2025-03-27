@@ -1,0 +1,9 @@
+package tn.esprit.bambinou.DTO;
+
+public class UserDTO {
+    private int id;
+    private String name;
+    private String age;
+    private String email;
+    private String password;
+}

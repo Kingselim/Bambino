@@ -16,6 +16,7 @@ import jakarta.persistence.*;
 import java.util.Set;
 
 @Entity
+//@JsonIgnoreProperties({"expertAppointments"})
 public class Expert {
 
     @Id
@@ -28,6 +29,7 @@ public class Expert {
     private String password;
 
     @OneToMany(mappedBy = "expert", cascade = CascadeType.ALL, orphanRemoval = true)
+    //@JsonIgnore
     private Set<Appointment> expertAppointments;
 
 
