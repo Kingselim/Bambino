@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface IDriverService {
     List<Driver> retrieveAllDrivers();
-    Driver retrieveDriver(Long driverId);
+    Driver retrieveDriver(int driverId);
     Driver addDriver(Driver driver);
-    void removeDriver(Long driverId);
+    void removeDriver(int driverId);
     Driver modifyDriver(Driver driver);
 }

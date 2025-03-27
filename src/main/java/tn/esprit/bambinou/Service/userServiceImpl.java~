@@ -21,7 +21,7 @@ public class userServiceImpl implements IuserService {
     }
 
     @Override
-    public User retrieveUser(int userId) {
+    public User retrieveUser(Long userId) {
         return userRepository.findById(userId).orElse(null);
     }
 
@@ -31,7 +31,7 @@ public class userServiceImpl implements IuserService {
     }
 
     @Override
-    public void removeUser(int userId) {
+    public void removeUser(Long userId) {
         userRepository.deleteById(userId);
     }
 

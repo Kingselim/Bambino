@@ -1,5 +1,7 @@
 package tn.esprit.bambinou.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +15,7 @@ import java.util.Set;
 
 
 @Entity
+@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.STRING)
 @Getter
 @Setter
 @AllArgsConstructor
@@ -38,6 +41,17 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<RoleType> roleTypes = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private Set<Appointment> clientAppointments = new HashSet<>();
+
+
+    public User(String name, String age, String email, String password) {
+        this.name = name;
+        this.age = age;
+        this.email = email;
+        this.password = password;
+    }
 
 
 
@@ -89,7 +103,11 @@ public class User {
         this.roleTypes = roleTypes;
     }
 
+    public Set<Appointment> getClientAppointments() {
+        return clientAppointments;
+    }
 
-
-
+    public void setClientAppointments(Set<Appointment> clientAppointments) {
+        this.clientAppointments = clientAppointments;
+    }
 }

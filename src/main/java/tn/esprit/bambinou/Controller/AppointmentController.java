@@ -1,8 +1,7 @@
 package tn.esprit.bambinou.Controller;
 
-
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.bambinou.Entity.Appointment;
 import tn.esprit.bambinou.Service.IAppointmentService;
@@ -10,38 +9,40 @@ import tn.esprit.bambinou.Service.IAppointmentService;
 import java.util.List;
 
 @RestController
-@AllArgsConstructor
 @RequestMapping("/appointment")
 public class AppointmentController {
-    @Autowired
-    private IAppointmentService appointmentService;
 
-    @GetMapping("/retrieve-all-appointments")
-    public List<Appointment> getAppointments() {
-        return appointmentService.retrieveAllAppointments();
-    }
+  @Autowired
+  private IAppointmentService appointmentService;
 
-    @GetMapping("/retrieve-appointment/{appointment-id}")
-    public Appointment retrieveAppointment(@PathVariable("appointment-id") Long appointmentId) {
-        return appointmentService.retrieveAppointment(appointmentId);
-    }
+  // Get all appointments
+  @GetMapping("/retrieve-all-appointments")
+  public List<Appointment> getAllAppointments() {
+    return appointmentService.getAllAppointments();
+  }
 
-    //http://localhost:8089/appointment/add-appointment
-    @PostMapping("/add-appointment")
-    public Appointment addAppointment(@RequestBody Appointment appointment) {
-        return appointmentService.addAppointment(appointment);
-    }
+  // Get appointment by ID
+  @GetMapping("retrieve-appointment/{id}")
+  public Appointment getAppointmentById(@PathVariable("id") int id) {
+    return appointmentService.getAppointmentById(id);
+  }
 
-    @DeleteMapping("/remove-appointment/{appointment-id}")
-    public void removeAppointment(@PathVariable("appointment-id") Long appointmentId) {
-        appointmentService.removeAppointment(appointmentId);
-    }
+  // Create new appointment
+  @PostMapping("/add-appointment")
+  @ResponseStatus(HttpStatus.CREATED)
+  public Appointment createAppointment(@RequestBody Appointment appointment) {
+    return appointmentService.createAppointment(appointment);
+  }
 
-    @PutMapping("/modify-appointment/{appointmentId}")
-    public Appointment modifyAppointment(@RequestBody Appointment appointment, @PathVariable("appointmentId") Long appointmentId) {
-        appointment.setIdAppointment(appointmentId); // Ensure the ID is set
-        return appointmentService.modifyAppointment(appointment);
-    }
+  // Update an appointment
+  @PutMapping("/modify-appointment/{id}")
+  public Appointment updateAppointment(@PathVariable("id") int id, @RequestBody Appointment appointment) {
+    return appointmentService.updateAppointment(id, appointment);
+  }
 
-
+  // Delete an appointment
+  @DeleteMapping("/delete/{id}")
+  public void deleteAppointment(@PathVariable("id") int id) {
+    appointmentService.deleteAppointment(id);
+  }
 }

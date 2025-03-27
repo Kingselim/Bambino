@@ -21,7 +21,7 @@ public class DriverController {
     }
 
     @GetMapping("/retrieve-driver/{driver-id}")
-    public Driver retrieveDriver(@PathVariable("driver-id") Long driverId) {
+    public Driver retrieveDriver(@PathVariable("driver-id") int driverId) {
         return driverService.retrieveDriver(driverId);
     }
 
@@ -31,13 +31,13 @@ public class DriverController {
     }
 
     @DeleteMapping("/remove-driver/{driver-id}")
-    public void removeDriver(@PathVariable("driver-id") Long driverId) {
+    public void removeDriver(@PathVariable("driver-id") int driverId) {
         driverService.removeDriver(driverId);
     }
 
     @PutMapping("/modify-driver/{driver-id}")
-    public Driver modifyDriver(@RequestBody Driver driver, @PathVariable("driver-id") Long driverId) {
-        driver.setIdDriver(driverId); // Ensure the ID is set
+    public Driver modifyDriver(@RequestBody Driver driver, @PathVariable("driver-id") int driverId) {
+        driver.setId(driverId); // Ensure the ID is set
         return driverService.modifyDriver(driver);
     }
 }

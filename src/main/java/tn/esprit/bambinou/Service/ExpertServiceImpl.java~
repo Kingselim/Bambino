@@ -1,0 +1,43 @@
+package tn.esprit.bambinou.Service;
+
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import tn.esprit.bambinou.Entity.Expert;
+import tn.esprit.bambinou.Repository.ExpertRepository;
+
+import java.util.List;
+
+@Service
+@AllArgsConstructor
+public class ExpertServiceImpl implements IExpertService {
+
+    @Autowired
+    private ExpertRepository expertRepository;
+
+    @Override
+    public Expert addExpert(Expert expert) {
+        return expertRepository.save(expert);
+    }
+
+    @Override
+    public List<Expert> retrieveAllExperts() {
+        //return expertRepository.findBySpecialty("EXPERT");
+        return expertRepository.findAll();
+    }
+
+    @Override
+    public Expert retrieveExpert(Long expertId) {
+        return expertRepository.findById(expertId).orElse(null);
+    }
+
+    @Override
+    public void removeExpert(Long expertId) {
+        expertRepository.deleteById(expertId);
+    }
+
+    @Override
+    public Expert modifyExpert(Expert expert) {
+        return expertRepository.save(expert);
+    }
+}
