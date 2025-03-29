@@ -106,7 +106,7 @@ public class AppointmentServiceImpl implements IAppointmentService {
 
 
 
-  /* @Override
+   @Override
   public ResponseEntity<AppointmentResponseDTO> createApp(@RequestBody AppointmentDTO appointmentDTO) {
     // Validate and fetch User
     User user = userRepository.findById(appointmentDTO.getUserId())
@@ -168,7 +168,111 @@ public class AppointmentServiceImpl implements IAppointmentService {
     }
 
     return ResponseEntity.ok(response);
-  } */
+  }
+
+  //-------------------------------------------------------------------------------------------------------------
+
+  @Override
+  public ResponseEntity<List<AppointmentResponseDTO>> getAllAppointments() {
+    List<Appointment> appointments = appointmentRepository.findAll();
+    List<AppointmentResponseDTO> responseList = new ArrayList<>();
+
+    for (Appointment appointment : appointments) {
+      AppointmentResponseDTO response = convertToResponseDTO(appointment);
+      responseList.add(response);
+    }
+    return ResponseEntity.ok(responseList);
+  }
+
+  // Retrieve appointment by id
+  @Override
+  public ResponseEntity<AppointmentResponseDTO> getAppointmentById(Long id) {
+    Appointment appointment = appointmentRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Appointment not found with ID: " + id));
+    AppointmentResponseDTO response = convertToResponseDTO(appointment);
+    return ResponseEntity.ok(response);
+  }
+
+  // Modify appointment
+  @Override
+  public ResponseEntity<AppointmentResponseDTO> updateAppointment(Long id, AppointmentDTO appointmentDTO) {
+    Appointment appointment = appointmentRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Appointment not found with ID: " + id));
+
+    // Update fields from DTO. You can add validations as needed.
+    appointment.setLocation(appointmentDTO.getLocation());
+    appointment.setStatus(appointmentDTO.getStatus());
+    appointment.setDescription(appointmentDTO.getDescription());
+    appointment.setAppointmentDateTime(appointmentDTO.getAppointmentDateTime());
+
+    // Update associated User
+    if (appointmentDTO.getUserId() != null) {
+      User user = userRepository.findById(appointmentDTO.getUserId())
+              .orElseThrow(() -> new RuntimeException("User not found with ID: " + appointmentDTO.getUserId()));
+      appointment.setUser(user);
+    }
+
+    // Update associated Expert
+    if (appointmentDTO.getExpertId() != null) {
+      Expert expert = expertRepository.findById(appointmentDTO.getExpertId())
+              .orElseThrow(() -> new RuntimeException("Expert not found with ID: " + appointmentDTO.getExpertId()));
+      appointment.setExpert(expert);
+    }
+
+    // Update associated Driver (if provided)
+    if (appointmentDTO.getDriverId() != null && appointmentDTO.getDriverId() != 0) {
+      Driver driver = driverRepository.findById(appointmentDTO.getDriverId())
+              .orElseThrow(() -> new RuntimeException("Driver not found with ID: " + appointmentDTO.getDriverId()));
+      appointment.setDriver(driver);
+    } else {
+      // Optionally clear driver if driverId is not provided or equals zero
+      appointment.setDriver(null);
+    }
+
+    // Save the updated appointment
+    Appointment updatedAppointment = appointmentRepository.save(appointment);
+    AppointmentResponseDTO response = convertToResponseDTO(updatedAppointment);
+    return ResponseEntity.ok(response);
+  }
+
+  // Helper method to convert Appointment to AppointmentResponseDTO
+  private AppointmentResponseDTO convertToResponseDTO(Appointment appointment) {
+    AppointmentResponseDTO response = new AppointmentResponseDTO();
+    response.setIdAppointment(appointment.getIdAppointment());
+    response.setLocation(appointment.getLocation());
+    response.setStatus(appointment.getStatus());
+    response.setDescription(appointment.getDescription());
+    response.setAppointmentDateTime(appointment.getAppointmentDateTime());
+
+    // Set User info
+    UserDTO userDTO = new UserDTO();
+    userDTO.setId(appointment.getUser().getId());
+    userDTO.setName(appointment.getUser().getName()); // assuming name field exists
+    response.setUser(userDTO);
+
+    // Set Expert info
+    ExpertDTO expertDTO = new ExpertDTO();
+    expertDTO.setId(appointment.getExpert().getId());
+    expertDTO.setName(appointment.getExpert().getName());
+    response.setExpert(expertDTO);
+
+    // Set Driver info if exists
+    if (appointment.getDriver() != null) {
+      DriverDTO driverDTO = new DriverDTO();
+      driverDTO.setIdDriver(appointment.getDriver().getId());
+      driverDTO.setNameDriver(appointment.getDriver().getNameDriver());
+      response.setDriver(driverDTO);
+    }
+
+    return response;
+  }
+
+
+
+
+
+
+
 
 
 

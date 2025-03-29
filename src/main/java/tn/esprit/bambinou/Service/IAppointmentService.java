@@ -9,7 +9,7 @@ import tn.esprit.bambinou.Entity.Appointment;
 import java.util.List;
 
 public interface IAppointmentService {
-  List<Appointment> getAllAppointments();
+  //List<Appointment> getAllAppointments();
   Appointment getAppointmentById(long id);
   Appointment createAppointment(Appointment appointment);
 
@@ -18,4 +18,13 @@ public interface IAppointmentService {
 
   public ResponseEntity<AppointmentResponseDTO> createApp(@RequestBody AppointmentDTO appointmentDTO);
   void deleteAppointment(long id);
+
+  // Retrieve all appointments
+  public ResponseEntity<List<AppointmentResponseDTO>> getAllAppointments();
+
+  // Retrieve appointment by ID
+  public ResponseEntity<AppointmentResponseDTO> getAppointmentById(Long id);
+
+  // Modify appointment (update)
+  public ResponseEntity<AppointmentResponseDTO> updateAppointment(Long id, @RequestBody AppointmentDTO appointmentDTO);
 }

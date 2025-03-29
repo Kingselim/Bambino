@@ -20,10 +20,10 @@ public class AppointmentController {
 
 
   // Get all appointments
-  @GetMapping("/retrieve-all-appointments")
+  /*@GetMapping("/retrieve-all-appointments")
   public List<Appointment> getAllAppointments() {
     return appointmentService.getAllAppointments();
-  }
+  }*/
 
   // Get appointment by ID
   @GetMapping("retrieve-appointment/{id}")
@@ -54,6 +54,26 @@ public class AppointmentController {
   @PostMapping("/create")
   public ResponseEntity<AppointmentResponseDTO> createAppointment(@RequestBody AppointmentDTO appointmentDTO) {
     return appointmentService.createApp(appointmentDTO);
+  }
+
+
+
+  // Retrieve all appointments
+  @GetMapping("/get-all")
+  public ResponseEntity<List<AppointmentResponseDTO>> getAllAppointments() {
+    return appointmentService.getAllAppointments();
+  }
+
+  // Retrieve appointment by id
+  @GetMapping("/get-one/{id}")
+  public ResponseEntity<AppointmentResponseDTO> getAppointmentById(@PathVariable Long id) {
+    return appointmentService.getAppointmentById(id);
+  }
+
+  // Modify appointment
+  @PutMapping("/modify/{id}")
+  public ResponseEntity<AppointmentResponseDTO> updateAppointment(@PathVariable Long id, @RequestBody AppointmentDTO appointmentDTO) {
+    return appointmentService.updateAppointment(id, appointmentDTO);
   }
 
 }
