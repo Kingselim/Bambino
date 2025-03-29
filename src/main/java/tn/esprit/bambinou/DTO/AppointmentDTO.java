@@ -4,8 +4,8 @@ public class AppointmentDTO {
     private String location;
     private String status;
     private String description;
-    private String appointmentDateTime; // Changed to LocalDateTime
-    private Integer userId; // Changed to Integer (nullable)
+    private String appointmentDateTime;
+    private Integer userId;
     private Integer expertId;
     private Integer driverId; // Nullable if not required
 

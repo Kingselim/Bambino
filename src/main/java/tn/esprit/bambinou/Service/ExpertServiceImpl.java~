@@ -3,41 +3,99 @@ package tn.esprit.bambinou.Service;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tn.esprit.bambinou.DTO.ExpertDTO;
+import tn.esprit.bambinou.DTO.ExpertResponseDTO;
 import tn.esprit.bambinou.Entity.Expert;
 import tn.esprit.bambinou.Repository.ExpertRepository;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.List;
+
 @Service
-@AllArgsConstructor
 public class ExpertServiceImpl implements IExpertService {
 
     @Autowired
     private ExpertRepository expertRepository;
 
-    @Override
-    public Expert addExpert(Expert expert) {
-        return expertRepository.save(expert);
-    }
-
-    @Override
-    public List<Expert> retrieveAllExperts() {
-        //return expertRepository.findBySpecialty("EXPERT");
+    /*@Override
+    public List<Expert> getAllExperts() {
         return expertRepository.findAll();
     }
 
     @Override
-    public Expert retrieveExpert(Long expertId) {
-        return expertRepository.findById(expertId).orElse(null);
-    }
+    public Expert getExpertById(int id) {
+        return expertRepository.findById(id).orElseThrow(() -> new RuntimeException("Expert not found"));
+    }*/
 
     @Override
-    public void removeExpert(Long expertId) {
-        expertRepository.deleteById(expertId);
-    }
-
-    @Override
-    public Expert modifyExpert(Expert expert) {
+    public Expert createExpert(Expert expert) {
         return expertRepository.save(expert);
+    }
+
+    /*@Override
+    public Expert updateExpert(int id, Expert expert) {
+        Expert existingExpert = getExpertById(id);
+        existingExpert.setName(expert.getName());
+        existingExpert.setAge(expert.getAge());
+        existingExpert.setEmail(expert.getEmail());
+        existingExpert.setPassword(expert.getPassword());
+        existingExpert.setSpecialty(expert.getSpecialty());
+        return expertRepository.save(existingExpert);
+    }*/
+
+    @Override
+    public void deleteExpert(int id) {
+        expertRepository.deleteById(id);
+    }
+
+
+
+
+    // Helper: Convert Expert to ExpertResponseDTO
+    private ExpertResponseDTO convertToResponseDTO(Expert expert) {
+        ExpertResponseDTO dto = new ExpertResponseDTO();
+        dto.setId(expert.getId());
+        dto.setName(expert.getName());
+        dto.setAge(expert.getAge());
+        dto.setEmail(expert.getEmail());
+        dto.setSpecialty(expert.getSpecialty());
+        return dto;
+    }
+
+    // Retrieve all experts
+    @Override
+    public List<ExpertResponseDTO> getAllExperts() {
+        List<Expert> experts = expertRepository.findAll();
+        return experts.stream()
+                .map(this::convertToResponseDTO)
+                .toList();
+    }
+
+    // Retrieve expert by ID
+    @Override
+    public ExpertResponseDTO getExpertById(int id) {
+        Expert expert = expertRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Expert not found with ID: " + id));
+        return convertToResponseDTO(expert);
+    }
+
+    // Modify expert (update)
+    @Override
+    public ExpertResponseDTO updateExpert(int id, ExpertDTO expertDTO) {
+        Expert existingExpert = expertRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Expert not found with ID: " + id));
+
+        // Update fields
+        if (expertDTO.getName() != null) existingExpert.setName(expertDTO.getName());
+        if (expertDTO.getAge() != null) existingExpert.setAge(expertDTO.getAge());
+        if (expertDTO.getEmail() != null) existingExpert.setEmail(expertDTO.getEmail());
+        if (expertDTO.getPassword() != null) existingExpert.setPassword(expertDTO.getPassword());
+        if (expertDTO.getSpecialty() != null) existingExpert.setSpecialty(expertDTO.getSpecialty());
+
+        Expert updatedExpert = expertRepository.save(existingExpert);
+        return convertToResponseDTO(updatedExpert);
     }
 }
