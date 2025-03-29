@@ -4,7 +4,10 @@ package tn.esprit.bambinou.Controller;
 import lombok.AllArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.bambinou.DTO.UserDTO;
+import tn.esprit.bambinou.DTO.UserResponseDTO;
 import tn.esprit.bambinou.Entity.User;
 import tn.esprit.bambinou.Service.IuserService;
 
@@ -63,4 +66,26 @@ public class UserController {
     public User modifyUser(@RequestBody User u) {
         return userService.modifyUser(u);
     }
+
+
+
+
+
+    @GetMapping("/retrieve-all-users_2")
+    public List<UserResponseDTO> retrieveAllUsers_2() {
+        return userService.retrieveAllUsers_2();
+    }
+
+    @GetMapping("/retrieve-user_2/{userId}")
+    public UserResponseDTO retrieveUserByID_2(@PathVariable("userId") int userId) {
+        return userService.retrieveUserByID_2(userId);
+    }
+
+    @PutMapping("/modify-user_2/{userId}")
+    public UserResponseDTO modifyUser_2(@PathVariable("userId") int userId, @RequestBody UserDTO userDTO) {
+        return userService.modifyUser_2(userId, userDTO);
+    }
+
+
+
 }
