@@ -2,7 +2,10 @@ package tn.esprit.bambinou.Controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.bambinou.DTO.DriverDTO;
+import tn.esprit.bambinou.DTO.DriverResponseDTO;
 import tn.esprit.bambinou.Entity.Driver;
 import tn.esprit.bambinou.Service.IDriverService;
 
@@ -15,7 +18,7 @@ public class DriverController {
     @Autowired
     private IDriverService driverService;
 
-    @GetMapping("/retrieve-all-drivers")
+    /*@GetMapping("/retrieve-all-drivers")
     public List<Driver> getDrivers() {
         return driverService.retrieveAllDrivers();
     }
@@ -23,7 +26,7 @@ public class DriverController {
     @GetMapping("/retrieve-driver/{driver-id}")
     public Driver retrieveDriver(@PathVariable("driver-id") int driverId) {
         return driverService.retrieveDriver(driverId);
-    }
+    }*/
 
     @PostMapping("/add-driver")
     public Driver addDriver(@RequestBody Driver driver) {
@@ -35,9 +38,31 @@ public class DriverController {
         driverService.removeDriver(driverId);
     }
 
-    @PutMapping("/modify-driver/{driver-id}")
+    /*@PutMapping("/modify-driver/{driver-id}")
     public Driver modifyDriver(@RequestBody Driver driver, @PathVariable("driver-id") int driverId) {
         driver.setId(driverId); // Ensure the ID is set
         return driverService.modifyDriver(driver);
+    }*/
+
+
+
+    @GetMapping("/retrieve-all-drivers")
+    public List<DriverResponseDTO> getDrivers() {
+        return driverService.retrieveAllDrivers();
     }
+
+    @GetMapping("/retrieve-driver/{driver-id}")
+    public ResponseEntity<DriverResponseDTO> retrieveDriver(@PathVariable("driver-id") int driverId) {
+        return ResponseEntity.ok(driverService.retrieveDriver(driverId));
+    }
+
+    @PutMapping("/modify-driver/{driver-id}")
+    public ResponseEntity<DriverResponseDTO> modifyDriver(@RequestBody DriverDTO driverDTO,
+                                                          @PathVariable("driver-id") int driverId) {
+        return ResponseEntity.ok(driverService.modifyDriver(driverId, driverDTO));
+    }
+
+
+
+
 }
