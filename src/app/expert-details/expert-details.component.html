@@ -1,0 +1,85 @@
+<hr>
+<div class="container mt-4">
+  <h2>Book an Appointment with {{ expert.name }}</h2>
+
+  <!-- Appointment Date Picker -->
+  <div>
+    <h4>Appointment Date</h4>
+    <p>Pick an Appointment Date with this Expert!</p>
+    <mat-form-field appearance="outline">
+      <mat-label>Choose a date</mat-label>
+      <input matInput [matDatepicker]="picker" (dateChange)="onDateChange($event)">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <hr>
+
+  <div class="time-slot-section">
+    <h4>Morning Slots</h4>
+    <div class="slot-list">
+      <div *ngFor="let slot of morningSlots">
+        <input 
+          type="radio" 
+          id="{{slot}}" 
+          name="appointmentSlot" 
+          [value]="slot" 
+          class="hidden-radio" 
+          [(ngModel)]="selectedTimeSlot"
+          [disabled]="isSlotBooked(slot)" />
+        <label 
+          for="{{slot}}" 
+          class="slot-button" 
+          [ngClass]="{'slot-button-disabled': isSlotBooked(slot)}">
+          {{ slot }}
+        </label>
+      </div>
+    </div>
+    
+    <hr>
+    
+    <h4>Evening Slots</h4>
+    <div class="slot-list">
+      <div *ngFor="let slot of eveningSlots">
+        <input 
+          type="radio" 
+          id="{{slot}}" 
+          name="appointmentSlot" 
+          [value]="slot" 
+          class="hidden-radio" 
+          [(ngModel)]="selectedTimeSlot"
+          [disabled]="isSlotBooked(slot)" />
+        <label 
+          for="{{slot}}" 
+          class="slot-button" 
+          [ngClass]="{'slot-button-disabled': isSlotBooked(slot)}">
+          {{ slot }}
+        </label>
+      </div>
+    </div>
+  </div>
+  
+
+  <hr>
+
+  <!-- Driver Selection -->
+  <div>
+    <h4>Driver</h4>
+    <p>Select a Driver (optional)</p>
+    <select class="form-select" aria-label="Select a driver" [(ngModel)]="selectedDriverId">
+      <option value="" selected>None</option> <!-- Unselect option -->
+      <option *ngFor="let driver of drivers" [value]="driver.idDriver">
+        {{ driver.nameDriver }} - {{ driver.carModel }}
+      </option>
+    </select>
+  </div>
+
+  <hr>
+
+  <!-- Interactive Button to Book Appointment -->
+  <div class="buttons">
+    <button class="btn btn-secondary" (click)="bookAppointment()">Book Now</button>
+  </div>
+</div>

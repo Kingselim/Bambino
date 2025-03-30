@@ -1,0 +1,33 @@
+<div class="search-container">
+    <input 
+      type="text" 
+      placeholder="Search Experts..." 
+      [(ngModel)]="searchQuery" 
+      (input)="onSearchChange()"
+    />
+    
+    <select [(ngModel)]="selectedRole" (change)="onRoleChange()">
+      <option value="">All Roles</option>
+      <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+    </select>
+  </div>
+  
+  <div *ngIf="filteredExperts.length === 0">
+    <p>No experts found.</p>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-4" *ngFor="let expert of filteredExperts">
+      <div class="card mb-4">
+        <!-- Using a placeholder image from an external source -->
+        <img src="https://img.freepik.com/free-photo/bearded-doctor-glasses_23-2147896187.jpg" class="card-img-top" alt="Expert Image">
+        <div class="card-body">
+          <h5 class="card-title">{{ expert.name }}</h5>
+          <p class="card-text">Specialty: {{ expert.specialty }}</p>
+          <p class="card-text">Age: {{ expert.age }}</p>
+          <a [routerLink]="['/expert-details', expert.id]" class="btn btn-primary">View Details</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  

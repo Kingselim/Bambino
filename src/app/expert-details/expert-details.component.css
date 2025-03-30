@@ -1,0 +1,236 @@
+/* Container for the entire page */
+.container {
+    max-width: 1200px; /* Increased width for better horizontal display */
+    margin: auto;
+    padding: 20px;
+  }
+
+  .expert-details {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #ccc; /* Thin gray border */
+    margin-bottom: 20px;
+}
+
+.expert-details p {
+  display: flex;
+  align-items: center; /* Centers content vertically */
+  font-size: 18px;
+  color: #555;
+}
+
+.expert-details .key {
+  font-weight: bold;
+  color: #4D65F9; /* Purple */
+  min-width: 120px; /* Adjust this to control tab spacing */
+}
+
+.expert-details .value {
+  color: #000000;
+  font-weight: 500;
+  flex-grow: 1; /* Ensures value stays aligned while keeping spacing */
+}
+
+
+
+  
+.expert-details h3 {
+  color: #f17298;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  /* margin-bottom: 10px; */
+  margin-top: 20px; 
+}
+
+  
+  
+  /* Section titles */
+  h2 {
+    font-size: 30px;
+    font-weight: bold;
+    color: #333; /* Darker color for a premium look */
+    border-bottom: 3px solid #f17298; /* Underline effect */
+    display: inline-block;
+    padding-bottom: 5px;
+    margin-bottom: 25px;
+  }
+  
+  
+  /* Calendar Section */
+  .calendar-section {
+    margin-bottom: 30px; /* Increased spacing */
+  }
+  
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7 equal columns for the week */
+    gap: 10px; /* Space between cells */
+  }
+  
+  /* Calendar headers and body */
+  .calendar-header,
+  .calendar-body {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* Ensure headers match the body */
+  }
+  
+  .day, .date {
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+  }
+  
+  /* Calendar date styling */
+  .date {
+    border: 1px solid #ddd;
+    padding: 20px;
+    cursor: pointer;
+    border-radius: 8px; /* Rounded corners */
+    transition: background-color 0.3s ease;
+  }
+  
+  .date:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* Active date (can be used to mark selected days) */
+  .date.active {
+    background-color: #6c757d;
+    color: white;
+  }
+  
+  /* Divider for sections */
+  hr {
+    margin: 40px 0;
+    border: 0;
+    border-top: 1px solid #efecec;
+  }
+  
+  /* Time Slot Section */
+  .time-slot-section h4 {
+    font-weight: bold;
+    margin-bottom: 15px; /* Consistent spacing */
+  }
+  
+  /* Time slot container - horizontal scroll */
+  .slot-list {
+    display: flex;
+    flex-wrap: nowrap; /* Keep slots in one line */
+    gap: 10px; /* Space between slots */
+    overflow-x: auto; /* Scroll if overflow */
+    padding-bottom: 10px; /* Prevent clipping */
+  }
+  
+  /* Hide the actual radio input */
+  .hidden-radio {
+    display: none;
+  }
+  
+  /* Style for the slot buttons */
+  .slot-button {
+    display: inline-block;
+    padding: 10px 20px;
+    border: 2px solid #f17298;
+    background-color: white;
+    color: black;
+    border-radius: 8px; /* Rounded corners for buttons */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    white-space: nowrap; /* Prevent wrapping */
+  }
+
+  .slot-button-disabled {
+    background-color: gray !important;
+    color: white !important;
+    border-color: gray !important;
+    pointer-events: none;
+    opacity: 0.7;
+  }
+  
+  
+  /* Hover effect for slots */
+  .slot-button:hover {
+    background-color: #f17298;
+    color: white;
+    transform: scale(1.05); /* Slight zoom on hover  pink : #FF4880  purple : #4D65F9 */
+  }
+  
+  /* Selected slot styling */
+  .hidden-radio:checked + .slot-button {
+    background-color: #f17298;
+    color: white;
+  }
+  
+  /* Button container for interactive buttons */
+  .buttons {
+    display: flex;
+    justify-content: space-between; /* Space out buttons */
+    margin-top: 30px;
+  }
+  
+  /* Button style */
+  .buttons button {
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    /* background-color: #146ebc; */
+    color: white;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+  }
+  
+  /* Button hover effect */
+  .buttons button:hover {
+    opacity: 0.9;
+  }
+  
+  /* Responsive Design for smaller screens */
+  @media (max-width: 768px) {
+    .calendar-grid {
+      gap: 5px; /* Reduce gaps on smaller screens */
+    }
+  
+    .date {
+      padding: 12px; /* Smaller padding */
+    }
+  
+    .slot-button {
+      padding: 8px 12px; /* Smaller buttons */
+    }
+  
+    .buttons {
+      flex-direction: column; /* Stack buttons vertically */
+      gap: 10px; /* Space between buttons */
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+  
+   
+
+
+  }
+  
