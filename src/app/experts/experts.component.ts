@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-experts',
@@ -13,7 +14,7 @@ export class ExpertsComponent implements OnInit {
   selectedRole: string = '';
   roles: string[] = ['Doctor', 'Nutritionist', 'Coach']; // You can make this dynamic based on backend data
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
     this.fetchExperts();
@@ -51,6 +52,10 @@ export class ExpertsComponent implements OnInit {
     });
   
     console.log('Filtered experts:', this.filteredExperts);  // Log filtered list
+  }
+
+  goToAppointments() {
+    this.router.navigate(['/appointments']);
   }
   
 }

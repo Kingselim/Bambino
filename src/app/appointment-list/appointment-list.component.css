@@ -1,0 +1,22 @@
+.fw-bold {
+    font-weight: bold;
+  }
+  .table-title {
+    color: #f17298;
+    font-weight: bold;
+  }
+  .table-header {
+    background-color: #4D65F9;
+    color: white;
+    font-weight: bold;
+  }
+
+  hr {
+    margin: 40px 0;
+    border: 0;
+    border-top: 1px solid #efecec;
+  }
+
+  /* #4D65F9 purple
+
+  #f17298 pink */

@@ -10,7 +10,11 @@
       <option value="">All Roles</option>
       <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
     </select>
+    
+    <button class="btn btn-primary" (click)="goToAppointments()">My Appointments</button>
+  
   </div>
+
   
   <div *ngIf="filteredExperts.length === 0">
     <p>No experts found.</p>
