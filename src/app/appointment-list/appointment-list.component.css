@@ -17,6 +17,23 @@
     border-top: 1px solid #efecec;
   }
 
+  .action-buttons {
+    display: flex;
+    gap: 20px; /* Ensures 60px spacing between buttons */
+    justify-content: center; /* Centers the buttons horizontally */
+    align-items: center; /* Centers the buttons vertically */
+}
+
+td {
+  text-align: center; /* Ensures text and elements inside are centered */
+  vertical-align: middle; /* Aligns content vertically */
+}
+th {
+  text-align: center; /* Ensures text and elements inside are centered */
+  vertical-align: middle; /* Aligns content vertically */
+}
+
+
   /* #4D65F9 purple
 
   #f17298 pink */

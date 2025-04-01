@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { EditAppointmentDialogComponent } from '../edit-appointment-dialog/edit-appointment-dialog.component';
+import { DeleteAppointmentDialogComponent } from '../delete-appointment-dialog/delete-appointment-dialog.component';
 
 @Component({
   selector: 'app-appointment-list',
@@ -13,7 +16,7 @@ export class AppointmentListComponent implements OnInit {
   historyAppointments: any[] = [];
   todaysAppointments: any[] = [];
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.fetchUserAppointments();
@@ -69,4 +72,47 @@ export class AppointmentListComponent implements OnInit {
       }
     });
   }
+
+  openEditModal(appointment: any): void {
+    // Open the edit appointment modal.
+    const dialogRef = this.dialog.open(EditAppointmentDialogComponent, {
+      width: '900px',
+      data: { appointment: appointment }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Refresh the appointment list after editing.
+        this.fetchUserAppointments();
+      }
+    });
+  }
+
+  openDeleteModal(appointment: any): void {
+    // Open a confirmation modal for deletion.
+    const dialogRef = this.dialog.open(DeleteAppointmentDialogComponent, {
+      width: '400px',
+      height: '260px',
+      data: { appointment: appointment }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        // Call delete endpoint if confirmed.
+        this.http.delete(`http://localhost:8089/appointment/delete/${appointment.idAppointment}`)
+          .subscribe(() => {
+            alert('Appointment deleted successfully.');
+            this.fetchUserAppointments();
+          }, error => {
+            console.error("Error deleting appointment:", error);
+            alert("Error deleting appointment.");
+          });
+      }
+    });
+  }
+
+
+
+
+
 }

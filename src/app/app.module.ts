@@ -20,6 +20,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import { AppointmentListComponent } from './appointment-list/appointment-list.component';
+import { EditAppointmentDialogComponent } from './edit-appointment-dialog/edit-appointment-dialog.component';
+import { DeleteAppointmentDialogComponent } from './delete-appointment-dialog/delete-appointment-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+
 
 @NgModule({
   declarations: [
@@ -30,7 +34,9 @@ import { AppointmentListComponent } from './appointment-list/appointment-list.co
     HomeComponent,
     PregnancyTrackingComponent,
     ExpertsComponent,
-    AppointmentListComponent
+    AppointmentListComponent,
+    EditAppointmentDialogComponent,
+    DeleteAppointmentDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -43,9 +49,11 @@ import { AppointmentListComponent } from './appointment-list/appointment-list.co
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    ExpertDetailsComponent
+    ExpertDetailsComponent,
+    MatDialogModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  //entryComponents: [EditAppointmentDialogComponent, DeleteAppointmentDialogComponent]
 })
 export class AppModule { }

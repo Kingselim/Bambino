@@ -1,0 +1,69 @@
+/* Time Slot Section */
+.time-slot-section h4 {
+    font-weight: bold;
+    margin-bottom: 15px; /* Consistent spacing */
+  }
+  
+  /* Time slot container - horizontal scroll */
+  .slot-list {
+    display: flex;
+    flex-wrap: nowrap; /* Keep slots in one line */
+    gap: 10px; /* Space between slots */
+    overflow-x: auto; /* Scroll if overflow */
+    padding-bottom: 10px; /* Prevent clipping */
+  }
+  
+  /* Hide the actual radio input */
+  .hidden-radio {
+    display: none;
+  }
+  
+  /* Style for the slot buttons */
+  .slot-button {
+    display: inline-block;
+    padding: 10px 20px;
+    border: 2px solid #f17298;
+    background-color: white;
+    color: black;
+    border-radius: 8px; /* Rounded corners for buttons */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    white-space: nowrap; /* Prevent wrapping */
+  }
+
+  .slot-button-disabled {
+    background-color: gray !important;
+    color: white !important;
+    border-color: gray !important;
+    pointer-events: none;
+    opacity: 0.7;
+  }
+  
+  
+  /* Hover effect for slots */
+  .slot-button:hover {
+    background-color: #f17298;
+    color: white;
+    transform: scale(1.05); /* Slight zoom on hover  pink : #FF4880  purple : #4D65F9 */
+  }
+  
+  /* Selected slot styling */
+  .hidden-radio:checked + .slot-button {
+    background-color: #f17298;
+    color: white;
+  }
+  
+  mat-form-field {
+    width: 100%; /* Ensure full width */
+    margin-bottom: 15px; /* Adds space below */
+}
+
+.form-group {
+  margin-bottom: 10px; /* Adds space between input fields */
+}
+
+
+.modal-content {
+  padding: 20px; /* Adds space inside modal */
+  
+}
