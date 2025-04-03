@@ -1,13 +1,24 @@
 .search-container {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  
-  input[type="text"] {
-    padding: 8px;
-    width: 200px;
-  }
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: center; /* Center horizontally */
+  text-align: center; /* Center text */
+}
+
+input[type="text"], select {
+  padding: 10px;
+  width: 220px;
+  border-radius: 12px; /* Bigger border-radius */
+  border: 1px solid #d3d3d3; /* Light gray border */
+  outline: none;
+}
+
+input[type="text"]:focus, select:focus {
+  border-color: #aaa; /* Slightly darker gray on focus */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+}
+
   
   select {
     padding: 8px;
@@ -23,5 +34,36 @@
     padding: 15px;
     margin: 10px 0;
   }
-  
-  
+
+  .card {
+    width: 90%;  /* Reduce the width */
+    max-width: 280px; /* Set a max width to control the size */
+    margin: auto;  /* Center the cards */
+    margin-bottom: 20px;
+}
+.row {
+  padding: 90px; /* Add padding around the row */
+  margin: 0 auto; /* Center the content */
+  justify-content: center; /* Ensure cards are spaced well */
+}
+
+.pagination-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.pagination-container button {
+  margin: 0 5px;
+}
+
+.pagination-container button.active {
+  background-color: #f17298; /* Match the button color */
+  color: white;
+  font-weight: bold;
+  border-color: #f17298;
+}
+hr {
+  margin: 40px 0;
+  border: 0;
+  border-top: 1px solid #efecec;
+}

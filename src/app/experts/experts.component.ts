@@ -14,6 +14,10 @@ export class ExpertsComponent implements OnInit {
   selectedRole: string = '';
   roles: string[] = ['Doctor', 'Nutritionist', 'Coach']; // You can make this dynamic based on backend data
 
+  currentPage: number = 1;
+  expertsPerPage: number = 6;
+
+
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
@@ -43,19 +47,32 @@ export class ExpertsComponent implements OnInit {
   
     this.filteredExperts = this.experts.filter(expert => {
       return (
-        // Check if searchQuery matches expert name (case-insensitive)
         (this.searchQuery ? expert.name.toLowerCase().includes(this.searchQuery.toLowerCase()) : true) &&
-        
-        // Check if selectedRole matches expert specialty
         (this.selectedRole ? expert.specialty === this.selectedRole : true)
       );
     });
   
-    console.log('Filtered experts:', this.filteredExperts);  // Log filtered list
+    this.currentPage = 1; // ✅ Reset pagination when filtering
+    console.log('Filtered experts:', this.filteredExperts);
   }
+  
 
   goToAppointments() {
     this.router.navigate(['/appointments']);
   }
+
+  get paginatedExperts() {
+    const startIndex = (this.currentPage - 1) * this.expertsPerPage;
+    return this.filteredExperts.slice(startIndex, startIndex + this.expertsPerPage);
+  }
+  
+  changePage(page: number) {
+    this.currentPage = page;
+  }
+  
+  get totalPages(): number[] {
+    return Array.from({ length: Math.ceil(this.filteredExperts.length / this.expertsPerPage) }, (_, i) => i + 1);
+  }
+  
   
 }

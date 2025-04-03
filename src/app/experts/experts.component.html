@@ -1,3 +1,4 @@
+<hr>
 <div class="search-container">
     <input 
       type="text" 
@@ -13,7 +14,7 @@
     
     <button class="btn btn-primary" (click)="goToAppointments()">My Appointments</button>
   
-  </div>
+</div>
 
   
   <div *ngIf="filteredExperts.length === 0">
@@ -21,7 +22,8 @@
   </div>
   
   <div class="row">
-    <div class="col-md-4" *ngFor="let expert of filteredExperts">
+    <div class="col-md-4" *ngFor="let expert of paginatedExperts">
+
       <div class="card mb-4">
         <!-- Using a placeholder image from an external source -->
         <img src="https://img.freepik.com/free-photo/bearded-doctor-glasses_23-2147896187.jpg" class="card-img-top" alt="Expert Image">
@@ -34,4 +36,25 @@
       </div>
     </div>
   </div>
+  <div class="pagination-container">
+    <button *ngIf="currentPage > 1" (click)="changePage(currentPage - 1)" class="btn btn-secondary">
+      Previous
+    </button>
+  
+    <ng-container *ngFor="let page of totalPages">
+      <button (click)="changePage(page)" 
+              [class.active]="page === currentPage" 
+              class="btn btn-light">
+        {{ page }}
+      </button>
+    </ng-container>
+  
+    <button *ngIf="currentPage * expertsPerPage < filteredExperts.length" (click)="changePage(currentPage + 1)" class="btn btn-secondary">
+      Next
+    </button>
+  </div>
+
+  <hr>
+  
+  
   
