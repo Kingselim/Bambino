@@ -269,6 +269,20 @@ public class AppointmentServiceImpl implements IAppointmentService {
   }
 
 
+  @Override
+  public ResponseEntity<AppointmentResponseDTO> cancelAppointment(Long id) {
+    Appointment appointment = appointmentRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Appointment not found with ID: " + id));
+
+    // Change the status to "canceled"
+    appointment.setStatus("canceled");
+
+    // Save the updated appointment
+    Appointment updatedAppointment = appointmentRepository.save(appointment);
+    AppointmentResponseDTO response = convertToResponseDTO(updatedAppointment);
+
+    return ResponseEntity.ok(response);
+  }
 
 
 

@@ -17,19 +17,19 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties({"driverAppointments"})
+//@JsonIgnoreProperties({"driverAppointments"})
 public class Driver {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idDriver;
-    private String NameDriver;
+    private String nameDriver;
     private Long phoneNumber;
-    private String CarModel;
-    private String LicensePlate;
+    private String carModel;
+    private String licensePlate;
 
-    
+
     @OneToMany(mappedBy = "driver", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    @JsonIgnore
+    //@JsonIgnore
     private Set<Appointment> driverAppointments = new HashSet<>();
 
 
@@ -44,11 +44,11 @@ public class Driver {
 
 
     public String getNameDriver() {
-        return NameDriver;
+        return nameDriver;
     }
 
     public void setNameDriver(String nameDriver) {
-        NameDriver = nameDriver;
+        this.nameDriver = nameDriver;
     }
 
     public Long getPhoneNumber() {
@@ -60,19 +60,19 @@ public class Driver {
     }
 
     public String getCarModel() {
-        return CarModel;
+        return carModel;
     }
 
     public void setCarModel(String carModel) {
-        CarModel = carModel;
+        this.carModel = carModel;
     }
 
     public String getLicensePlate() {
-        return LicensePlate;
+        return licensePlate;
     }
 
     public void setLicensePlate(String licensePlate) {
-        LicensePlate = licensePlate;
+        this.licensePlate = licensePlate;
     }
 
     public Set<Appointment> getDriverAppointments() {

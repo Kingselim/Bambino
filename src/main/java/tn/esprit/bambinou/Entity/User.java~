@@ -49,6 +49,10 @@ public class User {
     private Set<Appointment> clientAppointments = new HashSet<>();
 
 
+    public User() {
+        // JPA nécessite un constructeur sans argument
+    }
+
 
     public User(String name, String age, String email, String password) {
         this.name = name;

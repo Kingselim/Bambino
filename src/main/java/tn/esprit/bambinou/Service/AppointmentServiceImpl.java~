@@ -16,6 +16,7 @@ import tn.esprit.bambinou.Repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -35,10 +36,10 @@ public class AppointmentServiceImpl implements IAppointmentService {
 
   private static final Logger log = LoggerFactory.getLogger(AppointmentServiceImpl.class);
 
-  @Override
+  /*@Override
   public List<Appointment> getAllAppointments() {
     return appointmentRepository.findAll();
-  }
+  }*/
 
   @Override
   public Appointment getAppointmentById(long id) {
@@ -206,21 +207,21 @@ public class AppointmentServiceImpl implements IAppointmentService {
     appointment.setAppointmentDateTime(appointmentDTO.getAppointmentDateTime());
 
     // Update associated User
-    if (appointmentDTO.getUserId() != null) {
+    if (appointmentDTO.getUserId() != 0) {
       User user = userRepository.findById(appointmentDTO.getUserId())
               .orElseThrow(() -> new RuntimeException("User not found with ID: " + appointmentDTO.getUserId()));
       appointment.setUser(user);
     }
 
     // Update associated Expert
-    if (appointmentDTO.getExpertId() != null) {
+    if (appointmentDTO.getExpertId() != 0) {
       Expert expert = expertRepository.findById(appointmentDTO.getExpertId())
               .orElseThrow(() -> new RuntimeException("Expert not found with ID: " + appointmentDTO.getExpertId()));
       appointment.setExpert(expert);
     }
 
     // Update associated Driver (if provided)
-    if (appointmentDTO.getDriverId() != null && appointmentDTO.getDriverId() != 0) {
+    if (appointmentDTO.getDriverId() != 0 && appointmentDTO.getDriverId() != 0) {
       Driver driver = driverRepository.findById(appointmentDTO.getDriverId())
               .orElseThrow(() -> new RuntimeException("Driver not found with ID: " + appointmentDTO.getDriverId()));
       appointment.setDriver(driver);

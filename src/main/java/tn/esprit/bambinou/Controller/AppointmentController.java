@@ -76,4 +76,10 @@ public class AppointmentController {
     return appointmentService.updateAppointment(id, appointmentDTO);
   }
 
+  @PutMapping("/cancel/{id}")
+  public ResponseEntity<AppointmentResponseDTO> cancelAppointment(@PathVariable Long id) {
+    return appointmentService.cancelAppointment(id);
+  }
+
+
 }

@@ -27,4 +27,9 @@ public interface IAppointmentService {
 
   // Modify appointment (update)
   public ResponseEntity<AppointmentResponseDTO> updateAppointment(Long id, @RequestBody AppointmentDTO appointmentDTO);
+
+  ResponseEntity<AppointmentResponseDTO> cancelAppointment(Long id);
+
+
+
 }
