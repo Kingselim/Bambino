@@ -19,10 +19,11 @@
 
   .action-buttons {
     display: flex;
-    gap: 20px; /* Ensures 60px spacing between buttons */
+    gap: 20px; /* Ensures 40px spacing between buttons */
     justify-content: center; /* Centers the buttons horizontally */
     align-items: center; /* Centers the buttons vertically */
-}
+  }
+  
 
 td {
   text-align: center; /* Ensures text and elements inside are centered */
@@ -32,6 +33,16 @@ th {
   text-align: center; /* Ensures text and elements inside are centered */
   vertical-align: middle; /* Aligns content vertically */
 }
+.status-scheduled {
+  font-weight: bold;
+  color: rgb(0, 199, 0);
+}
+
+.status-canceled {
+  font-weight: bold;
+  color: rgb(238, 3, 3);
+}
+
 
 
   /* #4D65F9 purple

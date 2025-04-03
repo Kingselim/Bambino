@@ -1,0 +1,67 @@
+<div class="expert-calendar-container">
+    <div class="calendar-header">
+        <h2 class="fw-bold">Expert Appointments</h2>
+        <div class="date-pickers">
+            <select [(ngModel)]="selectedMonth">
+                <option *ngFor="let month of months" [value]="month">{{ month }}</option>
+            </select>
+            <select [(ngModel)]="selectedWeek">
+                <option *ngFor="let week of weeks" [value]="week">{{ week }}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="calendar-grid">
+        <!-- Days Row (X-Axis) -->
+        <div class="day-label"></div>
+        <div class="day-label" *ngFor="let day of daysOfWeek">
+            {{ day }}
+        </div>
+
+        <!-- Hours and Appointment Slots (Y-Axis) -->
+        <ng-container *ngFor="let hour of hours">
+            <div class="hour-label">{{ hour }}</div>
+            
+            <!-- Appointment Slots -->
+            <div class="appointment-slot" *ngFor="let day of daysOfWeek">
+                <!-- John Doe's Appointment - Tuesday 9:00 AM -->
+                <div class="appointment-card" 
+                     *ngIf="day === 'Tuesday' && hour === '9:00 AM'"
+                     (mouseenter)="showDetails($event, 'John Doe', '9:00 AM', 'Clinic XYZ')" 
+                     (mouseleave)="hideDetails()">
+                    <div class="patient-name">John Doe</div>
+                    <div class="appointment-time">9:00 AM</div>
+                    <div class="appointment-location">Clinic XYZ</div>
+                </div>
+
+                <!-- Yassine's Appointment - Monday 8:30 AM -->
+                <div class="appointment-card" 
+                     *ngIf="day === 'Monday' && hour === '8:30 AM'"
+                     (mouseenter)="showDetails($event, 'Yassine', '8:30 AM', 'Online')" 
+                     (mouseleave)="hideDetails()">
+                    <div class="patient-name">Yassine</div>
+                    <div class="appointment-time">8:30 AM</div>
+                    <div class="appointment-location">Online</div>
+                </div>
+
+                <!-- Alice Smith's Appointment - Thursday 10:00 AM -->
+                <div class="appointment-card" 
+                     *ngIf="day === 'Thursday' && hour === '10:00 AM'"
+                     (mouseenter)="showDetails($event, 'Alice Smith', '10:00 AM', 'Online')" 
+                     (mouseleave)="hideDetails()">
+                    <div class="patient-name">Alice Smith</div>
+                    <div class="appointment-time">10:00 AM</div>
+                    <div class="appointment-location">Online</div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+
+    <!-- Hover Modal -->
+    <div class="appointment-modal" *ngIf="showModal" [ngStyle]="{top: modalPosition.y + 'px', left: modalPosition.x + 'px'}">
+        <strong>{{ modalData.name }}</strong> <br>
+        <span>Time: {{ modalData.time }}</span> <br>
+        <span>Location: {{ modalData.location }}</span>
+    </div>
+</div>
+<hr>

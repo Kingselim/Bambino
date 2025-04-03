@@ -1,0 +1,132 @@
+.fw-bold {
+    font-weight: bold;
+}
+hr {
+    margin: 40px 0;
+    border: 0;
+    border-top: 1px solid #efecec;
+  }
+
+.calendar-header {
+    background-color: #ffffff;
+    padding: 15px 20px;
+    border-radius: 20px;
+    border: 1px solid #cccccc; /* Gray border */
+    margin-bottom: 40px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Optional subtle shadow */
+}
+
+.date-pickers {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.date-pickers select {
+    padding: 8px 15px;
+    border-radius: 20px; /* Matching rounded corners */
+    border: 1px solid #cccccc; /* Gray border */
+    background-color: #ffffff;
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.date-pickers select:hover {
+    border-color: #999999; /* Darker gray on hover */
+}
+
+.date-pickers select:focus {
+    border-color: #666666; /* Even darker when focused */
+    box-shadow: 0 0 0 2px rgba(100, 100, 100, 0.2); /* Focus ring */
+}
+
+.calendar-header h2 {
+    margin: 0 0 10px 0;
+    text-align: center;
+    color: #333333;
+}
+
+
+
+
+
+
+
+
+
+
+
+.expert-calendar-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.calendar-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: 100px repeat(7, 1fr);
+    grid-auto-rows: 80px;
+    border: 1px solid #ccc;
+}
+
+.day-label, .hour-label {
+    text-align: center;
+    font-weight: bold;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+.appointment-slot {
+    position: relative;
+    border: 1px solid #ddd;
+    /* Ensure slot takes full height of grid row */
+    height: 100%;
+    /* Prevent content from overflowing */
+    overflow: hidden;
+}
+
+.appointment-card {
+    background-color: #fac0d1;
+    /* Make card fill the entire slot */
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box; /* Include padding in height calculation */
+    padding: 5px; /* Reduced padding to fit content better */
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+    /* Flexbox for better content centering */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* Handle long content */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.appointment-card:hover {
+    background-color: #f17298;
+}
+
+.appointment-modal {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+}

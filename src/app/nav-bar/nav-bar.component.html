@@ -56,6 +56,9 @@
                     <a  class="nav-item nav-link active" routerLink="/home">Home</a>
                     <a routerLink="/about" class="nav-item nav-link">About</a>
                     <a routerLink="/experts" class="nav-item nav-link">Experts</a>
+
+                    <a [routerLink]="['/expert-appointments', currentExpertId]" class="nav-item nav-link">Expert's RDV</a>
+                    
                     <a href="service.html" class="nav-item nav-link">Services</a>
                     <a href="event.html" class="nav-item nav-link">Events</a>
                     <div class="nav-item dropdown">

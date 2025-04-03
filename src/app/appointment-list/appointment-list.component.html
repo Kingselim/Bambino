@@ -19,15 +19,22 @@
       <tr *ngFor="let appointment of todaysAppointments">
         <td>{{ appointment.appointmentDateTime }}</td>
         <td>{{ appointment.location }}</td>
-        <td>{{ appointment.status }}</td>
+        <td [ngClass]="{
+          'status-scheduled': appointment.status === 'Scheduled',
+          'status-canceled': appointment.status === 'canceled'
+        }">
+        {{ appointment.status }}
+      </td>
+      
         <td>{{ appointment.expert.name }}</td>
         <td>{{ appointment.driver ? appointment.driver.nameDriver : 'No Driver' }}</td>
         <td>
-          <div class="action-buttons">
+          <div class="action-buttons" *ngIf="appointment.status !== 'canceled'">
             <button class="btn btn-warning btn-sm" (click)="openEditModal(appointment)">Edit</button>
-            <button class="btn btn-danger btn-sm" (click)="openDeleteModal(appointment)">Delete</button>
+            <button class="btn btn-danger btn-sm" (click)="cancelAppointment(appointment)">Cancel</button>
           </div>
         </td>
+        
         
       </tr>
     </tbody>
@@ -52,13 +59,22 @@
       <tr *ngFor="let appointment of upcomingAppointments">
         <td>{{ appointment.appointmentDateTime }}</td>
         <td>{{ appointment.location }}</td>
-        <td>{{ appointment.status }}</td>
+        <td [ngClass]="{
+          'status-scheduled': appointment.status === 'Scheduled',
+          'status-canceled': appointment.status === 'canceled'
+        }">
+        {{ appointment.status }}
+      </td>
+      
         <td>{{ appointment.expert.name }}</td>
         <td>{{ appointment.driver ? appointment.driver.nameDriver : 'No Driver' }}</td>
         <td>
-          <button class="btn btn-warning btn-sm" (click)="openEditModal(appointment)">Edit</button>
-          <button class="btn btn-danger btn-sm" (click)="openDeleteModal(appointment)">Delete</button>
+          <div class="action-buttons" *ngIf="appointment.status !== 'canceled'">
+            <button class="btn btn-warning btn-sm" (click)="openEditModal(appointment)">Edit</button>
+            <button class="btn btn-danger btn-sm" (click)="cancelAppointment(appointment)">Cancel</button>
+          </div>
         </td>
+        
       </tr>
     </tbody>
   </table>

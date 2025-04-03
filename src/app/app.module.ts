@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule , CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -23,9 +23,14 @@ import { AppointmentListComponent } from './appointment-list/appointment-list.co
 import { EditAppointmentDialogComponent } from './edit-appointment-dialog/edit-appointment-dialog.component';
 import { DeleteAppointmentDialogComponent } from './delete-appointment-dialog/delete-appointment-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
-
+import { ExpertAppointmentComponent } from './expert-appointment/expert-appointment.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { CommonModule } from '@angular/common';
+import { HoverDetailsDialogComponent } from './hover-details-dialog/hover-details-dialog.component';
 
 @NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
     AppComponent,
     NavBarComponent,
@@ -36,12 +41,15 @@ import { MatDialogModule } from '@angular/material/dialog';
     ExpertsComponent,
     AppointmentListComponent,
     EditAppointmentDialogComponent,
-    DeleteAppointmentDialogComponent
+    DeleteAppointmentDialogComponent,
+    ExpertAppointmentComponent,
+    HoverDetailsDialogComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
@@ -50,7 +58,10 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatDatepickerModule,
     MatNativeDateModule,
     ExpertDetailsComponent,
-    MatDialogModule
+    MatDialogModule,CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    })
   ],
   providers: [],
   bootstrap: [AppComponent],

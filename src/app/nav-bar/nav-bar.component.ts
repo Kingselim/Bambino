@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent {
+  currentExpertId = 1; // Or get this from a service
 
 }

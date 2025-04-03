@@ -112,6 +112,19 @@ export class AppointmentListComponent implements OnInit {
   }
 
 
+  cancelAppointment(appointment: any): void {
+    if (confirm('Are you sure you want to cancel this appointment?')) {
+      this.http.put(`http://localhost:8089/appointment/cancel/${appointment.idAppointment}`, {})
+        .subscribe(() => {
+          alert('Appointment canceled successfully.');
+          this.fetchUserAppointments();
+        }, error => {
+          console.error("Error canceling appointment:", error);
+          alert("Error canceling appointment.");
+        });
+    }
+  }
+  
 
 
 
