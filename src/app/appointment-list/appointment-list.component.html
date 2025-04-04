@@ -31,7 +31,7 @@
         <td>
           <div class="action-buttons" *ngIf="appointment.status !== 'canceled'">
             <button class="btn btn-warning btn-sm" (click)="openEditModal(appointment)">Edit</button>
-            <button class="btn btn-danger btn-sm" (click)="cancelAppointment(appointment)">Cancel</button>
+            <button class="btn btn-secondary btn-sm" (click)="cancelAppointment(appointment)">Cancel</button>
           </div>
         </td>
         
@@ -71,7 +71,7 @@
         <td>
           <div class="action-buttons" *ngIf="appointment.status !== 'canceled'">
             <button class="btn btn-warning btn-sm" (click)="openEditModal(appointment)">Edit</button>
-            <button class="btn btn-danger btn-sm" (click)="cancelAppointment(appointment)">Cancel</button>
+            <button class="btn btn-secondary btn-sm" (click)="cancelAppointment(appointment)">Cancel</button>
           </div>
         </td>
         
@@ -91,6 +91,7 @@
         <th>Status</th>
         <th>Expert</th>
         <th>Driver</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -100,6 +101,7 @@
         <td>{{ appointment.status }}</td>
         <td>{{ appointment.expert.name }}</td>
         <td>{{ appointment.driver ? appointment.driver.nameDriver : 'No Driver' }}</td>
+        <td><button class="btn btn-danger btn-sm" (click)="openDeleteModal(appointment)"> X </button></td>
       </tr>
     </tbody>
   </table>

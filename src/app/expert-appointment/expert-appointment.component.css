@@ -7,20 +7,22 @@ hr {
     border-top: 1px solid #efecec;
   }
 
-.calendar-header {
+  .calendar-header {
     background-color: #ffffff;
     padding: 15px 20px;
     border-radius: 20px;
     border: 1px solid #cccccc; /* Gray border */
     margin-bottom: 40px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Optional subtle shadow */
+    display: flex;
+    justify-content: space-between; /* Space out elements */
+    align-items: center; /* Vertically center elements */
 }
 
 .date-pickers {
     display: flex;
     gap: 15px;
-    margin-top: 20px;
-    justify-content: center;
+    justify-content: flex-start; /* Align date pickers to the left */
 }
 
 .date-pickers select {
@@ -44,11 +46,14 @@ hr {
 }
 
 .calendar-header h2 {
-    margin: 0 0 10px 0;
+    margin: 0;
     text-align: center;
     color: #333333;
+    flex-grow: 1; /* Ensure it takes up available space */
 }
-
+button {
+    margin-left: auto; /* Push the button to the right */
+}
 
 
 

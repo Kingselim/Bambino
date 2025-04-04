@@ -1,6 +1,7 @@
 // expert-appointment.component.ts
 import { Component, OnInit } from '@angular/core';
 import { AppointmentService, Appointment } from '../services/appointment.service';
+import { SharedService } from '../services/shared.service';
 
 @Component({
   selector: 'app-expert-appointment',
@@ -22,10 +23,12 @@ export class ExpertAppointmentComponent implements OnInit {
 
   // Array to hold fetched appointments for expert id 1
   appointments: Appointment[] = [];
+  expertId: number = this.sharedService.getExpertId();
 
-  constructor(private appointmentService: AppointmentService) {}
+  constructor(private appointmentService: AppointmentService,private sharedService: SharedService) {}
 
   ngOnInit(): void {
+    this.expertId = this.sharedService.getExpertId();
     this.appointmentService.getAppointments().subscribe(data => {
       this.appointments = data;
     });

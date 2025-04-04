@@ -28,6 +28,8 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CommonModule } from '@angular/common';
 import { HoverDetailsDialogComponent } from './hover-details-dialog/hover-details-dialog.component';
+import { ExpertStatisticsComponent } from './expert-statistics/expert-statistics.component';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -43,7 +45,8 @@ import { HoverDetailsDialogComponent } from './hover-details-dialog/hover-detail
     EditAppointmentDialogComponent,
     DeleteAppointmentDialogComponent,
     ExpertAppointmentComponent,
-    HoverDetailsDialogComponent
+    HoverDetailsDialogComponent,
+    ExpertStatisticsComponent
   ],
   imports: [
     BrowserModule,
@@ -58,6 +61,7 @@ import { HoverDetailsDialogComponent } from './hover-details-dialog/hover-detail
     MatDatepickerModule,
     MatNativeDateModule,
     ExpertDetailsComponent,
+    NgChartsModule,
     MatDialogModule,CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory,

@@ -7,6 +7,7 @@ import { ExpertsComponent } from './experts/experts.component';
 import { ExpertDetailsComponent } from './expert-details/expert-details.component';
 import { AppointmentListComponent } from './appointment-list/appointment-list.component';
 import { ExpertAppointmentComponent } from './expert-appointment/expert-appointment.component';
+import { ExpertStatisticsComponent } from './expert-statistics/expert-statistics.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full' }, // Redirection au chargement
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path: 'experts', component: ExpertsComponent},
   {path: 'expert-appointments/:id', component: ExpertAppointmentComponent},
   { path: 'expert-details/:id', component: ExpertDetailsComponent },
+  { path: 'expert-statistics/:id', component: ExpertStatisticsComponent },
   { path: 'home', component: HomeComponent },
   { path: 'PregnancyTracking', component: PregnancyTrackingComponent  },
   { path: 'appointments', component: AppointmentListComponent }

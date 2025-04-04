@@ -1,6 +1,5 @@
 <div class="expert-calendar-container">
     <div class="calendar-header">
-        <h2 class="fw-bold">Expert Appointments</h2>
         <div class="date-pickers">
             <select [(ngModel)]="selectedMonth">
                 <option *ngFor="let month of months" [value]="month">{{ month }}</option>
@@ -9,7 +8,14 @@
                 <option *ngFor="let week of weeks" [value]="week">{{ week }}</option>
             </select>
         </div>
+        <h2 class="fw-bold">Expert Appointments</h2>
+        <div>
+            <button class="btn btn-primary" [routerLink]="['/expert-statistics', expertId]">
+                Expert Stats
+            </button>
+        </div>
     </div>
+    
 
     <div class="calendar-grid">
         <!-- Days Row (X-Axis) -->

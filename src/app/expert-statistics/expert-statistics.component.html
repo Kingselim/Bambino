@@ -1,0 +1,28 @@
+<div class="container my-4">
+    <h2 class="mb-4 text-center">Expert {{ expertId }} - Statistics</h2>
+  
+    <!-- Stat Cards -->
+    <div class="row mb-5">
+      <div class="col-md-3" *ngFor="let stat of statCards">
+        <div class="card text-white text-center p-3" [ngClass]="stat.bgColor">
+          <h4>{{ stat.title }}</h4>
+          <p class="display-6 fw-bold">{{ stat.value }}</p>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Charts -->
+    <div class="row gy-4">
+      <div class="col-md-6" *ngFor="let chart of chartConfigs">
+        <div class="card p-3 shadow-sm">
+          <h5 class="text-center mb-3">{{ chart.title }}</h5>
+          <canvas baseChart
+                  [type]="chart.type"
+                  [data]="chart.data"
+                  [options]="chart.options">
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  
