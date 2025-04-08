@@ -1,0 +1,41 @@
+<form [formGroup]="ForumForm" (ngSubmit)="onSubmit()">
+    <h2>Pregnancy Tracking Form - Monthly Update</h2>
+  
+    <div class="form-group">
+      <label for="month">Month of Pregnancy:</label>
+      <select class="form-control" id="month" formControlName="month">
+        <option value="">Select Month</option>
+        <option *ngFor="let m of [1, 2, 3, 4, 5, 6, 7, 8, 9]" [value]="m">Month {{ m }}</option>
+      </select>
+    </div>
+  
+    <div class="form-group">
+      <label for="weight">Weight (kg):</label>
+      <input type="number" class="form-control" id="weight" formControlName="weight">
+    </div>
+  
+    <div class="form-group">
+      <label for="bloodPressure">Blood Pressure:</label>
+      <input type="text" class="form-control" id="bloodPressure" formControlName="bloodPressure">
+    </div>
+  
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <textarea class="form-control" id="description" formControlName="description"></textarea>
+    </div>
+  
+    <div class="form-group">
+      <label for="symptoms">Symptoms:</label>
+      <input type="text" class="form-control" id="symptoms" formControlName="symptoms">
+    </div>
+  
+    <div class="form-group">
+      <label for="painLevel">Pain Level:</label>
+      <input type="range" class="form-control" id="painLevel" min="0" max="10" formControlName="painLevel">
+    </div>
+  
+    <!-- Add additional fields for other attributes similarly -->
+  
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  

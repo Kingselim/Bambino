@@ -1,0 +1,22 @@
+<div class="container mt-4">
+  <h2 class="mb-3">Pregnancy Tracking</h2>
+  <form [formGroup]="pregnancyForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="name">Pregnancy Name:</label>
+      <input type="text" class="form-control" id="name" formControlName="namePregnancyTracking">
+    </div>
+    <div class="form-group">
+      <label for="date">Pregnancy Date:</label>
+      <input type="date" class="form-control" id="date" formControlName="datePregnancyTracking">
+    </div>
+    <div class="form-group">
+      <label for="type">Tracking Type:</label>
+      <select class="form-control" id="type" formControlName="intervalChoice">
+        <option value="">Select an option</option>
+        <option value="MONTH">Monthly</option>
+        <option value="SEMESTER">Trimestral</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Tracking</button>
+  </form>
+</div>
