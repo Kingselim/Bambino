@@ -16,8 +16,15 @@ import tn.esprit.bambinou.Repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AppointmentServiceImpl implements IAppointmentService {
@@ -284,6 +291,66 @@ public class AppointmentServiceImpl implements IAppointmentService {
     return ResponseEntity.ok(response);
   }
 
+
+
+  public Map<String, Object> getExpertStatistics(int expertId) {
+    List<Appointment> appointments = appointmentRepository.findByExpertId(expertId);
+
+    Map<String, Long> appointmentsPerWeek = new HashMap<>();
+    Map<Integer, Long> clientAppointmentCount = new HashMap<>();
+    long canceledCount = 0;
+    long onlineCount = 0;
+
+    // Fix: Use "H:mm" to handle both single and double-digit hours
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd H:mm");
+
+    for (Appointment appt : appointments) {
+      try {
+        // Parse as LocalDateTime first
+        LocalDateTime dateTime = LocalDateTime.parse(appt.getAppointmentDateTime(), formatter);
+        LocalDate date = dateTime.toLocalDate(); // Use the date part for week grouping
+
+        // Group by ISO week of month
+        int week = date.get(WeekFields.ISO.weekOfMonth());
+        String key = "Week " + week;
+        appointmentsPerWeek.put(key, appointmentsPerWeek.getOrDefault(key, 0L) + 1);
+
+        // Count client appointments
+        int userId = appt.getUser().getId();
+        clientAppointmentCount.put(userId, clientAppointmentCount.getOrDefault(userId, 0L) + 1);
+
+        // Count canceled
+        if ("canceled".equalsIgnoreCase(appt.getStatus())) {
+          canceledCount++;
+        }
+
+        // Count online
+        if (appt.getLocation() != null && appt.getLocation().toLowerCase().contains("online")) {
+          onlineCount++;
+        }
+
+      } catch (DateTimeParseException e) {
+        // Optional: log the error and skip this appointment
+        System.err.println("Invalid date format in appointment: " + appt.getAppointmentDateTime());
+      }
+    }
+
+    long totalAppointments = appointments.size();
+    long newClients = clientAppointmentCount.values().stream().filter(count -> count == 1).count();
+    long loyalClients = clientAppointmentCount.values().stream().filter(count -> count > 1).count();
+    long inPersonCount = totalAppointments - onlineCount;
+
+    Map<String, Object> result = new HashMap<>();
+    result.put("appointmentsPerWeek", appointmentsPerWeek);
+    result.put("totalAppointments", totalAppointments);
+    result.put("newClients", newClients);
+    result.put("canceledAppointments", canceledCount);
+    result.put("loyalClients", loyalClients);
+    result.put("onlineCount", onlineCount);
+    result.put("inPersonCount", inPersonCount);
+
+    return result;
+  }
 
 
 

@@ -7,6 +7,7 @@ import tn.esprit.bambinou.DTO.AppointmentResponseDTO;
 import tn.esprit.bambinou.Entity.Appointment;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IAppointmentService {
   //List<Appointment> getAllAppointments();
@@ -30,6 +31,6 @@ public interface IAppointmentService {
 
   ResponseEntity<AppointmentResponseDTO> cancelAppointment(Long id);
 
-
+  public Map<String, Object> getExpertStatistics(int expertId);
 
 }

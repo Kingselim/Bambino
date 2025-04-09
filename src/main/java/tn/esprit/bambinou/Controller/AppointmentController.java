@@ -10,6 +10,7 @@ import tn.esprit.bambinou.Entity.Appointment;
 import tn.esprit.bambinou.Service.IAppointmentService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/appointment")
@@ -79,6 +80,11 @@ public class AppointmentController {
   @PutMapping("/cancel/{id}")
   public ResponseEntity<AppointmentResponseDTO> cancelAppointment(@PathVariable Long id) {
     return appointmentService.cancelAppointment(id);
+  }
+
+  @GetMapping("/expert-statistics/{expertId}")
+  public ResponseEntity<Map<String, Object>> getExpertStatistics(@PathVariable int expertId) {
+    return ResponseEntity.ok(appointmentService.getExpertStatistics(expertId));
   }
 
 
