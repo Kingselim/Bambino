@@ -39,9 +39,9 @@ export class EditAppointmentDialogComponent implements OnInit {
   createSlots(startHour: number, endHour: number): string[] {
     let slots: string[] = [];
     for (let hour = startHour; hour < endHour; hour++) {
-      const h = hour.toString().padStart(2, '0');
-      slots.push(`${h}:00`);
-      slots.push(`${h}:30`);
+      //const h = hour.toString().padStart(2);
+      slots.push(`${hour}:00`);
+      slots.push(`${hour}:30`);
     }
     return slots;
   }
@@ -108,7 +108,7 @@ export class EditAppointmentDialogComponent implements OnInit {
     this.http.put(`http://localhost:8089/appointment/modify/${this.appointment.idAppointment}`, updatedAppointmentDTO)
       .subscribe(
         () => {
-          alert('Appointment updated successfully.');
+          //alert('Appointment updated successfully.');
           this.dialogRef.close(true);
         },
         (error) => {

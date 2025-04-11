@@ -30,6 +30,7 @@ import { CommonModule } from '@angular/common';
 import { HoverDetailsDialogComponent } from './hover-details-dialog/hover-details-dialog.component';
 import { ExpertStatisticsComponent } from './expert-statistics/expert-statistics.component';
 import { NgChartsModule } from 'ng2-charts';
+import { CancelAppointmentDialogComponent } from './cancel-appointment-dialog/cancel-appointment-dialog.component';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -46,7 +47,8 @@ import { NgChartsModule } from 'ng2-charts';
     DeleteAppointmentDialogComponent,
     ExpertAppointmentComponent,
     HoverDetailsDialogComponent,
-    ExpertStatisticsComponent
+    ExpertStatisticsComponent,
+    CancelAppointmentDialogComponent
   ],
   imports: [
     BrowserModule,

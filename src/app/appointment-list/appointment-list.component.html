@@ -31,7 +31,7 @@
         <td>
           <div class="action-buttons" *ngIf="appointment.status !== 'canceled'">
             <button class="btn btn-warning btn-sm" (click)="openEditModal(appointment)">Edit</button>
-            <button class="btn btn-secondary btn-sm" (click)="cancelAppointment(appointment)">Cancel</button>
+            <button class="btn btn-secondary btn-sm" (click)="openCancelModal(appointment)">Cancel</button>
           </div>
         </td>
         
@@ -71,7 +71,7 @@
         <td>
           <div class="action-buttons" *ngIf="appointment.status !== 'canceled'">
             <button class="btn btn-warning btn-sm" (click)="openEditModal(appointment)">Edit</button>
-            <button class="btn btn-secondary btn-sm" (click)="cancelAppointment(appointment)">Cancel</button>
+            <button class="btn btn-secondary btn-sm" (click)="openCancelModal(appointment)">Cancel</button>
           </div>
         </td>
         

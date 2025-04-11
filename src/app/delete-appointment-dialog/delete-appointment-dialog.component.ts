@@ -18,7 +18,7 @@ export class DeleteAppointmentDialogComponent {
     this.http.delete(`http://localhost:8089/appointment/delete/${this.data.appointment.idAppointment}`)
       .subscribe(
         () => {
-          alert('Appointment deleted successfully.');
+          //alert('Appointment deleted successfully.');
           this.dialogRef.close(true); // Close dialog and return success
         },
         error => {

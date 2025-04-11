@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { EditAppointmentDialogComponent } from '../edit-appointment-dialog/edit-appointment-dialog.component';
 import { DeleteAppointmentDialogComponent } from '../delete-appointment-dialog/delete-appointment-dialog.component';
+import { CancelAppointmentDialogComponent } from '../cancel-appointment-dialog/cancel-appointment-dialog.component';
 
 @Component({
   selector: 'app-appointment-list',
@@ -101,7 +102,7 @@ export class AppointmentListComponent implements OnInit {
         // Call delete endpoint if confirmed.
         this.http.delete(`http://localhost:8089/appointment/delete/${appointment.idAppointment}`)
           .subscribe(() => {
-            alert('Appointment deleted successfully.');
+            //alert('Appointment deleted successfully.');
             this.fetchUserAppointments();
           }, error => {
             console.error("Error deleting appointment:", error);
@@ -112,18 +113,34 @@ export class AppointmentListComponent implements OnInit {
   }
 
 
-  cancelAppointment(appointment: any): void {
-    if (confirm('Are you sure you want to cancel this appointment?')) {
-      this.http.put(`http://localhost:8089/appointment/cancel/${appointment.idAppointment}`, {})
-        .subscribe(() => {
-          alert('Appointment canceled successfully.');
-          this.fetchUserAppointments();
-        }, error => {
-          console.error("Error canceling appointment:", error);
-          alert("Error canceling appointment.");
-        });
-    }
+  // cancelAppointment(appointment: any): void {
+  //   if (confirm('Are you sure you want to cancel this appointment?')) {
+  //     this.http.put(`http://localhost:8089/appointment/cancel/${appointment.idAppointment}`, {})
+  //       .subscribe(() => {
+  //         alert('Appointment canceled successfully.');
+  //         this.fetchUserAppointments();
+  //       }, error => {
+  //         console.error("Error canceling appointment:", error);
+  //         alert("Error canceling appointment.");
+  //       });
+  //   }
+  // }
+
+  openCancelModal(appointment: any): void {
+    const dialogRef = this.dialog.open(CancelAppointmentDialogComponent, {
+      width: '400px',
+      height: '260px',
+      data: { appointment: appointment }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        // Optionally, call fetchUserAppointments to refresh the list, or handle UI updates.
+        this.fetchUserAppointments();
+      }
+    });
   }
+
   
 
 

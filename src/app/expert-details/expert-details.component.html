@@ -1,10 +1,25 @@
 <hr>
 <div class="container mt-4">
+  
+    <h2>{{ expert.name }} 's Details</h2>
+  
+    <!-- Expert Details Section -->
+    <div class="expert-details mt-4">
+      <p><span class="key">Name:</span> <span class="value">{{ expert.name }}</span></p>
+      <p><span class="key">Speciality:</span> <span class="value">{{ expert.specialty }}</span></p>
+      <p><span class="key">Age:</span> <span class="value">{{ expert.age || 'N/A' }}</span></p>
+      <p><span class="key">Location:</span> <span class="value">{{ expert.location || 'Online' }}</span></p>
+      <p><span class="key">Rating:</span> <span class="value">{{ expert.rating || 'Not Rated Yet' }}</span></p>
+      <p><span class="key">Email:</span> <span class="value">{{ expert.email || 'No Email' }}</span></p>
+    </div>
+  
+  
+  <hr>
   <h2>Book an Appointment with {{ expert.name }}</h2>
 
   <!-- Appointment Date Picker -->
   <div>
-    <h4>Appointment Date</h4>
+    <h4>Appointment Date <span style="color: red; font-weight: bold;">*</span></h4>
     <p>Pick an Appointment Date with this Expert!</p>
     <mat-form-field appearance="outline">
       <mat-label>Choose a date</mat-label>
@@ -17,8 +32,10 @@
 
   <hr>
 
+  <h4>Time Slots <span style="color: red; font-weight: bold;">*</span></h4>
+  <p>Select a time slot in the evening or in the morning</p>
   <div class="time-slot-section">
-    <h4>Morning Slots</h4>
+    <h5>Morning Slots</h5>
     <div class="slot-list">
       <div *ngFor="let slot of morningSlots">
         <input 
@@ -40,7 +57,7 @@
     
     <hr>
     
-    <h4>Evening Slots</h4>
+    <h5>Evening Slots</h5>
     <div class="slot-list">
       <div *ngFor="let slot of eveningSlots">
         <input 
@@ -82,3 +99,4 @@
     <button class="btn btn-secondary" (click)="bookAppointment()">Book Now</button>
   </div>
 </div>
+<hr>
