@@ -8,6 +8,10 @@ public class ExpertDTO {
     private String email;
     private String password;
     private String specialty;
+    private String location;
+    private float rating;
+    private boolean rated;
+
 
     public int getId() {
         return id;
@@ -55,5 +59,29 @@ public class ExpertDTO {
 
     public void setSpecialty(String specialty) {
         this.specialty = specialty;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
+
+    public boolean isRated() {
+        return rated;
+    }
+
+    public void setRated(boolean rated) {
+        this.rated = rated;
     }
 }

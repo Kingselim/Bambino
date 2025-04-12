@@ -9,6 +9,11 @@ public class ExpertResponseDTO {
     private String email;
     private String specialty;
 
+    private String location;
+    private float rating;
+    private boolean rated;
+
+
     private List<AppointmentResponseDTO> expertAppointments;
 
     public int getId() {
@@ -57,5 +62,29 @@ public class ExpertResponseDTO {
 
     public void setExpertAppointments(List<AppointmentResponseDTO> expertAppointments) {
         this.expertAppointments = expertAppointments;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
+
+    public boolean isRated() {
+        return rated;
+    }
+
+    public void setRated(boolean rated) {
+        this.rated = rated;
     }
 }

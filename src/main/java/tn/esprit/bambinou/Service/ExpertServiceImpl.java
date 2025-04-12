@@ -96,6 +96,11 @@ public class ExpertServiceImpl implements IExpertService {
         dto.setEmail(expert.getEmail());
         dto.setSpecialty(expert.getSpecialty());
 
+        dto.setLocation(expert.getLocation());
+        dto.setRating(expert.getRating());
+        dto.setRated(expert.isRated());
+
+
         // Map expertAppointments to AppointmentResponseDTO
         List<AppointmentResponseDTO> appointmentDTOs = expert.getExpertAppointments()
                 .stream()
@@ -132,6 +137,11 @@ public class ExpertServiceImpl implements IExpertService {
         if (expertDTO.getEmail() != null) existingExpert.setEmail(expertDTO.getEmail());
         if (expertDTO.getPassword() != null) existingExpert.setPassword(expertDTO.getPassword());
         if (expertDTO.getSpecialty() != null) existingExpert.setSpecialty(expertDTO.getSpecialty());
+
+        if (expertDTO.getLocation() != null) existingExpert.setLocation(expertDTO.getLocation());
+        existingExpert.setRating(expertDTO.getRating());  // Be sure to design how to treat default cases.
+        existingExpert.setRated(expertDTO.isRated());
+
 
         Expert updatedExpert = expertRepository.save(existingExpert);
         return convertToResponseDTO(updatedExpert);

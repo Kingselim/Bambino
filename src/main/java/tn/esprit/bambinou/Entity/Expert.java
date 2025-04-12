@@ -26,6 +26,10 @@ public class Expert {
     private String age;
     private String email;
     private String password;
+    private String location = null;
+    private float rating = 0.0f;
+    private boolean rated = false;
+
 
     @OneToMany(mappedBy = "expert", cascade = CascadeType.ALL, orphanRemoval = true)
     //@JsonIgnore
@@ -90,5 +94,29 @@ public class Expert {
 
     public void setSpecialty(String specialty) {
         this.specialty = specialty;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
+
+    public boolean isRated() {
+        return rated;
+    }
+
+    public void setRated(boolean rated) {
+        this.rated = rated;
     }
 }

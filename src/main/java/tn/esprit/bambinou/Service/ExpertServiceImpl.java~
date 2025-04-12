@@ -3,8 +3,8 @@ package tn.esprit.bambinou.Service;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tn.esprit.bambinou.DTO.ExpertDTO;
-import tn.esprit.bambinou.DTO.ExpertResponseDTO;
+import tn.esprit.bambinou.DTO.*;
+import tn.esprit.bambinou.Entity.Appointment;
 import tn.esprit.bambinou.Entity.Expert;
 import tn.esprit.bambinou.Repository.ExpertRepository;
 
@@ -54,6 +54,39 @@ public class ExpertServiceImpl implements IExpertService {
 
 
 
+    // Helper: Convert Appointment to AppointmentResponseDTO
+    private AppointmentResponseDTO convertToAppointmentResponseDTO(Appointment appointment) {
+        AppointmentResponseDTO dto = new AppointmentResponseDTO();
+        dto.setIdAppointment(appointment.getIdAppointment());
+        dto.setLocation(appointment.getLocation());
+        dto.setStatus(appointment.getStatus());
+        dto.setDescription(appointment.getDescription());
+        dto.setAppointmentDateTime(appointment.getAppointmentDateTime());
+
+        // Set User info
+        if (appointment.getUser() != null) {
+            UserDTO userDTO = new UserDTO();
+            userDTO.setId(appointment.getUser().getId());
+            dto.setUser(userDTO);
+        }
+
+        // Set Expert info
+        if (appointment.getExpert() != null) {
+            ExpertDTO expertDTO = new ExpertDTO();
+            expertDTO.setId(appointment.getExpert().getId());
+            dto.setExpert(expertDTO);
+        }
+
+        // Set Driver info (if present)
+        if (appointment.getDriver() != null) {
+            DriverDTO driverDTO = new DriverDTO();
+            driverDTO.setIdDriver(appointment.getDriver().getId());
+            dto.setDriver(driverDTO);
+        }
+
+        return dto;
+    }
+
     // Helper: Convert Expert to ExpertResponseDTO
     private ExpertResponseDTO convertToResponseDTO(Expert expert) {
         ExpertResponseDTO dto = new ExpertResponseDTO();
@@ -62,10 +95,22 @@ public class ExpertServiceImpl implements IExpertService {
         dto.setAge(expert.getAge());
         dto.setEmail(expert.getEmail());
         dto.setSpecialty(expert.getSpecialty());
+
+        dto.setLocation(expert.getLocation());
+        dto.setRating(expert.getRating());
+        dto.setRated(expert.isRated());
+
+
+        // Map expertAppointments to AppointmentResponseDTO
+        List<AppointmentResponseDTO> appointmentDTOs = expert.getExpertAppointments()
+                .stream()
+                .map(this::convertToAppointmentResponseDTO)
+                .toList();
+
+        dto.setExpertAppointments(appointmentDTOs);
         return dto;
     }
 
-    // Retrieve all experts
     @Override
     public List<ExpertResponseDTO> getAllExperts() {
         List<Expert> experts = expertRepository.findAll();
@@ -74,7 +119,6 @@ public class ExpertServiceImpl implements IExpertService {
                 .toList();
     }
 
-    // Retrieve expert by ID
     @Override
     public ExpertResponseDTO getExpertById(int id) {
         Expert expert = expertRepository.findById(id)
@@ -82,13 +126,12 @@ public class ExpertServiceImpl implements IExpertService {
         return convertToResponseDTO(expert);
     }
 
-    // Modify expert (update)
     @Override
     public ExpertResponseDTO updateExpert(int id, ExpertDTO expertDTO) {
         Expert existingExpert = expertRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Expert not found with ID: " + id));
 
-        // Update fields
+        // Update fields if not null
         if (expertDTO.getName() != null) existingExpert.setName(expertDTO.getName());
         if (expertDTO.getAge() != null) existingExpert.setAge(expertDTO.getAge());
         if (expertDTO.getEmail() != null) existingExpert.setEmail(expertDTO.getEmail());
