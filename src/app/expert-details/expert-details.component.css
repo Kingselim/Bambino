@@ -1,3 +1,44 @@
+/* 1) Make the entire row a flex container */
+.appointment-options-row {
+  display: flex;
+  gap: 40px; /* Space between each section; adjust as needed */
+  flex-wrap: wrap; /* Allows wrapping on smaller screens */
+  margin-bottom: 40px; /* Some spacing before the next section */
+}
+
+/* 2) Each section in the row can have a consistent look */
+.appointment-option {
+  flex: 1; /* So each takes up an equal share of the row */
+  min-width: 250px; /* Prevents elements from becoming too narrow on small screens */
+}
+
+/* 3) For the location radio buttons, override color to your primary color (#4D65F9) 
+   Instead of #f17298 used for time slots. 
+*/
+
+/* The container for location buttons, for any further styling if needed */
+.location-radios {
+  margin-top: 10px;
+}
+
+/* The label styling for location radio buttons */
+.location-slot-button {
+  border-color: #4D65F9 !important; /* Primary color border */
+}
+
+/* When hovered */
+.location-slot-button:hover {
+  background-color: #4D65F9 !important;
+  color: #fff !important;
+}
+
+/* Selected state: radio input is checked */
+.hidden-radio:checked + .location-slot-button {
+  background-color: #4D65F9 !important;
+  color: #fff !important;
+}
+
+
 /* Container for the entire page */
 .container {
     max-width: 1200px; /* Increased width for better horizontal display */

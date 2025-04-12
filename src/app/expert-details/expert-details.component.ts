@@ -31,10 +31,12 @@ export class ExpertDetailsComponent implements OnInit {
   eveningSlots: string[] = [];
   currentDate = new Date();
   drivers: any[] = [];
-  
   selectedDate: Date | null = null;
   selectedTimeSlot: string = "";
   selectedDriverId: number = 0;
+
+  selectedAppointmentLocation: string = 'online';  // default to online
+
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {}
 
@@ -113,7 +115,9 @@ export class ExpertDetailsComponent implements OnInit {
     }
 
     const appointmentDTO = {
-      location: "Online",
+      //location: "Online",
+      location: this.selectedAppointmentLocation === 'online' ? "Online" : (this.expert ? this.expert.location : null),
+
       status: "Scheduled",
       description: "",
       appointmentDateTime: appointmentDateTime,

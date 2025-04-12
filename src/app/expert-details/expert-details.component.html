@@ -16,9 +16,11 @@
   
   <hr>
   <h2>Book an Appointment with {{ expert.name }}</h2>
+<!-- Wrap everything (Date, Location, Driver) in a container with a custom class -->
+<div class="appointment-options-row">
 
   <!-- Appointment Date Picker -->
-  <div>
+  <div class="appointment-option">
     <h4>Appointment Date <span style="color: red; font-weight: bold;">*</span></h4>
     <p>Pick an Appointment Date with this Expert!</p>
     <mat-form-field appearance="outline">
@@ -29,6 +31,64 @@
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
   </div>
+
+  <!-- Appointment Location -->
+  <div class="appointment-option">
+    <h4>Appointment Location <span style="color: red; font-weight: bold;">*</span></h4>
+    <p>Select an appointment location</p>
+    <!-- Use a specialized class (location-radios) for location buttons 
+         so we can style them differently from time slots -->
+    <div class="time-slot-section location-radios">
+      <div class="slot-list">
+        <div>
+          <input 
+            type="radio" 
+            id="online" 
+            name="appointmentLocation" 
+            [value]="'online'" 
+            class="hidden-radio" 
+            [(ngModel)]="selectedAppointmentLocation" />
+          <label 
+            for="online" 
+            class="slot-button location-slot-button">
+            Online
+          </label>
+        </div>
+        <div>
+          <input 
+            type="radio" 
+            id="expertLocation" 
+            name="appointmentLocation" 
+            [value]="'expertLocation'" 
+            class="hidden-radio" 
+            [(ngModel)]="selectedAppointmentLocation" />
+          <label 
+            for="expertLocation" 
+            class="slot-button location-slot-button">
+            Expert's Location
+          </label>
+        </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- Driver Selection -->
+  <div class="appointment-option">
+    <h4>Driver</h4>
+    <p>Select a Driver (optional)</p>
+    <select class="form-select" aria-label="Select a driver" [(ngModel)]="selectedDriverId">
+      <option value="" selected>None</option>
+      <option *ngFor="let driver of drivers" [value]="driver.idDriver">
+        {{ driver.nameDriver }} - {{ driver.carModel }}
+      </option>
+    </select>
+  </div>
+</div>
+
+<hr>
+
+
+
 
   <hr>
 
@@ -80,17 +140,7 @@
   
   <hr>
 
-  <!-- Driver Selection -->
-  <div>
-    <h4>Driver</h4>
-    <p>Select a Driver (optional)</p>
-    <select class="form-select" aria-label="Select a driver" [(ngModel)]="selectedDriverId">
-      <option value="" selected>None</option>
-      <option *ngFor="let driver of drivers" [value]="driver.idDriver">
-        {{ driver.nameDriver }} - {{ driver.carModel }}
-      </option>
-    </select>
-  </div>
+  
 
   <hr>
 
