@@ -6,5 +6,5 @@ import tn.esprit.bambinou.Entity.Expert;
 import java.util.List;
 
 public interface ExpertRepository extends JpaRepository<Expert, Integer> {
-    //List<Expert> findBySpecialty(String speciality);
+    List<Expert> findBySpecialty(String specialty);
 }

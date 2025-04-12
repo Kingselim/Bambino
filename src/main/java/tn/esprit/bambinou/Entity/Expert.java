@@ -30,6 +30,10 @@ public class Expert {
     private float rating = 0.0f;
     private boolean rated = false;
 
+    // New fields for geolocation
+    private Double latitude;
+    private Double longitude;
+
 
     @OneToMany(mappedBy = "expert", cascade = CascadeType.ALL, orphanRemoval = true)
     //@JsonIgnore
@@ -118,5 +122,21 @@ public class Expert {
 
     public void setRated(boolean rated) {
         this.rated = rated;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 }

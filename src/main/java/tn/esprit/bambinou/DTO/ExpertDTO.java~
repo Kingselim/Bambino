@@ -1,48 +1,17 @@
-package tn.esprit.bambinou.Entity;
+package tn.esprit.bambinou.DTO;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import jakarta.persistence.*;
-import java.util.Set;
-
-@Entity
-public class Expert {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ExpertDTO {
     private int id;
 
     private String name;
     private String age;
     private String email;
     private String password;
-    private String location = null;
-    private float rating = 0.0f;
-    private boolean rated = false;
-
-    // New fields for geolocation
-    private Double latitude;
-    private Double longitude;
-
-
-    @OneToMany(mappedBy = "expert", cascade = CascadeType.ALL, orphanRemoval = true)
-    //@JsonIgnore
-    private Set<Appointment> expertAppointments;
-
-
     private String specialty;
+    private String location;
+    private float rating;
+    private boolean rated;
 
-    // Getters and Setters
 
     public int getId() {
         return id;
@@ -82,14 +51,6 @@ public class Expert {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Set<Appointment> getExpertAppointments() {
-        return expertAppointments;
-    }
-
-    public void setExpertAppointments(Set<Appointment> expertAppointments) {
-        this.expertAppointments = expertAppointments;
     }
 
     public String getSpecialty() {

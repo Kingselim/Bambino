@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/expert")
@@ -65,4 +66,57 @@ public class ExpertController {
     public ResponseEntity<ExpertResponseDTO> updateExpert(@PathVariable int id, @RequestBody ExpertDTO expertDTO) {
         return ResponseEntity.ok(expertService.updateExpert(id, expertDTO));
     }
+
+
+
+
+    @GetMapping("/nearest-experts")
+    public List<ExpertResponseDTO> getNearestExperts(
+            @RequestParam String specialty,
+            @RequestParam double lat,
+            @RequestParam double lng,
+            @RequestParam double radius
+    ) {
+        // Get all experts with the given specialty
+        List<Expert> experts = expertService.findBySpecialty(specialty);
+
+        // Filter and map to DTO
+        return experts.stream()
+                .filter(expert -> expert.getLatitude() != null && expert.getLongitude() != null)
+                .filter(expert -> {
+                    double distance = haversine(lat, lng, expert.getLatitude(), expert.getLongitude());
+                    return distance <= radius;
+                })
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    // DTO Conversion
+    private ExpertResponseDTO convertToDTO(Expert expert) {
+        ExpertResponseDTO dto = new ExpertResponseDTO();
+        dto.setId(expert.getId());
+        dto.setName(expert.getName());
+        dto.setSpecialty(expert.getSpecialty());
+        dto.setLatitude(expert.getLatitude());
+        dto.setLongitude(expert.getLongitude());
+        return dto;
+    }
+
+    // Haversine stays the same
+    private double haversine(double lat1, double lng1, double lat2, double lng2) {
+        final int R = 6371;
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLng = Math.toRadians(lng2 - lng1);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+                        Math.sin(dLng / 2) * Math.sin(dLng / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
+    }
+
+
+
+
+
+
 }

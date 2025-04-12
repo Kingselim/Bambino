@@ -146,4 +146,28 @@ public class ExpertServiceImpl implements IExpertService {
         Expert updatedExpert = expertRepository.save(existingExpert);
         return convertToResponseDTO(updatedExpert);
     }
+
+
+
+
+
+
+
+
+
+    @Override
+    public List<Expert> findBySpecialty(String specialty) {
+        return expertRepository.findBySpecialty(specialty);
+    }
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -20,4 +20,6 @@ public interface IExpertService {
     List<ExpertResponseDTO> getAllExperts();
     ExpertResponseDTO getExpertById(int id);
     ExpertResponseDTO updateExpert(int id, ExpertDTO expertDTO);
+
+    List<Expert> findBySpecialty(String specialty);
 }

@@ -3,6 +3,8 @@ package tn.esprit.bambinou.Controller;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.bambinou.DTO.ExpertDTO;
+import tn.esprit.bambinou.DTO.ExpertResponseDTO;
 import tn.esprit.bambinou.Entity.Expert;
 import tn.esprit.bambinou.Service.IExpertService;
 
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/expert")
@@ -20,7 +23,7 @@ public class ExpertController {
     @Autowired
     private IExpertService expertService;
 
-    @GetMapping("/retrieve-all-experts")
+    /*@GetMapping("/retrieve-all-experts")
     public List<Expert> getAllExperts() {
         return expertService.getAllExperts();
     }
@@ -28,21 +31,79 @@ public class ExpertController {
     @GetMapping("/retrieve-expert/{id}")
     public ResponseEntity<Expert> getExpertById(@PathVariable int id) {
         return ResponseEntity.ok(expertService.getExpertById(id));
-    }
+    }*/
 
     @PostMapping("/add-expert")
     public ResponseEntity<Expert> createExpert(@RequestBody Expert expert) {
         return ResponseEntity.ok(expertService.createExpert(expert));
     }
 
-    @PutMapping("/modify-expert/{id}")
+    /*@PutMapping("/modify-expert/{id}")
     public ResponseEntity<Expert> updateExpert(@PathVariable int id, @RequestBody Expert expert) {
         return ResponseEntity.ok(expertService.updateExpert(id, expert));
-    }
+    }*/
 
     @DeleteMapping("/remove-expert/{id}")
     public ResponseEntity<Void> deleteExpert(@PathVariable int id) {
         expertService.deleteExpert(id);
         return ResponseEntity.noContent().build();
     }
+
+    // Retrieve all experts
+    @GetMapping("/retrieve-all-experts")
+    public ResponseEntity<List<ExpertResponseDTO>> getAllExperts() {
+        return ResponseEntity.ok(expertService.getAllExperts());
+    }
+
+    // Retrieve expert by ID
+    @GetMapping("/retrieve-expert/{id}")
+    public ResponseEntity<ExpertResponseDTO> getExpertById(@PathVariable int id) {
+        return ResponseEntity.ok(expertService.getExpertById(id));
+    }
+
+    // Modify (update) expert
+    @PutMapping("/modify-expert/{id}")
+    public ResponseEntity<ExpertResponseDTO> updateExpert(@PathVariable int id, @RequestBody ExpertDTO expertDTO) {
+        return ResponseEntity.ok(expertService.updateExpert(id, expertDTO));
+    }
+
+
+
+
+    @GetMapping("/nearest-experts")
+    public List<Expert> getNearestExperts(
+            @RequestParam String specialty,
+            @RequestParam double lat,
+            @RequestParam double lng,
+            @RequestParam double radius
+    ) {
+        // Get all experts with the given specialty
+        List<Expert> experts = expertService.findBySpecialty(specialty);
+
+        // Filter based on distance using the Haversine formula
+        return experts.stream()
+                .filter(expert -> expert.getLatitude() != null && expert.getLongitude() != null)
+                .filter(expert -> {
+                    double distance = haversine(lat, lng, expert.getLatitude(), expert.getLongitude());
+                    return distance <= radius;
+                })
+                .collect(Collectors.toList());
+    }
+
+    // Haversine formula to calculate distance between two points in kilometers
+    private double haversine(double lat1, double lng1, double lat2, double lng2) {
+        final int R = 6371; // Earth's radius in KM
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLng = Math.toRadians(lng2 - lng1);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+                        Math.sin(dLng / 2) * Math.sin(dLng / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
+    }
+
+
+
+
+
 }
