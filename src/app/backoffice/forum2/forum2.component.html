@@ -748,39 +748,47 @@
                                     </div>
                                     
                                 </div>
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                      <table class="table">
-                                        <thead>
-                                          <tr>
-                                            <th>ID</th>
-                                            <th>Description</th>
-                                            <th>Weight (kg)</th>
-                                            <th>Blood Pressure</th>
-                                            <th>Symptoms</th>
-                                            <th>Pregnancy Pain</th>
-                                            <th>Cravings</th>
-                                            <th>Mood Swings</th>
-                                            <th>Breathelessness</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody>
-                                          <tr *ngFor="let forum of Forums">
-                                            <td>{{ forum.idForum }}</td>
-                                            <td>{{ forum.description }}</td>
-                                            <td>{{ forum.weight }}</td>
-                                            <td>{{ forum.bloodPressure }}</td>
-                                            <td>{{ forum.symptoms }}</td>
-                                            <td>{{ forum.pregnancyPain }}</td>
-                                            <td>{{ forum.pregnancyCravings }}</td>
-                                            <td>{{ forum.moodSwings }}</td>
-                                            <td>{{ forum.breathelessness }}</td>
-                                          </tr>
-                                        </tbody>
-                                      </table>
-                                    </div>
+                                <div class="container mt-4">
+                                  <h2>Liste des forums de grossesse</h2>
+                                
+                                  <!-- Conteneur scrollable horizontalement -->
+                                  <div style="overflow-x: auto;">
+                                    <table class="table table-bordered table-striped">
+                                      <thead class="thead-dark">
+                                        <tr>
+                                          <th>ID Forum</th>
+                                          <th>Mois</th>
+                                          <th>Poids</th>
+                                          <th>Tension</th>
+                                          <th>Symptômes</th>
+                                          <th>Douleurs</th>
+                                          <th>Envies</th>
+                                          <th>Humeur</th>
+                                          <th>Notes</th>
+                                          <th>Essoufflement</th>
+                                          <th>ID Suivi</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr *ngFor="let forum of Forums">
+                                          <td>{{ forum.idForum }}</td>
+                                          <td>{{ forum.month }}</td>
+                                          <td>{{ forum.weight ? forum.weight + ' kg' : '-' }}</td>
+                                          <td>{{ forum.bloodPressure }}</td>
+                                          <td>{{ forum.symptoms }}</td>
+                                          <td>{{ forum.pregnancyPain }}</td>
+                                          <td>{{ forum.pregnancyCravings }}</td>
+                                          <td>{{ forum.moodSwings }}</td>
+                                          <td>{{ forum.description }}</td>
+                                          <td>{{ forum.breathelessness }}</td>
+                                          <td>{{ forum.pregnancyTracking?.idPregnancyTracking }}</td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
                                   </div>
-                                  
+                                </div>
+                                
+                                
                             </div>
                         </div>
                     </div>

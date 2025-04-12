@@ -12,9 +12,9 @@ export class PregnancyTrackingService {
   private apiUrl = 'http://localhost:8089/pregnancy-tracking';
   constructor(private http: HttpClient) { }
 
-  //getAllPregnancyTrackings(): Observable<any[]> {
-    //return this.http.get<any[]>(`${this.apiUrl}/retrieve-all`);
-  //}
+ /* getAllPregnancyTrackings(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/retrieve-all`);
+  }*/
   getAllPregnancyTrackings(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/retrieve-all`).pipe(
       map(data => 
@@ -28,9 +28,24 @@ export class PregnancyTrackingService {
       )
     );
   }
-  
-  addPregnancyTracking(trackingData: PregnancyTrackings): Observable<PregnancyTrackings> {
+    //getAllPregnancyTrackings(): Observable<any[]> {
+      //return this.http.get<any[]>("http://localhost:8089/pregnancy-tracking/retrieve-all");
+    //}
+    
+  /*addPregnancyTracking(trackingData: PregnancyTrackings): Observable<PregnancyTrackings> {
     console.log('je suis la',trackingData)
     return this.http.post<any>(`${this.apiUrl}/add`, trackingData);
+  }*/
+  addPregnancyTracking(trackingData: PregnancyTrackings): Observable<PregnancyTrackings> {
+    return this.http.post<PregnancyTrackings>(
+      'http://localhost:8089/pregnancy-tracking/add',
+      trackingData,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
   }
+  
 }

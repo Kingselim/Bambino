@@ -1,6 +1,6 @@
 import { Component , OnInit} from '@angular/core';
 import { PregnancyTrackingService } from 'src/app/service/pregnancy-tracking.service';
-
+import { PregnancyTrackings } from 'src/app/model/PregnancyTracking';
 @Component({
   selector: 'app-pregnancy-tracking2',
   templateUrl: './pregnancy-tracking2.component.html',
@@ -21,13 +21,22 @@ export class PregnancyTracking2Component  implements OnInit {
   ngOnInit() {
     this.loadPregnancyTrackings();
   }
-
   loadPregnancyTrackings() {
     this.pregnancyTrackingService.getAllPregnancyTrackings().subscribe(
-      data => { this.PregnancyTrackings = data; },
-      error => { console.error('Error fetching data:', error); }
+      data => {
+        this.PregnancyTrackings = data.map(pt => ({
+          ...pt,
+          datePregnancyTracking: new Date(pt.datePregnancyTracking)
+        }));
+      },
+      error => {
+        console.error('❌ Erreur de chargement :', error);
+      }
     );
   }
+ 
+  
+  
 
   
 }

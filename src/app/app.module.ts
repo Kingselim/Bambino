@@ -17,9 +17,10 @@ import { AlimentationComponent } from './alimentation/alimentation.component';
 import { AppointmentComponent } from './appointment/appointment.component';
 import { ShopComponent } from './shop/shop.component';
 import { CoachingComponent } from './coaching/coaching.component';
-import { PregnancyTrackingFormComponent } from './pregnancy-tracking-form/pregnancy-tracking-form.component';
-import { PregnancyTrackingForm2Component } from './pregnancy-tracking-form2/pregnancy-tracking-form2.component';
-import { ForumComponent } from './forum/forum.component';
+import {MonthlyTrackingComponent} from './monthly-tracking/monthly-tracking.component';
+import { SemesterTrackingComponent } from './semester-tracking/semester-tracking.component';
+import { NgChartsModule } from 'ng2-charts';
+import { TodoListComponent } from './todo-list/todo-list.component';
 
 @NgModule({
   declarations: [
@@ -34,9 +35,11 @@ import { ForumComponent } from './forum/forum.component';
     AppointmentComponent,
     ShopComponent,
     CoachingComponent,
-    PregnancyTrackingFormComponent,
-    PregnancyTrackingForm2Component,
-    ForumComponent
+    MonthlyTrackingComponent,
+    SemesterTrackingComponent,
+    TodoListComponent,
+
+    
    
     
     
@@ -46,7 +49,9 @@ import { ForumComponent } from './forum/forum.component';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgChartsModule
+
 
   ],
   providers: [],

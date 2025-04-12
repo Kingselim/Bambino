@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { ForumService } from './forum.service';
 
 import { PregnancyTrackingService } from './pregnancy-tracking.service';
 

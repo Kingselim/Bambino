@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './about/about.component';
 import {HomeComponent} from './home/home.component';
@@ -8,10 +8,9 @@ import {AlimentationComponent} from './alimentation/alimentation.component';
 import {AppointmentComponent} from './appointment/appointment.component';
 import {ShopComponent} from './shop/shop.component';
 import { CoachingComponent } from './coaching/coaching.component';
-import { PregnancyTrackingFormComponent }  from './pregnancy-tracking-form/pregnancy-tracking-form.component';
-import { PregnancyTrackingForm2Component } from './pregnancy-tracking-form2/pregnancy-tracking-form2.component';
-import { ForumComponent } from './forum/forum.component';
-
+import { MonthlyTrackingComponent } from './monthly-tracking/monthly-tracking.component';
+import { SemesterTrackingComponent } from './semester-tracking/semester-tracking.component';
+import { TodoListComponent } from './todo-list/todo-list.component';
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full' }, // Redirection au chargement
   {path: 'about', component: AboutComponent},
@@ -23,10 +22,11 @@ const routes: Routes = [
   {path: 'Appointment' , component:AppointmentComponent},
   {path: 'Shop' , component:ShopComponent},
   {path :'Coaching' , component:CoachingComponent},
-  {path :'form1' , component:PregnancyTrackingFormComponent},
-  {path :'form2' , component:PregnancyTrackingForm2Component},
-  {path :'forum' , component:ForumComponent}
-  
+  { path: 'monthly-tracking/:id', component: MonthlyTrackingComponent },
+  {path:'semester-tracking/:id', component : SemesterTrackingComponent},
+  { path: 'todo', component: TodoListComponent }
+
+
 ];
 
 @NgModule({

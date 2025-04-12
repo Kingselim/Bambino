@@ -1,0 +1,151 @@
+<div class="container py-4">
+  <h2 class="text-center fw-bold mb-4">Pregnancy Journal</h2>
+
+  <div class="d-flex flex-wrap gap-4 justify-content-between">
+    <!-- Form -->
+    <div class="animated-card card p-4 shadow-lg border-0" style="border-radius: 20px; background-color: #ffffff;">
+      <h4 class="fw-bold mb-4 text-center">Tracking for Month {{ currentMonth }}</h4>
+
+      <form [formGroup]="monthlyForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label class="form-label">Weight (kg)</label>
+          <input type="number" class="form-control" formControlName="weight">
+          <div class="text-danger mt-1" *ngIf="monthlyForm.get('weight')?.touched && monthlyForm.get('weight')?.invalid">
+            Weight is required and must be at least 30 kg.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Blood Pressure</label>
+          <input type="text" class="form-control" formControlName="bloodPressure">
+          <div class="text-danger mt-1" *ngIf="monthlyForm.get('bloodPressure')?.touched && monthlyForm.get('bloodPressure')?.invalid">
+            Blood pressure is required.
+          </div>
+          
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Mood</label>
+          <div class="d-flex gap-2 flex-wrap">
+            <button type="button" class="btn btn-outline-primary" [class.active]="monthlyForm.value.moodSwings === 'HAPPY'" (click)="monthlyForm.patchValue({ moodSwings: 'HAPPY' })">😊 Happy</button>
+            <button type="button" class="btn btn-outline-primary" [class.active]="monthlyForm.value.moodSwings === 'STABLE'" (click)="monthlyForm.patchValue({ moodSwings: 'STABLE' })">😌 Stable</button>
+            <button type="button" class="btn btn-outline-primary" [class.active]="monthlyForm.value.moodSwings === 'IRRITABLE'" (click)="monthlyForm.patchValue({ moodSwings: 'IRRITABLE' })">😠 Irritable</button>
+            <button type="button" class="btn btn-outline-primary" [class.active]="monthlyForm.value.moodSwings === 'SAD'" (click)="monthlyForm.patchValue({ moodSwings: 'SAD' })">😢 Sad</button>
+          </div>
+          <div class="text-danger mt-1" *ngIf="monthlyForm.get('moodSwings')?.touched && monthlyForm.get('moodSwings')?.invalid">
+            Mood selection is required.
+          </div>
+          
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Symptoms</label>
+          <textarea class="form-control" formControlName="symptoms"></textarea>
+          <div class="text-danger mt-1" *ngIf="monthlyForm.get('symptoms')?.touched && monthlyForm.get('symptoms')?.invalid">
+            Symptoms are required.
+          </div>
+          
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Pains</label>
+          <textarea class="form-control" formControlName="pregnancyPain"></textarea>
+          <div class="text-danger mt-1" *ngIf="monthlyForm.get('pregnancyPain')?.touched && monthlyForm.get('pregnancyPain')?.invalid">
+            Please describe any pain.
+          </div>
+          
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Food Cravings</label>
+          <input type="text" class="form-control" formControlName="pregnancyCravings">
+          <div class="text-danger mt-1" *ngIf="monthlyForm.get('pregnancyCravings')?.touched && monthlyForm.get('pregnancyCravings')?.invalid">
+            Food cravings are required.
+          </div>
+          
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Breathlessness</label>
+          <input type="text" class="form-control" formControlName="breathelessness">
+          <div class="text-danger mt-1" *ngIf="monthlyForm.get('breathelessness')?.touched && monthlyForm.get('breathelessness')?.invalid">
+            Please indicate if there is breathlessness.
+          </div>
+          
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Additional Notes</label>
+          <textarea class="form-control" formControlName="description"></textarea>
+          <div class="text-danger mt-1" *ngIf="monthlyForm.get('description')?.touched && monthlyForm.get('description')?.invalid">
+            Additional notes are required.
+          </div>
+          
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100" [disabled]="monthlyForm.invalid">
+          {{ isEditing ? 'Update Month' : 'Save Month' }}
+        </button>
+        
+
+        <div class="text-center mt-3">
+          <button class="btn btn-outline-secondary me-2" (click)="previousMonth()" [disabled]="currentMonth === 1">← Previous</button>
+          <span class="fw-bold">Month {{ currentMonth }}</span>
+          <button class="btn btn-outline-secondary ms-2" (click)="nextMonth()" [disabled]="currentMonth === 9">Next →</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- To-Do and History -->
+    <div class="bg-light p-3 rounded shadow-sm" style="min-width: 250px; max-width: 300px;">
+      <div class="d-flex justify-content-center mb-3">
+        <a [routerLink]="['/todo']" class="btn btn-outline-secondary rounded-pill w-100">
+          📝 Open To-Do List
+        </a>
+      </div>
+
+      <h5 class="fw-bold">📅 History</h5>
+      <div class="list-group">
+        <a *ngFor="let tracking of trackings"
+           class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+           [class.active]="tracking.month === currentMonth"
+           (click)="loadMonth(tracking.month)">
+          <div>
+            <div><strong>Month {{ tracking.month }}</strong></div>
+            <div class="small">{{ tracking.moodSwings }}</div>
+          </div>
+          <div>{{ tracking.weight }} kg</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="row mt-5">
+    <div class="col-md-6">
+      <h4>📈 Weight Evolution</h4>
+      <canvas baseChart
+              [datasets]="weightData"
+              [labels]="labels"
+              [options]="weightChartOptions"
+              chartType="line">
+      </canvas>
+    </div>
+    <div class="col-md-6">
+      <h4>💓 Blood Pressure Evolution</h4>
+      <canvas baseChart
+              [datasets]="pressureData"
+              [labels]="labels"
+              [options]="pressureChartOptions"
+              chartType="line">
+      </canvas>
+    </div>
+  </div>
+</div>
+
+<style>
+  button.active {
+    background-color: #a48ce2;
+    color: white;
+  }
+</style>

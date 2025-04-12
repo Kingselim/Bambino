@@ -37,10 +37,10 @@ export class PregnancyTrackingComponent implements OnInit {
           // Navigate based on the interval choice
           switch (this.pregnancyForm.value.intervalChoice) {
             case 'MONTH':
-              this.router.navigate(['/form1']); // Navigate to form1 if the choice is MONTH
+              this.router.navigate([ '/monthly-tracking', response.idPregnancyTracking]); // Navigate to form1 if the choice is MONTH
               break;
             case 'SEMESTER':
-              this.router.navigate(['/form2']); // Navigate to form2 if the choice is SEMESTER
+              this.router.navigate(['/semester-tracking', response.idPregnancyTracking]); // Navigate to form2 if the choice is SEMESTER
               break;
             default:
               console.log('No valid choice was made.');

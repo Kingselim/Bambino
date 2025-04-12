@@ -23,10 +23,12 @@ export class Forum2Component implements OnInit {
   loadForums() {
     this.forumService.getAllForums().subscribe({
       next: (data) => {
+        console.log("Forums reçus :", data); // 🔍 debug
         this.Forums = data;
       },
-   
+      error: (err) => console.error('Erreur chargement forums:', err)
     });
   }
+  
 
 }

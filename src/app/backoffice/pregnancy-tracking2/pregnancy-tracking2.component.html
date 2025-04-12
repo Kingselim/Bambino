@@ -748,28 +748,26 @@
                                     </div>
                                     
                                 </div>
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                      <table class="table">
-                                        <thead>
-                                          <tr>
-                                            <th>ID</th>
-                                            <th>Name</th>
-                                            <th>Date</th>
-                                            <th>Interval Choice</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr *ngFor="let tracking of PregnancyTrackings">
-                                                <td>{{ tracking.idPregnancyTracking }}</td>
-                                                <td>{{ tracking.namePregnancyTracking }}</td>
-                                                <td>{{ tracking.datePregnancyTracking | date: 'yyyy-MM-dd' }}</td>
-                                                <td>{{ tracking.intervalChoice }}</td>
-                                              </tr>
-                                              
-                                        </tbody>
-                                      </table>
-                                    </div>
+                                <div class="container mt-4">
+                                    <h2>Liste des suivis de grossesse</h2>
+                                    <table class="table table-bordered">
+                                      <thead class="thead-dark">
+                                        <tr>
+                                          <th>ID</th>
+                                          <th>Nom Suivi</th>
+                                          <th>Date</th>
+                                          <th>Intervalle</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr *ngFor="let pt of PregnancyTrackings">
+                                          <td>{{ pt.idPregnancyTracking }}</td>
+                                          <td>{{ pt.namePregnancyTracking }}</td>
+                                          <td>{{ pt.datePregnancyTracking | date:'yyyy-MM-dd' }}</td>
+                                          <td>{{ pt.intervalChoice }}</td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
                                   </div>
                                   
                             
