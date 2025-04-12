@@ -61,6 +61,10 @@ export class ExpertsComponent implements OnInit {
     this.router.navigate(['/appointments']);
   }
 
+  goToMap() {
+    this.router.navigate(['/nearest-experts']);
+  }
+
   get paginatedExperts() {
     const startIndex = (this.currentPage - 1) * this.expertsPerPage;
     return this.filteredExperts.slice(startIndex, startIndex + this.expertsPerPage);

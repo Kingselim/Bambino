@@ -1,0 +1,63 @@
+/* Container for the search panel */
+.search-panel {
+    display: flex;
+    justify-content: center;       /* Center horizontally on the page */
+    align-items: center;           /* Center vertically within the row */
+    gap: 20px;                     /* Space between the elements */
+    padding: 20px;                 /* Optional padding */
+    flex-wrap: wrap;               /* Wrap if screen is too small */
+}
+
+/* Style the specialty multi combo box */
+.search-panel select#specialty {
+    border: 1px solid gray;
+    border-radius: 10px;
+    padding: 5px 10px;
+    outline: none;
+}
+
+/* Container for the radio button group */
+.radius-options {
+    display: flex;
+    gap: 20px;                     /* 20px space between buttons */
+    align-items: center;
+}
+
+/* Label style for the radio buttons */
+.radio-btn {
+    cursor: pointer;
+}
+
+/* Hide the default radio button */
+.radio-btn input[type="radio"] {
+    display: none;
+}
+
+/* Style the span that shows the radio button text */
+.radio-btn span {
+    display: inline-block;
+    background-color: white;
+    border: 1px solid #4D65F9;     /* Primary color border */
+    border-radius: 10px;
+    padding: 5px 10px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Change style when the radio input is checked */
+.radio-btn input[type="radio"]:checked + span {
+    background-color: #4D65F9;
+    color: white;
+}
+
+/* Outer container to center the row if needed */
+.outer-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+hr {
+    border: none;
+    height: 1px;
+    background-color: transparent;
+  }
+  

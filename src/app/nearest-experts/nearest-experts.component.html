@@ -1,0 +1,29 @@
+<div class="search-panel">
+    <!-- Specialty multi combo box -->
+    <label for="specialty">Expert Specialty:</label>
+    <select id="specialty" [(ngModel)]="selectedSpecialty">
+      <option *ngFor="let s of specialties" [value]="s">{{ s }}</option>
+    </select>
+  
+    <!-- Radius selection -->
+    <div class="radius-options">
+      <label class="radio-btn">
+        <input type="radio" name="radius" [(ngModel)]="selectedRadius" [value]="1">
+        <span>1 km</span>
+      </label>
+      <label class="radio-btn">
+        <input type="radio" name="radius" [(ngModel)]="selectedRadius" [value]="5">
+        <span>5 km</span>
+      </label>
+      <label class="radio-btn">
+        <input type="radio" name="radius" [(ngModel)]="selectedRadius" [value]="10">
+        <span>10 km</span>
+      </label>
+    </div>
+  
+    <button class="btn btn-primary" (click)="searchNearestExperts()">Search</button>
+  </div>
+  
+  <!-- Map container -->
+  <div id="map" style="height: 500px;"></div>
+<hr>  

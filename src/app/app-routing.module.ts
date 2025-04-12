@@ -8,6 +8,7 @@ import { ExpertDetailsComponent } from './expert-details/expert-details.componen
 import { AppointmentListComponent } from './appointment-list/appointment-list.component';
 import { ExpertAppointmentComponent } from './expert-appointment/expert-appointment.component';
 import { ExpertStatisticsComponent } from './expert-statistics/expert-statistics.component';
+import { NearestExpertsComponent } from './nearest-experts/nearest-experts.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full' }, // Redirection au chargement
@@ -18,7 +19,9 @@ const routes: Routes = [
   { path: 'expert-statistics/:id', component: ExpertStatisticsComponent },
   { path: 'home', component: HomeComponent },
   { path: 'PregnancyTracking', component: PregnancyTrackingComponent  },
-  { path: 'appointments', component: AppointmentListComponent }
+  { path: 'appointments', component: AppointmentListComponent },
+  { path: 'nearest-experts', component: NearestExpertsComponent }
+
   
 
 ];
