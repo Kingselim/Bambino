@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router'; 
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-experts',
@@ -13,12 +14,18 @@ export class ExpertsComponent implements OnInit {
   searchQuery: string = '';
   selectedRole: string = '';
   roles: string[] = ['Doctor', 'Nutritionist', 'Coach']; // You can make this dynamic based on backend data
-
   currentPage: number = 1;
   expertsPerPage: number = 6;
 
 
-  constructor(private http: HttpClient, private router: Router) {}
+  // Rating modal properties
+  selectedExpert: any = null;
+  selectedRating: number = 0;
+  hoverRating: number = 0;
+
+
+
+  constructor(private http: HttpClient, private router: Router,private modalService: NgbModal) {}
 
   ngOnInit(): void {
     this.fetchExperts();
@@ -77,6 +84,55 @@ export class ExpertsComponent implements OnInit {
   get totalPages(): number[] {
     return Array.from({ length: Math.ceil(this.filteredExperts.length / this.expertsPerPage) }, (_, i) => i + 1);
   }
+
   
+
+
+
+
+  openRatingModal(expert: any, content: any) {
+    this.selectedExpert = expert;
+    this.selectedRating = 0;
+    this.hoverRating = 0;
+    this.modalService.open(content, { centered: true });
+  }
+
+  setRating(rating: number) {
+    this.selectedRating = rating;
+  }
+
+  setHoverRating(rating: number) {
+    this.hoverRating = rating;
+  }
+
+  resetHoverRating() {
+    this.hoverRating = this.selectedRating;
+  }
+
+  submitRating() {
+    if (this.selectedRating > 0 && this.selectedExpert) {
+      // Here you would typically send the rating to your backend
+      console.log(`Rating ${this.selectedExpert.name} with ${this.selectedRating} stars`);
+      
+      // Example API call (uncomment and adjust as needed):
+      /*
+      this.http.post(`http://localhost:8089/expert/rate/${this.selectedExpert.id}`, {
+        rating: this.selectedRating
+      }).subscribe(response => {
+        console.log('Rating submitted successfully', response);
+        this.modalService.dismissAll();
+      }, error => {
+        console.error('Error submitting rating', error);
+      });
+      */
+      
+      this.modalService.dismissAll();
+    }
+  }
+
+
+
+
+
   
 }

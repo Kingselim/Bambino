@@ -141,7 +141,10 @@ export class AppointmentListComponent implements OnInit {
     });
   }
 
-  
+  goToAppointmentMeeting(appointment: any): void {
+    // Navigate to the appointment meeting page
+    this.router.navigate(['/appointment-meeting', appointment.idAppointment]);
+  }
 
 
 

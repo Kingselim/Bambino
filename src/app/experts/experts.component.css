@@ -67,3 +67,29 @@ hr {
   border: 0;
   border-top: 1px solid #efecec;
 }
+
+
+/* ... your existing styles ... */
+
+/* Add these new styles */
+.modal-header {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.modal-body {
+  padding: 2rem;
+}
+
+.stars i {
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.stars i:hover {
+  transform: scale(1.2);
+}
+
+.btn-close {
+  font-size: 1.5rem;
+}

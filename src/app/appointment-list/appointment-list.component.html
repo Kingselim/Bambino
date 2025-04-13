@@ -30,9 +30,18 @@
         <td>{{ appointment.driver ? appointment.driver.nameDriver : 'No Driver' }}</td>
         <td>
           <div class="action-buttons" *ngIf="appointment.status !== 'canceled'">
+
             <button class="btn btn-warning btn-sm" (click)="openEditModal(appointment)">Edit</button>
             <button class="btn btn-secondary btn-sm" (click)="openCancelModal(appointment)">Cancel</button>
+            <!-- New button for "online" appointments -->
+            <button *ngIf="appointment.location === 'Online'" 
+            class="btn btn-dark btn-sm" 
+            (click)="goToAppointmentMeeting(appointment)">
+              Go to Meeting
+            </button>
+
           </div>
+            
         </td>
         
         

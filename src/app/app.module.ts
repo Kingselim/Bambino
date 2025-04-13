@@ -32,6 +32,8 @@ import { ExpertStatisticsComponent } from './expert-statistics/expert-statistics
 import { NgChartsModule } from 'ng2-charts';
 import { CancelAppointmentDialogComponent } from './cancel-appointment-dialog/cancel-appointment-dialog.component';
 import { NearestExpertsComponent } from './nearest-experts/nearest-experts.component';
+import { AppointmentMeetingComponent } from './appointment-meeting/appointment-meeting.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -50,7 +52,8 @@ import { NearestExpertsComponent } from './nearest-experts/nearest-experts.compo
     HoverDetailsDialogComponent,
     ExpertStatisticsComponent,
     CancelAppointmentDialogComponent,
-    NearestExpertsComponent
+    NearestExpertsComponent,
+    AppointmentMeetingComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +72,7 @@ import { NearestExpertsComponent } from './nearest-experts/nearest-experts.compo
     MatDialogModule,CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory,
-    })
+    }), NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent],

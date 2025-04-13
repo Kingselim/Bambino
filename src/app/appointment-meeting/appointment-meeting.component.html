@@ -1,0 +1,13 @@
+<div class="container">
+    <h2>Meeting Details for Appointment</h2>
+    <div *ngIf="appointment">
+      <p><strong>Expert:</strong> {{ appointment.expert.name }}</p>
+      <p><strong>Patient:</strong> {{ appointment.user.name }}</p>
+      <p><strong>Location:</strong> {{ appointment.location }}</p>
+      <p><strong>Date & Time:</strong> {{ appointment.appointmentDateTime }}</p>
+      <!-- Add more appointment details here -->
+      <button class="btn btn-primary">Join Meeting</button>
+    </div>
+  </div>
+  <hr>
+  

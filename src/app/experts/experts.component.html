@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
 <hr>
 <div class="search-container">
     <input 
@@ -33,6 +35,7 @@
           <p class="card-text">Specialty: {{ expert.specialty }}</p>
           <p class="card-text">Age: {{ expert.age }}</p>
           <a [routerLink]="['/expert-details', expert.id]" class="btn btn-primary">View Details</a>
+          <button class="btn btn-warning ms-2" (click)="openRatingModal(expert, ratingModal)">Rate</button>
         </div>
       </div>
     </div>
@@ -57,5 +60,31 @@
 
   <hr>
   
+  <!-- Rating Modal -->
+<ng-template #ratingModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Rate {{selectedExpert?.name}}</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body text-center">
+    <div class="stars mb-3">
+      <i *ngFor="let star of [1,2,3,4,5]" 
+          class="bi fs-1 mx-1" 
+          [class.bi-star-fill]="(hoverRating || selectedRating) >= star"
+          [class.bi-star]="(hoverRating || selectedRating) < star"
+          [style.color]="(hoverRating || selectedRating) >= star ? '#ffc107' : '#e4e5e9'"
+          (click)="setRating(star)"
+          (mouseenter)="setHoverRating(star)"
+          (mouseleave)="resetHoverRating()">
+      </i>
+    </div>
+    <p *ngIf="selectedRating > 0">You selected {{selectedRating}} star(s)</p>
+    <p *ngIf="selectedRating === 0">Please select a rating</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="submitRating()" [disabled]="selectedRating === 0">Rate</button>
+  </div>
+</ng-template>
   
   

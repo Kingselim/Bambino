@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 <hr>
 <div class="container mt-4">
   <h2>{{ expert.name }}'s Details</h2>
@@ -8,7 +10,13 @@
     <p><span class="key">Speciality:</span> <span class="value">{{ expert.specialty }}</span></p>
     <p><span class="key">Age:</span> <span class="value">{{ expert.age || 'N/A' }}</span></p>
     <p><span class="key">Location:</span> <span class="value">{{ expert.location || 'Online' }}</span></p>
-    <p><span class="key">Rating:</span> <span class="value">{{ expert.rating || 'Not Rated Yet' }}</span></p>
+    <p><span class="key">Rating:</span> 
+      <span class="value">
+        <i class="fas fa-star" style="color: rgb(223, 223, 0);"></i> 
+        {{ expert.rating || 'Not Rated Yet' }}
+      </span>
+    </p>
+    
     <p><span class="key">Email:</span> <span class="value">{{ expert.email || 'No Email' }}</span></p>
   </div>
 
