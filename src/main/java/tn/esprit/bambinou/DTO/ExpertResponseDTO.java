@@ -15,6 +15,7 @@ public class ExpertResponseDTO {
 
     private Double latitude;
     private Double longitude;
+    private int appointmentPrice;
 
 
     private List<AppointmentResponseDTO> expertAppointments;
@@ -105,5 +106,13 @@ public class ExpertResponseDTO {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+
+    public int getAppointmentPrice() {
+        return appointmentPrice;
+    }
+
+    public void setAppointmentPrice(int appointmentPrice) {
+        this.appointmentPrice = appointmentPrice;
     }
 }

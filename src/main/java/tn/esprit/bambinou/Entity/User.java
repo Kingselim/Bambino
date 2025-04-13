@@ -19,7 +19,7 @@ import java.util.Set;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
 //@JsonIgnoreProperties({"clientAppointments"})
 public class User {
     @Id
@@ -49,6 +49,7 @@ public class User {
     private Set<Appointment> clientAppointments = new HashSet<>();
 
 
+    public User(){}
 
     public User(String name, String age, String email, String password) {
         this.name = name;

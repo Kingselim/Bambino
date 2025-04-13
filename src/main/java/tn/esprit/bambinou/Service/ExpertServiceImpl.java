@@ -99,6 +99,7 @@ public class ExpertServiceImpl implements IExpertService {
         dto.setLocation(expert.getLocation());
         dto.setRating(expert.getRating());
         dto.setRated(expert.isRated());
+        dto.setAppointmentPrice(expert.getAppointmentPrice());
 
 
         // Map expertAppointments to AppointmentResponseDTO

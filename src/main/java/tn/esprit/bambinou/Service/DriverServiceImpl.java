@@ -79,7 +79,7 @@ public class DriverServiceImpl implements IDriverService {
     // Helper: Convert Driver to DriverResponseDTO
     private DriverResponseDTO convertToDriverResponseDTO(Driver driver) {
         DriverResponseDTO dto = new DriverResponseDTO();
-        dto.setIdDriver(driver.getIdDriver());
+        dto.setIdDriver(driver.getId());
         dto.setNameDriver(driver.getNameDriver());
         dto.setPhoneNumber(driver.getPhoneNumber());
         dto.setCarModel(driver.getCarModel());

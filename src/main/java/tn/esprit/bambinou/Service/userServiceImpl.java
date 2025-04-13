@@ -97,7 +97,7 @@ public class userServiceImpl implements IuserService {
 
             if (appointment.getDriver() != null) {
                 DriverDTO driverDTO = new DriverDTO();
-                driverDTO.setIdDriver(appointment.getDriver().getIdDriver());
+                driverDTO.setIdDriver(appointment.getDriver().getId());
                 appointmentResponseDTO.setDriver(driverDTO);
             }
 

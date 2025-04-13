@@ -33,6 +33,7 @@ public class Expert {
     // New fields for geolocation
     private Double latitude;
     private Double longitude;
+    private int appointmentPrice;
 
 
     @OneToMany(mappedBy = "expert", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -138,5 +139,13 @@ public class Expert {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+
+    public int getAppointmentPrice() {
+        return appointmentPrice;
+    }
+
+    public void setAppointmentPrice(int appointmentPrice) {
+        this.appointmentPrice = appointmentPrice;
     }
 }
