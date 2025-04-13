@@ -1,115 +1,99 @@
 <hr>
 <div class="container mt-4">
-  
-    <h2>{{ expert.name }} 's Details</h2>
-  
-    <!-- Expert Details Section -->
-    <div class="expert-details mt-4">
-      <p><span class="key">Name:</span> <span class="value">{{ expert.name }}</span></p>
-      <p><span class="key">Speciality:</span> <span class="value">{{ expert.specialty }}</span></p>
-      <p><span class="key">Age:</span> <span class="value">{{ expert.age || 'N/A' }}</span></p>
-      <p><span class="key">Location:</span> <span class="value">{{ expert.location || 'Online' }}</span></p>
-      <p><span class="key">Rating:</span> <span class="value">{{ expert.rating || 'Not Rated Yet' }}</span></p>
-      <p><span class="key">Email:</span> <span class="value">{{ expert.email || 'No Email' }}</span></p>
-    </div>
-  
-  
+  <h2>{{ expert.name }}'s Details</h2>
+
+  <!-- Expert Details Section -->
+  <div class="expert-details modern-expert-details mt-4">
+    <p><span class="key">Name:</span> <span class="value">{{ expert.name }}</span></p>
+    <p><span class="key">Speciality:</span> <span class="value">{{ expert.specialty }}</span></p>
+    <p><span class="key">Age:</span> <span class="value">{{ expert.age || 'N/A' }}</span></p>
+    <p><span class="key">Location:</span> <span class="value">{{ expert.location || 'Online' }}</span></p>
+    <p><span class="key">Rating:</span> <span class="value">{{ expert.rating || 'Not Rated Yet' }}</span></p>
+    <p><span class="key">Email:</span> <span class="value">{{ expert.email || 'No Email' }}</span></p>
+  </div>
+
   <hr>
   <h2>Book an Appointment with {{ expert.name }}</h2>
-<!-- Wrap everything (Date, Location, Driver) in a container with a custom class -->
-<div class="appointment-options-row">
-
-  <!-- Appointment Date Picker -->
-  <div class="appointment-option">
-    <h4>Appointment Date <span style="color: red; font-weight: bold;">*</span></h4>
-    <p>Pick an Appointment Date with this Expert!</p>
-    <mat-form-field appearance="outline">
-      <mat-label>Choose a date</mat-label>
-      <input matInput [matDatepicker]="picker" (dateChange)="onDateChange($event)">
-      <mat-hint>YYYY-MM-DD</mat-hint>
-      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-  </div>
-
-  <!-- Appointment Location -->
-  <div class="appointment-option">
-    <h4>Appointment Location <span style="color: red; font-weight: bold;">*</span></h4>
-    <p>Select an appointment location</p>
-    <!-- Use a specialized class (location-radios) for location buttons 
-         so we can style them differently from time slots -->
-    <div class="time-slot-section location-radios">
-      <div class="slot-list">
-        <div>
-          <input 
-            type="radio" 
-            id="online" 
-            name="appointmentLocation" 
-            [value]="'online'" 
-            class="hidden-radio" 
-            [(ngModel)]="selectedAppointmentLocation" />
-          <label 
-            for="online" 
-            class="slot-button location-slot-button">
-            Online
-          </label>
-        </div>
-        <div>
-          <input 
-            type="radio" 
-            id="expertLocation" 
-            name="appointmentLocation" 
-            [value]="'expertLocation'" 
-            class="hidden-radio" 
-            [(ngModel)]="selectedAppointmentLocation" />
-          <label 
-            for="expertLocation" 
-            class="slot-button location-slot-button">
-            Expert's Location
-          </label>
-        </div>
+  <!-- Wrap Date, Location, and Driver in a container with a custom class -->
+  <div class="appointment-options-row">
+    <!-- Appointment Date Picker -->
+    <div class="appointment-option">
+      <h4>Appointment Date <span style="color: red; font-weight: bold;">*</span></h4>
+      <p>Pick an Appointment Date with this Expert!</p>
+      <mat-form-field appearance="outline">
+        <mat-label>Choose a date</mat-label>
+        <input matInput [matDatepicker]="picker" (dateChange)="onDateChange($event)">
+        <mat-hint>YYYY-MM-DD</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
     </div>
+
+    <!-- Appointment Location -->
+    <div class="appointment-option">
+      <h4>Appointment Location <span style="color: red; font-weight: bold;">*</span></h4>
+      <p>Select an appointment location</p>
+      <!-- Use a specialized class (location-radios) for location buttons -->
+      <div class="time-slot-section location-radios">
+        <div class="slot-list">
+          <div>
+            <input type="radio"
+                   id="online"
+                   name="appointmentLocation"
+                   [value]="'online'"
+                   class="hidden-radio"
+                   [(ngModel)]="selectedAppointmentLocation" />
+            <label for="online" class="slot-button location-slot-button">
+              Online
+            </label>
+          </div>
+          <div>
+            <input type="radio"
+                   id="expertLocation"
+                   name="appointmentLocation"
+                   [value]="'expertLocation'"
+                   class="hidden-radio"
+                   [(ngModel)]="selectedAppointmentLocation" />
+            <label for="expertLocation" class="slot-button location-slot-button">
+              Expert's Location
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Driver Selection -->
+    <div class="appointment-option">
+      <h4>Driver</h4>
+      <p>Select a Driver (optional)</p>
+      <select class="form-select" aria-label="Select a driver" [(ngModel)]="selectedDriverId">
+        <option value="" selected>None</option>
+        <option *ngFor="let driver of drivers" [value]="driver.idDriver">
+          {{ driver.nameDriver }} - {{ driver.carModel }}
+        </option>
+      </select>
     </div>
   </div>
-
-  <!-- Driver Selection -->
-  <div class="appointment-option">
-    <h4>Driver</h4>
-    <p>Select a Driver (optional)</p>
-    <select class="form-select" aria-label="Select a driver" [(ngModel)]="selectedDriverId">
-      <option value="" selected>None</option>
-      <option *ngFor="let driver of drivers" [value]="driver.idDriver">
-        {{ driver.nameDriver }} - {{ driver.carModel }}
-      </option>
-    </select>
-  </div>
-</div>
-
-<hr>
-
-
-
 
   <hr>
 
+  <!-- Time Slots Section -->
   <h4>Time Slots <span style="color: red; font-weight: bold;">*</span></h4>
   <p>Select a time slot in the evening or in the morning</p>
   <div class="time-slot-section">
     <h5>Morning Slots</h5>
     <div class="slot-list">
       <div *ngFor="let slot of morningSlots">
-        <input 
-          type="radio" 
-          id="{{slot}}" 
-          name="appointmentSlot" 
-          [value]="slot" 
-          class="hidden-radio" 
-          [(ngModel)]="selectedTimeSlot"
-          [disabled]="isSlotBooked(slot)" />
-        <label 
-          for="{{slot}}" 
-          class="slot-button" 
-          [ngClass]="{'slot-button-disabled': isSlotBooked(slot)}">
+        <input type="radio"
+               id="{{slot}}"
+               name="appointmentSlot"
+               [value]="slot"
+               class="hidden-radio"
+               [(ngModel)]="selectedTimeSlot"
+               [disabled]="isSlotBooked(slot)" />
+        <label for="{{slot}}"
+               class="slot-button"
+               [ngClass]="{'slot-button-disabled': isSlotBooked(slot)}">
           {{ slot }}
         </label>
       </div>
@@ -120,18 +104,16 @@
     <h5>Evening Slots</h5>
     <div class="slot-list">
       <div *ngFor="let slot of eveningSlots">
-        <input 
-          type="radio" 
-          id="{{slot}}" 
-          name="appointmentSlot" 
-          [value]="slot" 
-          class="hidden-radio" 
-          [(ngModel)]="selectedTimeSlot"
-          [disabled]="isSlotBooked(slot)" />
-        <label 
-          for="{{slot}}" 
-          class="slot-button" 
-          [ngClass]="{'slot-button-disabled': isSlotBooked(slot)}">
+        <input type="radio"
+               id="{{slot}}"
+               name="appointmentSlot"
+               [value]="slot"
+               class="hidden-radio"
+               [(ngModel)]="selectedTimeSlot"
+               [disabled]="isSlotBooked(slot)" />
+        <label for="{{slot}}"
+               class="slot-button"
+               [ngClass]="{'slot-button-disabled': isSlotBooked(slot)}">
           {{ slot }}
         </label>
       </div>
@@ -140,7 +122,55 @@
   
   <hr>
 
-  
+  <!-- Payment Section (only for Online appointments) -->
+  <div *ngIf="selectedAppointmentLocation === 'online'" class="payment-section modern-payment-section mt-4">
+    <h5>Payment <span style="color: red; font-weight: bold;">*</span></h5>
+    <p>Appointment Price: <strong>{{ expert?.appointmentPrice | currency }}</strong></p>
+
+    <p>Please select a payment method:</p>
+    <button class="btn modern-btn-primary me-2" (click)="openPaymentModal('visa')">Pay with Visa</button>
+    <button class="btn modern-btn-primary" (click)="openPaymentModal('paypal')">Pay with PayPal</button>
+    <div *ngIf="isPaymentSuccessful" class="payment-success mt-2">
+      <p class="text-success">Payment successful.</p>
+    </div>
+  </div>
+
+  <!-- Payment Modal -->
+  <div class="payment-modal-overlay modern-payment-modal-overlay" *ngIf="paymentModalOpen">
+    <div class="payment-modal modern-payment-modal">
+      <h3>{{ paymentMethod === 'visa' ? 'Visa Payment' : 'PayPal Payment' }} Form</h3>
+      <form (ngSubmit)="submitPayment()">
+        <!-- Visa Payment Form -->
+        <div *ngIf="paymentMethod === 'visa'">
+          <div class="mb-3">
+            <label for="cardNumber" class="form-label">Card Number</label>
+            <input id="cardNumber" type="text" class="form-control"
+                   [(ngModel)]="paymentDetails.cardNumber" name="cardNumber" required>
+          </div>
+          <div class="mb-3">
+            <label for="expiry" class="form-label">Expiration Date</label>
+            <input id="expiry" type="text" class="form-control"
+                   [(ngModel)]="paymentDetails.expiry" name="expiry" placeholder="MM/YY" required>
+          </div>
+          <div class="mb-3">
+            <label for="cvv" class="form-label">CVV</label>
+            <input id="cvv" type="text" class="form-control"
+                   [(ngModel)]="paymentDetails.cvv" name="cvv" required>
+          </div>
+        </div>
+        <!-- PayPal Payment Form -->
+        <div *ngIf="paymentMethod === 'paypal'">
+          <div class="mb-3">
+            <label for="paypalEmail" class="form-label">PayPal Email</label>
+            <input id="paypalEmail" type="email" class="form-control"
+                   [(ngModel)]="paymentDetails.paypalEmail" name="paypalEmail" required>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-success me-2">Submit Payment</button>
+        <button type="button" class="btn btn-secondary" (click)="closePaymentModal()">Cancel</button>
+      </form>
+    </div>
+  </div>
 
   <hr>
 

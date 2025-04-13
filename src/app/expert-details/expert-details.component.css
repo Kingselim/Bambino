@@ -1,278 +1,279 @@
-/* 1) Make the entire row a flex container */
+/* General container for layout */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Appointment row setup */
 .appointment-options-row {
   display: flex;
-  gap: 40px; /* Space between each section; adjust as needed */
-  flex-wrap: wrap; /* Allows wrapping on smaller screens */
-  margin-bottom: 40px; /* Some spacing before the next section */
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
 }
 
-/* 2) Each section in the row can have a consistent look */
+/* Each appointment section */
 .appointment-option {
-  flex: 1; /* So each takes up an equal share of the row */
-  min-width: 250px; /* Prevents elements from becoming too narrow on small screens */
+  flex: 1;
+  min-width: 250px;
 }
 
-/* 3) For the location radio buttons, override color to your primary color (#4D65F9) 
-   Instead of #f17298 used for time slots. 
-*/
-
-/* The container for location buttons, for any further styling if needed */
-.location-radios {
-  margin-top: 10px;
+/* Modern Expert Details Section */
+.modern-expert-details {
+  background: #fafafa;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  transition: box-shadow 0.3s ease;
 }
 
-/* The label styling for location radio buttons */
-.location-slot-button {
-  border-color: #4D65F9 !important; /* Primary color border */
+.modern-expert-details:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
-/* When hovered */
-.location-slot-button:hover {
-  background-color: #4D65F9 !important;
-  color: #fff !important;
+/* Modern Payment Section */
+.modern-payment-section {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border: 1px solid #e0e0e0;
 }
 
-/* Selected state: radio input is checked */
-.hidden-radio:checked + .location-slot-button {
-  background-color: #4D65F9 !important;
-  color: #fff !important;
+.modern-payment-section p {
+  font-size: 18px;
+  margin: 10px 0;
 }
 
+/* Primary button style */
+.modern-btn-primary {
+  background: linear-gradient(45deg, #4D65F9, #6a82fb);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  transition: background 0.3s ease;
+  padding: 10px 20px;
+}
 
-/* Container for the entire page */
-.container {
-    max-width: 1200px; /* Increased width for better horizontal display */
-    margin: auto;
-    padding: 20px;
+.modern-btn-primary:hover {
+  background: linear-gradient(45deg, #3c54d9, #5a72ea);
+}
+
+/* Modal for Payment */
+.modern-payment-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modern-payment-modal {
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 90%;
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
   }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
 
-  
-  .expert-details {
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    border: 1px solid #ccc; /* Thin gray border */
-    margin-bottom: 20px;
+/* Expert details section */
+.expert-details {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
 }
 
 .expert-details p {
   display: flex;
-  align-items: center; /* Centers content vertically */
+  align-items: center;
   font-size: 18px;
   color: #555;
 }
 
 .expert-details .key {
   font-weight: bold;
-  color: #4D65F9; /* Purple */
-  min-width: 120px; /* Adjust this to control tab spacing */
+  color: #4D65F9;
+  min-width: 120px;
 }
 
 .expert-details .value {
-  color: #000000;
+  color: #000;
   font-weight: 500;
-  flex-grow: 1; /* Ensures value stays aligned while keeping spacing */
+  flex-grow: 1;
 }
 
-
-
-  
+/* Expert details heading */
 .expert-details h3 {
   color: #f17298;
   font-size: 24px;
   font-weight: bold;
   text-align: center;
-  /* margin-bottom: 10px; */
-  margin-top: 20px; 
+  margin-top: 20px;
 }
 
-  
-  
-  /* Section titles */
-  h2 {
-    font-size: 30px;
-    font-weight: bold;
-    color: #333; /* Darker color for a premium look */
-    border-bottom: 3px solid #f17298; /* Underline effect */
-    display: inline-block;
-    padding-bottom: 5px;
-    margin-bottom: 25px;
-  }
-  
-  
-  /* Calendar Section */
-  .calendar-section {
-    margin-bottom: 30px; /* Increased spacing */
-  }
-  
+/* Section titles */
+h2 {
+  font-size: 30px;
+  font-weight: bold;
+  color: #333;
+  border-bottom: 3px solid #f17298;
+  padding-bottom: 5px;
+  margin-bottom: 25px;
+}
+
+/* Calendar Section */
+.calendar-section {
+  margin-bottom: 30px;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+}
+
+.calendar-header,
+.calendar-body {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.day, .date {
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.date {
+  border: 1px solid #ddd;
+  padding: 20px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.date:hover {
+  background-color: #f1f1f1;
+}
+
+.date.active {
+  background-color: #6c757d;
+  color: white;
+}
+
+hr {
+  margin: 40px 0;
+  border: 0;
+  border-top: 1px solid #efecec;
+}
+
+/* Time Slot Section */
+.time-slot-section h4 {
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.slot-list {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.hidden-radio {
+  display: none;
+}
+
+.slot-button {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 2px solid #f17298;
+  background-color: white;
+  color: black;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  white-space: nowrap;
+}
+
+.slot-button-disabled {
+  background-color: gray !important;
+  color: white !important;
+  border-color: gray !important;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.slot-button:hover {
+  background-color: #f17298;
+  color: white;
+  transform: scale(1.05);
+}
+
+.hidden-radio:checked + .slot-button {
+  background-color: #f17298;
+  color: white;
+}
+
+/* Button container */
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.buttons button {
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.buttons button:hover {
+  opacity: 0.9;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr); /* 7 equal columns for the week */
-    gap: 10px; /* Space between cells */
+    gap: 5px;
   }
-  
-  /* Calendar headers and body */
-  .calendar-header,
-  .calendar-body {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr); /* Ensure headers match the body */
-  }
-  
-  .day, .date {
-    text-align: center;
-    padding: 10px;
-    font-weight: bold;
-  }
-  
-  /* Calendar date styling */
+
   .date {
-    border: 1px solid #ddd;
-    padding: 20px;
-    cursor: pointer;
-    border-radius: 8px; /* Rounded corners */
-    transition: background-color 0.3s ease;
+    padding: 12px;
   }
-  
-  .date:hover {
-    background-color: #f1f1f1;
-  }
-  
-  /* Active date (can be used to mark selected days) */
-  .date.active {
-    background-color: #6c757d;
-    color: white;
-  }
-  
-  /* Divider for sections */
-  hr {
-    margin: 40px 0;
-    border: 0;
-    border-top: 1px solid #efecec;
-  }
-  
-  /* Time Slot Section */
-  .time-slot-section h4 {
-    font-weight: bold;
-    margin-bottom: 15px; /* Consistent spacing */
-  }
-  
-  /* Time slot container - horizontal scroll */
-  .slot-list {
-    display: flex;
-    flex-wrap: nowrap; /* Keep slots in one line */
-    gap: 10px; /* Space between slots */
-    overflow-x: auto; /* Scroll if overflow */
-    padding-bottom: 10px; /* Prevent clipping */
-  }
-  
-  /* Hide the actual radio input */
-  .hidden-radio {
-    display: none;
-  }
-  
-  /* Style for the slot buttons */
+
   .slot-button {
-    display: inline-block;
-    padding: 10px 20px;
-    border: 2px solid #f17298;
-    background-color: white;
-    color: black;
-    border-radius: 8px; /* Rounded corners for buttons */
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    white-space: nowrap; /* Prevent wrapping */
+    padding: 8px 12px;
   }
 
-  .slot-button-disabled {
-    background-color: gray !important;
-    color: white !important;
-    border-color: gray !important;
-    pointer-events: none;
-    opacity: 0.7;
-  }
-  
-  
-  /* Hover effect for slots */
-  .slot-button:hover {
-    background-color: #f17298;
-    color: white;
-    transform: scale(1.05); /* Slight zoom on hover  pink : #FF4880  purple : #4D65F9 */
-  }
-  
-  /* Selected slot styling */
-  .hidden-radio:checked + .slot-button {
-    background-color: #f17298;
-    color: white;
-  }
-  
-  /* Button container for interactive buttons */
   .buttons {
-    display: flex;
-    justify-content: space-between; /* Space out buttons */
-    margin-top: 30px;
+    flex-direction: column;
+    gap: 10px;
   }
-  
-  /* Button style */
-  .buttons button {
-    padding: 12px 24px;
-    font-size: 16px;
-    border: none;
-    border-radius: 8px;
-    /* background-color: #146ebc; */
-    color: white;
-    cursor: pointer;
-    transition: opacity 0.3s ease;
-  }
-  
-  /* Button hover effect */
-  .buttons button:hover {
-    opacity: 0.9;
-  }
-  
-  /* Responsive Design for smaller screens */
-  @media (max-width: 768px) {
-    .calendar-grid {
-      gap: 5px; /* Reduce gaps on smaller screens */
-    }
-  
-    .date {
-      padding: 12px; /* Smaller padding */
-    }
-  
-    .slot-button {
-      padding: 8px 12px; /* Smaller buttons */
-    }
-  
-    .buttons {
-      flex-direction: column; /* Stack buttons vertically */
-      gap: 10px; /* Space between buttons */
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-  
-   
-
-
-  }
-  
+}

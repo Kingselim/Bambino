@@ -5,8 +5,14 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatCardModule } from '@angular/material/card';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatOptionModule } from '@angular/material/core';  // utile pour mat-option
 
 @Component({
   selector: 'app-expert-details',
@@ -18,11 +24,14 @@ import { CommonModule } from '@angular/common';
     MatInputModule,
     MatDatepickerModule,
     CommonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDatepickerModule,
     MatNativeDateModule,
     FormsModule,
+    MatToolbarModule,
+    MatCardModule,
+    MatRadioModule,
+    MatDividerModule,
+    MatSelectModule,
+    MatOptionModule
   ]
 })
 export class ExpertDetailsComponent implements OnInit {
@@ -34,11 +43,19 @@ export class ExpertDetailsComponent implements OnInit {
   selectedDate: Date | null = null;
   selectedTimeSlot: string = "";
   selectedDriverId: number = 0;
-
   selectedAppointmentLocation: string = 'online';  // default to online
 
+  // Payment-related properties
+  paymentModalOpen: boolean = false;
+  paymentMethod: string = '';
+  isPaymentSuccessful: boolean = false;
+  paymentDetails: any = {};
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -89,21 +106,61 @@ export class ExpertDetailsComponent implements OnInit {
     if (!this.selectedDate || !this.expert || !this.expert.expertAppointments) return false;
     
     const dateObj = new Date(this.selectedDate);
-    const formattedDate = `${dateObj.getFullYear()}-${(dateObj.getMonth() + 1).toString().padStart(2, '0')}-${dateObj.getDate().toString().padStart(2, '0')}`;
+    const formattedDate = `${dateObj.getFullYear()}-${(dateObj.getMonth() + 1)
+      .toString().padStart(2, '0')}-${dateObj.getDate().toString().padStart(2, '0')}`;
 
     return this.expert.expertAppointments.some((app: any) => {
       return app.appointmentDateTime.trim() === `${formattedDate} ${slot}`.trim();
     });
   }
 
+  // Opens the payment modal for the selected method (visa or paypal)
+  openPaymentModal(method: string) {
+    this.paymentMethod = method;
+    this.paymentModalOpen = true;
+    // Reset payment details each time the modal opens
+    this.paymentDetails = {};
+  }
+
+  closePaymentModal() {
+    this.paymentModalOpen = false;
+  }
+
+  // Simulated payment submission. In a real-world scenario, you would integrate payment gateway APIs.
+  submitPayment() {
+    // Basic check: ensure required fields are filled.
+    if (this.paymentMethod === 'visa') {
+      if (!this.paymentDetails.cardNumber || !this.paymentDetails.expiry || !this.paymentDetails.cvv) {
+        alert('Please fill in all Visa details.');
+        return;
+      }
+    } else if (this.paymentMethod === 'paypal') {
+      if (!this.paymentDetails.paypalEmail) {
+        alert('Please enter your PayPal email.');
+        return;
+      }
+    }
+    // Simulate a successful payment.
+    this.isPaymentSuccessful = true;
+    this.paymentModalOpen = false;
+    alert('Payment successful');
+  }
+
   bookAppointment() {
+    // When online, check that payment has been successfully completed.
+    if (this.selectedAppointmentLocation === 'online' && !this.isPaymentSuccessful) {
+      alert('Payment is required for online appointments. Please complete the payment.');
+      return;
+    }
+
     if (!this.selectedDate || !this.selectedTimeSlot) {
       alert('Please select both an appointment date and a time slot.');
       return;
     }
     
     const dateObj = new Date(this.selectedDate);
-    const formattedDate = `${dateObj.getFullYear()}-${(dateObj.getMonth() + 1).toString().padStart(2, '0')}-${dateObj.getDate().toString().padStart(2, '0')}`;
+    const formattedDate = `${dateObj.getFullYear()}-${(dateObj.getMonth() + 1)
+      .toString().padStart(2, '0')}-${dateObj.getDate().toString().padStart(2, '0')}`;
     const appointmentDateTime = `${formattedDate} ${this.selectedTimeSlot}`;
 
     const currentDate = new Date();
@@ -115,9 +172,9 @@ export class ExpertDetailsComponent implements OnInit {
     }
 
     const appointmentDTO = {
-      //location: "Online",
-      location: this.selectedAppointmentLocation === 'online' ? "Online" : (this.expert ? this.expert.location : null),
-
+      location: this.selectedAppointmentLocation === 'online'
+        ? "Online"
+        : (this.expert ? this.expert.location : null),
       status: "Scheduled",
       description: "",
       appointmentDateTime: appointmentDateTime,
