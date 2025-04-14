@@ -34,6 +34,7 @@ import { CancelAppointmentDialogComponent } from './cancel-appointment-dialog/ca
 import { NearestExpertsComponent } from './nearest-experts/nearest-experts.component';
 import { AppointmentMeetingComponent } from './appointment-meeting/appointment-meeting.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MeetingUrgenceComponent } from './meeting-urgence/meeting-urgence.component';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -53,7 +54,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ExpertStatisticsComponent,
     CancelAppointmentDialogComponent,
     NearestExpertsComponent,
-    AppointmentMeetingComponent
+    AppointmentMeetingComponent,
+    MeetingUrgenceComponent
   ],
   imports: [
     BrowserModule,

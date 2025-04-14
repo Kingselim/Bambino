@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';  // Import ActivatedRoute to access route params
 import { HttpClient } from '@angular/common/http'; // Import HttpClient to fetch appointment data
+import { ActivatedRoute, Router } from '@angular/router';  // Added Router
+
 
 @Component({
   selector: 'app-appointment-meeting',
@@ -12,7 +13,8 @@ export class AppointmentMeetingComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router  // Inject Router
   ) {}
 
   ngOnInit(): void {
@@ -30,4 +32,13 @@ export class AppointmentMeetingComponent implements OnInit {
       );
     }
   }
+
+
+  joinMeeting(): void {
+    // Use the appointment ID as the room ID for consistency
+    const roomId = this.route.snapshot.paramMap.get('id') || 'default-room';
+    this.router.navigate(['/meeting-urgence'], { queryParams: { roomID: roomId } });
+  }
+
+  
 }
