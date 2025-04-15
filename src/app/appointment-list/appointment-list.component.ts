@@ -17,6 +17,9 @@ export class AppointmentListComponent implements OnInit {
   historyAppointments: any[] = [];
   todaysAppointments: any[] = [];
 
+  historyCurrentPage: number = 1;
+appointmentsPerPage: number = 5;  // Or any number you want
+
   constructor(private http: HttpClient, private router: Router, public dialog: MatDialog) {}
 
   ngOnInit(): void {
@@ -146,6 +149,19 @@ export class AppointmentListComponent implements OnInit {
     this.router.navigate(['/appointment-meeting', appointment.idAppointment]);
   }
 
+
+  get paginatedHistoryAppointments() {
+    const startIndex = (this.historyCurrentPage - 1) * this.appointmentsPerPage;
+    return this.historyAppointments.slice(startIndex, startIndex + this.appointmentsPerPage);
+  }
+  
+  changeHistoryPage(page: number) {
+    this.historyCurrentPage = page;
+  }
+  
+  get totalHistoryPages(): number[] {
+    return Array.from({ length: Math.ceil(this.historyAppointments.length / this.appointmentsPerPage) }, (_, i) => i + 1);
+  }
 
 
 }

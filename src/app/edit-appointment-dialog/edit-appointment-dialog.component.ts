@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit-appointment-dialog',
@@ -84,16 +85,31 @@ export class EditAppointmentDialogComponent implements OnInit {
 
   save() {
     if (!this.selectedDate || !this.selectedTimeSlot) {
-      alert('Please select both a date and a time slot.');
+      Swal.fire({
+                icon: 'error',
+                title: 'editing failed',
+                text: 'Please select both a date and a time slot.',
+                showConfirmButton: true
+              });
       return;
     }
     const newAppointmentDateTime = `${this.formatDate(this.selectedDate)} ${this.selectedTimeSlot}`;
     if (new Date(newAppointmentDateTime) <= new Date()) {
-      alert('The new appointment date/time must be in the future.');
+      Swal.fire({
+        icon: 'error',
+        title: 'editing failed',
+        text: 'The new appointment date/time must be in the future.',
+        showConfirmButton: true
+      });
       return;
     }
     if (this.isSlotBooked(this.selectedTimeSlot)) {
-      alert('This time slot is already booked by the expert. Please choose another time.');
+      Swal.fire({
+        icon: 'error',
+        title: 'editing failed',
+        text: 'This time slot is already booked by the expert. Please choose another time.',
+        showConfirmButton: true
+      });
       return;
     }
     const updatedAppointmentDTO = {
@@ -113,7 +129,12 @@ export class EditAppointmentDialogComponent implements OnInit {
         },
         (error) => {
           console.error('Error updating appointment:', error);
-          alert('Error updating appointment. Please try again.');
+          Swal.fire({
+            icon: 'error',
+            title: 'editing failed',
+            text: 'Error updating appointment. Please try again.',
+            showConfirmButton: true
+          });
         }
       );
   }

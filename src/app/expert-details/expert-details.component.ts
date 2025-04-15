@@ -12,7 +12,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatOptionModule } from '@angular/material/core';  // utile pour mat-option
+import { MatOptionModule } from '@angular/material/core'; 
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-expert-details',
@@ -131,30 +133,51 @@ export class ExpertDetailsComponent implements OnInit {
     // Basic check: ensure required fields are filled.
     if (this.paymentMethod === 'visa') {
       if (!this.paymentDetails.cardNumber || !this.paymentDetails.expiry || !this.paymentDetails.cvv) {
-        alert('Please fill in all Visa details.');
+        Swal.fire({
+          icon: 'warning',
+          title: 'Incomplete Visa Info',
+          text: 'Please fill in all Visa details.'
+        });
         return;
       }
     } else if (this.paymentMethod === 'paypal') {
       if (!this.paymentDetails.paypalEmail) {
-        alert('Please enter your PayPal email.');
+        Swal.fire({
+          icon: 'warning',
+          title: 'Missing PayPal Email',
+          text: 'Please enter your PayPal email.'
+        });
         return;
       }
     }
     // Simulate a successful payment.
     this.isPaymentSuccessful = true;
     this.paymentModalOpen = false;
-    alert('Payment successful');
+    Swal.fire({
+      icon: 'success',
+      title: 'Payment Successful!',
+      showConfirmButton: false,
+      timer: 1500
+    });
   }
 
   bookAppointment() {
     // When online, check that payment has been successfully completed.
     if (this.selectedAppointmentLocation === 'online' && !this.isPaymentSuccessful) {
-      alert('Payment is required for online appointments. Please complete the payment.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Payment Required',
+        text: 'Payment is required for online appointments. Please complete the payment first.'
+      });
       return;
     }
 
     if (!this.selectedDate || !this.selectedTimeSlot) {
-      alert('Please select both an appointment date and a time slot.');
+      Swal.fire({
+        icon: 'warning',
+        title: 'Missing Information',
+        text: 'Please select both an appointment date and a time slot.'
+      });
       return;
     }
     
@@ -167,7 +190,13 @@ export class ExpertDetailsComponent implements OnInit {
     const appointmentDate = new Date(`${formattedDate} ${this.selectedTimeSlot}`);
 
     if (appointmentDate <= currentDate) {
-      alert('The appointment date/time must be in the future. Please choose a valid date/time.');
+      Swal.fire({
+        icon: 'error',
+        title: 'Wrong Information',
+        text: 'The appointment date/time must be in the future. Please choose a valid date/time.',
+        showConfirmButton: true
+      });
+      
       return;
     }
 
@@ -186,11 +215,22 @@ export class ExpertDetailsComponent implements OnInit {
     this.http.post<any>('http://localhost:8089/appointment/create', appointmentDTO).subscribe(
       response => {
         console.log("Appointment created:", response);
-        alert("Appointment booked successfully!");
+        Swal.fire({
+          icon: 'success',
+          title: 'Appointment Booked!',
+          text: 'Your appointment has been successfully scheduled.',
+          showConfirmButton: true
+        });
+        this.router.navigate(['/appointments']);
       },
       error => {
         console.error("Error booking appointment:", error);
-        alert("Error booking appointment. Please try again.");
+        Swal.fire({
+          icon: 'error',
+          title: 'Appointment NOT Booked!',
+          text: 'Your appointment has NOT been scheduled.',
+          showConfirmButton: true
+        });
       }
     );
   }

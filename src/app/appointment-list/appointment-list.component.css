@@ -43,6 +43,21 @@ th {
   color: rgb(238, 3, 3);
 }
 
+.pagination-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.pagination-container button {
+  margin: 0 5px;
+}
+
+.pagination-container button.active {
+  background-color: #f17298;
+  color: white;
+  font-weight: bold;
+  border-color: #f17298;
+}
 
 
   /* #4D65F9 purple

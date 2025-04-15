@@ -90,9 +90,10 @@
   <p *ngIf="upcomingAppointments.length === 0">No upcoming appointments.</p>
 
   <!-- History Table -->
+   <hr>
   
   <h3 class="table-title">History</h3>
-  <table class="table table-bordered" *ngIf="historyAppointments.length > 0">
+  <table class="table table-bordered" *ngIf="paginatedHistoryAppointments.length > 0">
     <thead class="table-header">
       <tr>
         <th>Appointment Date & Time</th>
@@ -104,7 +105,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let appointment of historyAppointments">
+      <tr *ngFor="let appointment of paginatedHistoryAppointments">
         <td>{{ appointment.appointmentDateTime }}</td>
         <td>{{ appointment.location }}</td>
         <td>{{ appointment.status }}</td>
@@ -115,7 +116,29 @@
     </tbody>
   </table>
   <p *ngIf="historyAppointments.length === 0">No past appointments.</p>
-</div>
+  
+  <div class="pagination-container">
+    <button *ngIf="historyCurrentPage > 1"
+            (click)="changeHistoryPage(historyCurrentPage - 1)"
+            class="btn btn-secondary">
+      Previous
+    </button>
+  
+    <ng-container *ngFor="let page of totalHistoryPages">
+      <button (click)="changeHistoryPage(page)"
+              [class.active]="page === historyCurrentPage"
+              class="btn btn-light">
+        {{ page }}
+      </button>
+    </ng-container>
+  
+    <button *ngIf="historyCurrentPage * appointmentsPerPage < historyAppointments.length"
+            (click)="changeHistoryPage(historyCurrentPage + 1)"
+            class="btn btn-secondary">
+      Next
+    </button>
+  </div>
+  
 <hr>
 
 
