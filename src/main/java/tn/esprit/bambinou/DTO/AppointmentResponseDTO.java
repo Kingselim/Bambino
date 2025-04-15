@@ -6,9 +6,14 @@ public class AppointmentResponseDTO {
     private String status;
     private String description;
     private String appointmentDateTime;
+
     private UserDTO user;
     private ExpertDTO expert;
     private DriverDTO driver;
+
+    private String transactionId;
+    private String paymentStatus; // PENDING, COMPLETED, FAILED
+
     public AppointmentResponseDTO() {}
 
     public Long getIdAppointment() {
@@ -73,5 +78,21 @@ public class AppointmentResponseDTO {
 
     public void setDriver(DriverDTO driver) {
         this.driver = driver;
+    }
+
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 }

@@ -9,6 +9,9 @@ public class AppointmentDTO {
     private Integer expertId;
     private Integer driverId; // Nullable if not required
 
+    private String transactionId;
+    private String paymentStatus; // PENDING, COMPLETED, FAILED
+
     // Constructors
     public AppointmentDTO() {}
 
@@ -80,5 +83,21 @@ public class AppointmentDTO {
 
     public void setDriverId(int driverId) {
         this.driverId = driverId;
+    }
+
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 }
