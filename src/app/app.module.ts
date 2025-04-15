@@ -35,6 +35,8 @@ import { NearestExpertsComponent } from './nearest-experts/nearest-experts.compo
 import { AppointmentMeetingComponent } from './appointment-meeting/appointment-meeting.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MeetingUrgenceComponent } from './meeting-urgence/meeting-urgence.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -71,6 +73,8 @@ import { MeetingUrgenceComponent } from './meeting-urgence/meeting-urgence.compo
     MatNativeDateModule,
     ExpertDetailsComponent,
     NgChartsModule,
+    MatIconModule,
+    MatSelectModule,
     MatDialogModule,CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory,
