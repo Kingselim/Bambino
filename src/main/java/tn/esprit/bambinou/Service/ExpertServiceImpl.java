@@ -165,6 +165,15 @@ public class ExpertServiceImpl implements IExpertService {
 
 
 
+    @Override
+    public ExpertResponseDTO rateExpert(int expertId, int rating) {
+        Expert expert = expertRepository.findById(expertId)
+                .orElseThrow(() -> new RuntimeException("Expert not found with ID: " + expertId));
+        expert.addRating(rating);
+        Expert updatedExpert = expertRepository.save(expert);
+        return convertToResponseDTO(updatedExpert);
+    }
+
 
 
 

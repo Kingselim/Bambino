@@ -355,6 +355,14 @@ public class AppointmentServiceImpl implements IAppointmentService {
 
 
 
+  @Override
+  public Expert rateExpert(int expertId, int rating) {
+    Expert expert = expertRepository.findById(expertId)
+            .orElseThrow(() -> new RuntimeException("Expert not found with ID: " + expertId));
+    expert.addRating(rating);
+    return expertRepository.save(expert);
+  }
+
 
 
 

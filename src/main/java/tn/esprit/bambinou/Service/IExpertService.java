@@ -22,4 +22,8 @@ public interface IExpertService {
     ExpertResponseDTO updateExpert(int id, ExpertDTO expertDTO);
 
     List<Expert> findBySpecialty(String specialty);
+
+    ExpertResponseDTO rateExpert(int expertId, int rating);
+
+
 }

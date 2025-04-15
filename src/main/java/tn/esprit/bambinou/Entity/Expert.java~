@@ -150,12 +150,4 @@ public class Expert {
     public void setAppointmentPrice(int appointmentPrice) {
         this.appointmentPrice = appointmentPrice;
     }
-
-    public List<Integer> getRatingList() {
-        return ratingList;
-    }
-
-    public void setRatingList(List<Integer> ratingList) {
-        this.ratingList = ratingList;
-    }
 }
