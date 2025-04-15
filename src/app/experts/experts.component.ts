@@ -111,11 +111,8 @@ export class ExpertsComponent implements OnInit {
 
   submitRating() {
     if (this.selectedRating > 0 && this.selectedExpert) {
-      // Here you would typically send the rating to your backend
       console.log(`Rating ${this.selectedExpert.name} with ${this.selectedRating} stars`);
-      
-      // Example API call (uncomment and adjust as needed):
-      /*
+  
       this.http.post(`http://localhost:8089/expert/rate/${this.selectedExpert.id}`, {
         rating: this.selectedRating
       }).subscribe(response => {
@@ -124,11 +121,9 @@ export class ExpertsComponent implements OnInit {
       }, error => {
         console.error('Error submitting rating', error);
       });
-      */
-      
-      this.modalService.dismissAll();
     }
   }
+  
 
 
 
