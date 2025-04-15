@@ -101,6 +101,9 @@ public class ExpertServiceImpl implements IExpertService {
         dto.setRated(expert.isRated());
         dto.setAppointmentPrice(expert.getAppointmentPrice());
 
+        dto.setLatitude(expert.getLatitude());
+        dto.setLongitude(expert.getLongitude());
+
 
         // Map expertAppointments to AppointmentResponseDTO
         List<AppointmentResponseDTO> appointmentDTOs = expert.getExpertAppointments()
@@ -142,7 +145,8 @@ public class ExpertServiceImpl implements IExpertService {
         if (expertDTO.getLocation() != null) existingExpert.setLocation(expertDTO.getLocation());
         existingExpert.setRating(expertDTO.getRating());  // Be sure to design how to treat default cases.
         existingExpert.setRated(expertDTO.isRated());
-
+        if (expertDTO.getLatitude() != null) existingExpert.setLatitude(expertDTO.getLatitude());
+        if (expertDTO.getLongitude() != null) existingExpert.setLongitude(expertDTO.getLongitude());
 
         Expert updatedExpert = expertRepository.save(existingExpert);
         return convertToResponseDTO(updatedExpert);
