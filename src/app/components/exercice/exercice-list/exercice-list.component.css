@@ -1,0 +1,114 @@
+/* Style personnalisé pour la page d'exercices */
+h2 {
+  font-size: 2.5rem;
+  color: #333;
+  font-weight: bold;
+}
+
+.card-header {
+  padding: 1rem;
+  font-size: 1.1rem;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.card-footer {
+  padding: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.exercice-card {
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+}
+
+.exercice-card:hover {
+  transform: scale(1.05);
+}
+
+.row-cols-md-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.card {
+  background-color: #f8f9fa;
+  border-radius: 1rem;
+  box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+  background-color: #ffffff;
+  padding: 1.5rem;
+}
+
+.card-footer .btn {
+  font-size: 0.875rem;
+}
+
+form .form-select {
+  width: 250px;
+  margin: 0 auto;
+}
+
+button {
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+.btn-outline-danger {
+  border-color: #dc3545;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.btn-outline-primary {
+  border-color: #007bff;
+}
+
+.btn-outline-primary:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.btn-lg {
+  padding: 0.8rem 2.5rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: #6c757d;
+}
+
+/* Réduction de la hauteur des champs */
+.form-control,
+.pastel-input {
+  font-size: 0.95rem;         /* Texte un peu plus petit */
+  padding: 8px 12px;          /* Réduction des paddings */
+  border-radius: 0.75rem;     /* Coins toujours doux mais plus fins */
+}
+
+/* Champs au focus */
+.pastel-input:focus {
+  border-color: #a1c9f7;
+  box-shadow: 0 0 0 0.15rem rgba(161, 201, 247, 0.25);
+}
+
+/* Boutons légèrement réduits aussi */
+.btn-primary, .btn-secondary {
+  font-size: 1rem;
+  padding: 10px 14px;
+  border-radius: 0.75rem;
+}

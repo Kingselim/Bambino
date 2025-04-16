@@ -1,0 +1,49 @@
+<div class="edit-container pastel-edit shadow-lg p-4 rounded-4">
+  <h2 class="text-center text-primary mb-4">📝 Modifier un Coaching</h2>
+
+  <form (ngSubmit)="onSubmit()" #coachingForm="ngForm">
+
+    <!-- Nom du Coaching -->
+    <div class="form-group mb-3">
+      <label for="nameCoaching" class="form-label">🏷️ Nom du Coaching</label>
+      <input type="text" id="nameCoaching" required [(ngModel)]="coaching.nameCoaching" name="nameCoaching"
+             class="form-control pastel-input" placeholder="Ex: Yoga matinal" />
+    </div>
+
+    <!-- Description -->
+    <div class="form-group mb-3">
+      <label for="description" class="form-label">📝 Description</label>
+      <textarea id="description" rows="3" required [(ngModel)]="coaching.description" name="description"
+                class="form-control pastel-input" placeholder="Ex: Une séance douce pour démarrer la journée..."></textarea>
+    </div>
+
+    <!-- Date de la Session -->
+    <div class="form-group mb-3">
+      <label for="sessionDate" class="form-label">📅 Date de la Session</label>
+      <input type="date" id="sessionDate" required [(ngModel)]="coaching.sessionDate" name="sessionDate"
+             class="form-control pastel-input" />
+    </div>
+
+    <!-- Image URL -->
+    <div class="form-group mb-3">
+      <label for="image" class="form-label">🖼️ URL de l'image</label>
+      <input type="url" id="image" [(ngModel)]="coaching.image" name="image"
+             class="form-control pastel-input" placeholder="Ex: https://site.com/image.jpg" />
+    </div>
+
+    <!-- Preview Image -->
+    <div *ngIf="coaching.image" class="text-center mb-3">
+      <label class="form-label">📸 Aperçu de l'image</label>
+      <img [src]="coaching.image" alt="Preview" class="img-fluid rounded shadow-sm" style="max-height: 150px;" />
+    </div>
+
+    <!-- Boutons -->
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary rounded-pill px-5 py-2 me-2">💾 Enregistrer</button>
+      <button type="button" class="btn btn-outline-secondary rounded-pill px-4" (click)="router.navigate(['/coaching'])">
+        ↩️ Annuler
+      </button>
+    </div>
+
+  </form>
+</div>

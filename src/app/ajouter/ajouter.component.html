@@ -1,0 +1,151 @@
+<div class="form-wrapper container py-5 px-4 bg-light rounded-4 shadow-lg" style="max-width: 700px;">
+  <h2 class="text-center mb-4 text-primary">➕ Ajouter un Exercice</h2>
+
+  <form (ngSubmit)="save()" #form="ngForm" class="needs-validation" novalidate>
+
+    <!-- Name Field -->
+    <div class="mb-3">
+      <label for="name" class="form-label">🏷️ Nom de l'exercice</label>
+      <input
+        id="name"
+        type="text"
+        class="form-control pastel-input"
+        [(ngModel)]="exercice.name"
+        name="name"
+        required
+        #name="ngModel"
+        placeholder="Ex: Étirement du dos"
+        [ngClass]="{'is-invalid': name.invalid && name.touched}"
+      />
+      <div *ngIf="name.invalid && name.touched" class="invalid-feedback">
+        Le nom est requis.
+      </div>
+    </div>
+
+    <!-- Duration Field -->
+    <div class="mb-3">
+      <label for="duration" class="form-label">⏱️ Durée (en minutes)</label>
+      <input
+        id="duration"
+        type="number"
+        class="form-control pastel-input"
+        [(ngModel)]="exercice.duration"
+        name="duration"
+        required
+        #duration="ngModel"
+        placeholder="Ex: 30"
+        [ngClass]="{'is-invalid': duration.invalid && duration.touched}"
+      />
+      <div *ngIf="duration.invalid && duration.touched" class="invalid-feedback">
+        La durée est requise.
+      </div>
+    </div>
+
+    <!-- Video URL Field -->
+    <div class="mb-3">
+      <label for="videoUrl" class="form-label">🎬 URL de la vidéo</label>
+      <input
+        id="videoUrl"
+        type="url"
+        class="form-control pastel-input"
+        [(ngModel)]="exercice.videoUrl"
+        name="videoUrl"
+        required
+        #videoUrl="ngModel"
+        placeholder="Ex: https://www.youtube.com/watch?v=example"
+        [ngClass]="{'is-invalid': videoUrl.invalid && videoUrl.touched}"
+      />
+      <div *ngIf="videoUrl.invalid && videoUrl.touched" class="invalid-feedback">
+        L'URL de la vidéo est requise.
+      </div>
+    </div>
+
+    <!-- Image URL Field -->
+    <div class="mb-3">
+      <label for="imageUrl" class="form-label">🖼️ URL de l'image</label>
+      <input
+        id="imageUrl"
+        type="url"
+        class="form-control pastel-input"
+        [(ngModel)]="exercice.imageUrl"
+        name="imageUrl"
+        required
+        #imageUrl="ngModel"
+        placeholder="Ex: https://www.example.com/image.jpg"
+        [ngClass]="{'is-invalid': imageUrl.invalid && imageUrl.touched}"
+      />
+      <div *ngIf="imageUrl.invalid && imageUrl.touched" class="invalid-feedback">
+        L'URL de l'image est requise.
+      </div>
+    </div>
+
+    <!-- Category Field -->
+    <div class="mb-3">
+      <label for="category" class="form-label">📂 Catégorie</label>
+      <input
+        id="category"
+        type="text"
+        class="form-control pastel-input"
+        [(ngModel)]="exercice.category"
+        name="category"
+        required
+        #category="ngModel"
+        placeholder="Ex: Étirements, Renforcement"
+        [ngClass]="{'is-invalid': category.invalid && category.touched}"
+      />
+      <div *ngIf="category.invalid && category.touched" class="invalid-feedback">
+        La catégorie est requise.
+      </div>
+    </div>
+
+    <!-- Description Field -->
+    <div class="mb-3">
+      <label for="description" class="form-label">📝 Description</label>
+      <input
+        id="description"
+        type="text"
+        class="form-control pastel-input"
+        [(ngModel)]="exercice.description"
+        name="description"
+        required
+        #description="ngModel"
+        placeholder="Ex: Étirement du dos"
+        [ngClass]="{'is-invalid': description.invalid && description.touched}"
+      />
+      <div *ngIf="description.invalid && description.touched" class="invalid-feedback">
+        La description est requise.
+      </div>
+    </div>
+
+    <!-- Difficulty Field -->
+    <div class="mb-4">
+      <label for="difficulty" class="form-label">🔥 Difficulté</label>
+      <select
+        id="difficulty"
+        class="form-control pastel-input"
+        [(ngModel)]="exercice.difficulty"
+        name="difficulty"
+        required
+        #difficulty="ngModel"
+        [ngClass]="{'is-invalid': difficulty.invalid && difficulty.touched}"
+      >
+        <option value="" disabled selected>-- Sélectionner --</option>
+        <option *ngFor="let level of difficulties" [value]="level">{{ level }}</option>
+      </select>
+      <div *ngIf="difficulty.invalid && difficulty.touched" class="invalid-feedback">
+        La difficulté est requise.
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="text-center">
+      <button 
+        type="submit" 
+        class="btn btn-lg btn-primary px-5 rounded-pill shadow-sm"
+        [disabled]="form.invalid">
+        💾 Enregistrer l'exercice
+      </button>
+    </div>
+
+  </form>
+</div>

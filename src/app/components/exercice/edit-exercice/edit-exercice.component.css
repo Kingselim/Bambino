@@ -1,0 +1,38 @@
+.pastel-edit {
+    max-width: 600px;
+    margin: 40px auto;
+    background: linear-gradient(135deg, #fdf6fd, #f3f9ff);
+    border: 2px solid #e5eaf0;
+    border-radius: 1.25rem;
+  }
+  
+  .pastel-input {
+    font-size: 0.9rem;
+    padding: 8px 10px;
+    border: 2px solid #dcd3e7;
+    border-radius: 10px;
+    background-color: #fff7fa;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .pastel-input:focus {
+    border-color: #a1c9f7;
+    background-color: #f7faff;
+    box-shadow: 0 0 6px rgba(153, 197, 255, 0.4);
+    outline: none;
+  }
+  
+  .btn-primary {
+    background: linear-gradient(90deg, #a1c4fd, #c2e9fb);
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .btn-primary:hover {
+    background: linear-gradient(90deg, #92c9ff, #d6f0ff);
+    color: #444;
+    transform: translateY(-2px);
+  }
+  

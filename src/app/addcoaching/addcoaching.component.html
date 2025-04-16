@@ -1,0 +1,92 @@
+<div class="form-wrapper container">
+  <h2 class="text-center mb-4">➕ Ajouter un Coaching</h2>
+
+  <form (ngSubmit)="save()" #form="ngForm" class="form-group">
+    
+    <!-- Name Field -->
+    <div class="form-group mb-3">
+      <label for="name" class="form-label">Nom du Coaching</label>
+      <input
+        id="name"
+        type="text"
+        class="form-control"
+        [(ngModel)]="coaching.nameCoaching"
+        name="name"
+        required
+        #name="ngModel"
+        placeholder="Ex: Coaching Bien-être"
+        [ngClass]="{'is-invalid': name.invalid && name.touched}"
+      />
+      <div *ngIf="name.invalid && name.touched" class="invalid-feedback">
+        Le nom est requis.
+      </div>
+    </div>
+
+    <!-- Description Field -->
+    <div class="form-group mb-3">
+      <label for="description" class="form-label">Description</label>
+      <input
+        id="description"
+        type="text"
+        class="form-control"
+        [(ngModel)]="coaching.description"
+        name="description"
+        required
+        #description="ngModel"
+        placeholder="Ex: Coaching pour améliorer votre bien-être"
+        [ngClass]="{'is-invalid': description.invalid && description.touched}"
+      />
+      <div *ngIf="description.invalid && description.touched" class="invalid-feedback">
+        La description est requise.
+      </div>
+    </div>
+
+    <!-- Session Date Field -->
+    <div class="form-group mb-3">
+      <label for="sessionDate" class="form-label">Date de la session</label>
+      <input
+        id="sessionDate"
+        type="date"
+        class="form-control"
+        [(ngModel)]="coaching.sessionDate"
+        name="sessionDate"
+        required
+        #sessionDate="ngModel"
+        [ngClass]="{'is-invalid': sessionDate.invalid && sessionDate.touched}"
+      />
+      <div *ngIf="sessionDate.invalid && sessionDate.touched" class="invalid-feedback">
+        La date de session est requise.
+      </div>
+    </div>
+
+    <!-- Image URL Field -->
+    <div class="form-group mb-3">
+      <label for="image" class="form-label">URL de l'image</label>
+      <input
+        id="image"
+        type="url"
+        class="form-control"
+        [(ngModel)]="coaching.image"
+        name="image"
+        required
+        #image="ngModel"
+        placeholder="Ex: https://www.example.com/image.jpg"
+        [ngClass]="{'is-invalid': image.invalid && image.touched}"
+      />
+      <div *ngIf="image.invalid && image.touched" class="invalid-feedback">
+        L'URL de l'image est requise.
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="form-actions text-center mt-4">
+      <button 
+        type="submit" 
+        class="btn btn-primary btn-lg" 
+        [disabled]="form.invalid">💾 Enregistrer</button>
+
+       
+    </div>
+
+  </form>
+</div>

@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
+
+body {
+    font-family: 'Lato', sans-serif;
+    background: linear-gradient(to right, #FEF7CD, #F2FCE2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.form-wrapper {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px;
+}
+
+.form-title {
+    text-align: center;
+    color: #FEC6A1;
+    margin-bottom: 25px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #517fa4;
+    font-weight: 300;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #E5DEFF;
+    border-radius: 8px;
+    background-color: #F1F0FB;
+    transition: border-color 0.3s ease;
+}
+
+input:focus {
+    outline: none;
+    border-color: #FEC6A1;
+    box-shadow: 0 0 5px rgba(254, 198, 161, 0.5);
+}
+
+input:invalid {
+    border-color: #FFDEE2;
+}
+
+.form-actions {
+    text-align: center;
+}
+
+button {
+    background-color: #FEC6A1;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+button:hover {
+    background-color: #FDE1D3;
+    transform: scale(1.05);
+}
+
+button:disabled {
+    background-color: #E5E5E5;
+    cursor: not-allowed;
+}

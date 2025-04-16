@@ -1,0 +1,131 @@
+/* Carte principale contenant tous les coachings */
+.card-main {
+  background-color: #FFF;
+  border-radius: 1rem;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  margin-bottom: 2rem;
+  padding: 2rem;
+}
+
+/* Style des cartes individuelles de chaque coaching */
+.card {
+  background-color: #FFF;
+  border-radius: 1rem;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.08);
+}
+
+.card-img-top {
+  border-radius: 1rem 1rem 0 0;
+  height: 180px;
+  object-fit: cover;
+}
+
+/* Style pour le bouton pastel */
+.pastel-button {
+  background: linear-gradient(to right, #ffdce0, #ffe4f0);
+  color: #444;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  font-family: 'Quicksand', sans-serif;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.pastel-button:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(to right, #ffcbd7, #ffd8f4);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+}
+
+
+/* Footer des cartes */
+/* Boutons dans le footer de la carte */
+/* Boutons dans le footer de la carte alignés verticalement */
+.card-footer {
+  display: flex;
+  flex-direction: column; /* Aligner les boutons verticalement */
+  gap: 0.5rem; /* Espacement entre les boutons */
+  padding: 1rem 1.5rem;
+  background-color: #F8F5F1;
+  border-top: 1px solid #eee;
+}
+
+.card-footer button {
+  font-size: 0.875rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Les styles des boutons spécifiques */
+.btn-danger {
+  background-color: #FFD6D6;
+  color: #C94C4C;
+}
+
+.btn-warning {
+  background-color: #FFF1CC;
+  color: #CC9900;
+}
+
+.btn-info {
+  background-color: #E1F3FF;
+  color: #3478B5;
+}
+
+/* Effets au survol des boutons */
+.btn-danger:hover {
+  background-color: #FFB6B6;
+}
+
+.btn-warning:hover {
+  background-color: #FFE38C;
+}
+
+.btn-info:hover {
+  background-color: #C7E8FF;
+}
+
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.pagination button {
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: #FCDDEC;
+  color: #555;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.pagination button.active {
+  background-color: #FBB8D4;
+  color: #fff;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

@@ -1,0 +1,64 @@
+<div class="container">
+  <h2 class="header-title mb-4">🧘 Bambino Coachings 🧘</h2>
+
+  <div *ngIf="isLoading" class="alert alert-info">Chargement des données...</div>
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+  
+  <!-- Carte principale contenant tous les coachings -->
+  <div class="card card-main">
+    <div class="card-body">
+      <div class="top-actions mb-3">
+        <button class="btn pastel-button" [routerLink]="['/addcoaching']">➕ Créer un Coaching</button>
+      </div>
+
+      <div *ngIf="paginatedCoachings.length > 0" class="row">
+        <div class="col-md-4 mb-4" *ngFor="let coaching of paginatedCoachings">
+          <!-- Carte individuelle pour chaque coaching -->
+          <div class="card shadow-sm">
+            <img
+              *ngIf="coaching.image; else noImage"
+              [src]="coaching.image"
+              class="card-img-top"
+              alt="Coaching Image"
+              style="height: 180px; object-fit: cover;"
+            />
+            <ng-template #noImage>
+              <img src="assets/default-image.png" class="card-img-top" alt="Default Image" style="height: 180px; object-fit: cover;" />
+            </ng-template>
+
+            <div class="card-body">
+              <h4 class="card-title">{{ coaching.nameCoaching }}</h4><br>
+              <p class="card-text"><strong>Description :</strong></p><br>
+              <p>{{ coaching.description }}</p>
+              <p class="text-muted"><strong>Date :</strong> </p>
+              <p>{{ coaching.sessionDate | date: 'mediumDate' }}</p>
+            </div>
+
+            <div class="card-footer d-flex justify-content-between">
+              <button class="btn btn-sm btn-danger" (click)="onDelete(coaching.idCoaching)">🗑 Supprimer coaching</button>
+              <button class="btn btn-sm btn-warning" [routerLink]="['/editcoaching', coaching.idCoaching]">✏️ Modifier coaching</button>
+              <button class="btn btn-sm btn-info" [routerLink]="['/coaching', coaching.idCoaching, 'exercices']">📄 Voir Exercices</button>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="!isLoading && coachings.length === 0" class="alert alert-secondary">
+        Aucun coaching disponible.
+      </div>
+
+      <div class="pagination">
+        <button (click)="prevPage()" [disabled]="currentPage === 1">Précédent</button>
+
+        <button *ngFor="let page of totalPagesArray()" 
+                (click)="goToPage(page)" 
+                [class.active]="page === currentPage">
+          {{ page }}
+        </button>
+
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages">Suivant</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,113 @@
+<div class="edit-container pastel-edit shadow-lg p-4 rounded-4">
+  <h2 class="text-center text-primary mb-4">✏️ Modifier un Exercice</h2>
+
+  <!-- Name -->
+  <div class="form-group mb-3">
+    <label for="name" class="form-label">🏷️ Nom de l'exercice</label>
+    <input
+      id="name"
+      name="name"
+      type="text"
+      class="form-control pastel-input"
+      [(ngModel)]="exercice.name"
+      placeholder="Ex: Étirement du dos"
+      required
+    />
+  </div>
+
+  <!-- Duration -->
+  <div class="form-group mb-3">
+    <label for="duration" class="form-label">⏱️ Durée (minutes)</label>
+    <input
+      id="duration"
+      name="duration"
+      type="number"
+      class="form-control pastel-input"
+      [(ngModel)]="exercice.duration"
+      placeholder="Ex: 30"
+      required
+    />
+  </div>
+
+  <!-- Video URL -->
+  <div class="form-group mb-3">
+    <label for="videoUrl" class="form-label">🎬 URL de la vidéo</label>
+    <input
+      id="videoUrl"
+      name="videoUrl"
+      type="url"
+      class="form-control pastel-input"
+      [(ngModel)]="exercice.videoUrl"
+      placeholder="Ex: https://youtube.com/..."
+      required
+    />
+  </div>
+
+  <!-- Image URL -->
+  <div class="form-group mb-3">
+    <label for="imageUrl" class="form-label">🖼️ URL de l'image</label>
+    <input
+      id="imageUrl"
+      name="imageUrl"
+      type="url"
+      class="form-control pastel-input"
+      [(ngModel)]="exercice.imageUrl"
+      placeholder="Ex: https://image.com/..."
+      required
+    />
+    <div *ngIf="exercice.imageUrl" class="mt-2 text-center">
+      <img [src]="exercice.imageUrl" alt="Image preview" class="img-fluid rounded shadow-sm" style="max-height: 150px;" />
+    </div>
+  </div>
+
+  <!-- Category -->
+  <div class="form-group mb-3">
+    <label for="category" class="form-label">📂 Catégorie</label>
+    <input
+      id="category"
+      name="category"
+      type="text"
+      class="form-control pastel-input"
+      [(ngModel)]="exercice.category"
+      placeholder="Ex: Yoga, Fitness, Relaxation"
+      required
+    />
+  </div>
+
+  <!-- Description -->
+  <div class="form-group mb-3">
+    <label for="description" class="form-label">📝 Description</label>
+    <textarea
+      id="description"
+      name="description"
+      class="form-control pastel-input"
+      rows="3"
+      [(ngModel)]="exercice.description"
+      placeholder="Détaillez brièvement l'exercice..."
+      required
+    ></textarea>
+  </div>
+
+  <!-- Difficulty -->
+  <div class="form-group mb-4">
+    <label for="difficulty" class="form-label">🔥 Difficulté</label>
+    <select
+      id="difficulty"
+      name="difficulty"
+      class="form-control pastel-input"
+      [(ngModel)]="exercice.difficulty"
+      required
+    >
+      <option [ngValue]="'Easy'">Facile</option>
+      <option [ngValue]="'Medium'">Moyenne</option>
+      <option [ngValue]="'Hard'">Difficile</option>
+    </select>
+  </div>
+
+  <!-- Submit -->
+  <div class="text-center">
+    <button class="btn btn-primary rounded-pill px-5 py-2" (click)="onUpdate()">
+      💾 Enregistrer l'exercice
+    </button>
+  </div>
+</div>
