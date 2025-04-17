@@ -15,8 +15,8 @@ export interface Task {
 export class ForumService {
  private apiUrl = 'http://localhost:8089/forum';
  public trackings: Forum[] = [];
-  // 🔄 Type corrigé ici
-  public tasks: Task[] = [];
+ currentMonthlyForm: Partial<Forum> | null = null;
+ public tasks: Task[] = [];
   constructor(private http: HttpClient) { }
 
   /*getAllForums(): Observable<any[]> {
