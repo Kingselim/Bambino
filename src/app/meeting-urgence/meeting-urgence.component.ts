@@ -87,32 +87,25 @@ export class MeetingUrgenceComponent implements OnInit, AfterViewInit {
     navigator.mediaDevices.getUserMedia({ audio: true })
       .then(stream => {
         this.mediaRecorder = new MediaRecorder(stream);
-        this.audioChunks = [];  // Clear old chunks before starting new recording.
-  
-        this.mediaRecorder.ondataavailable = event => {
-          this.audioChunks.push(event.data);
-        };
-        
+        this.audioChunks = [];
+
+        this.mediaRecorder.ondataavailable = event => this.audioChunks.push(event.data);
+
         this.mediaRecorder.onstop = () => {
           const audioBlob = new Blob(this.audioChunks, { type: 'audio/wav' });
           const formData = new FormData();
           formData.append('file', audioBlob, 'recording.wav');
           formData.append('appointmentId', this.appointmentId || '');
 
-  
-          this.http.post('/api/meetings/process-recording', formData)
+          this.http.post('http://localhost:8089/api/meetings/process-recording', formData)
             .subscribe({
-              next: (response: any) => {
-                console.log('Processing complete:', response.pdfUrl);
-              },
-              error: error => {
-                console.error('Error uploading recording:', error);
-              }
+              next: (response: any) => console.log('Processing complete, PDF:', response.pdfUrl),
+              error: error => console.error('Error uploading recording:', error)
             });
-          
-          this.audioChunks = [];  // Clear after sending
+
+          this.audioChunks = [];
         };
-        
+
         this.mediaRecorder.start();
         this.isRecording = true;
       })
@@ -120,14 +113,13 @@ export class MeetingUrgenceComponent implements OnInit, AfterViewInit {
         console.error('Microphone access denied or error:', error);
       });
   }
-  
+
   stopRecording() {
     if (this.mediaRecorder && this.isRecording) {
       this.mediaRecorder.stop();
       this.isRecording = false;
     }
   }
-  
 
 
 

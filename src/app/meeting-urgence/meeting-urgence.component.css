@@ -1,0 +1,59 @@
+.recording-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    background: #fdfdfd;
+    border: 1px solid #eaeaea;
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.recording-controls:hover {
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.recording-controls .text-danger {
+    font-weight: 600;
+    color: #ff4b5c;
+    background: rgba(255, 75, 92, 0.1);
+    padding: 0.4rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.95rem;
+}
+
+.recording-controls button {
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.1s ease;
+}
+
+.recording-controls button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.recording-controls .btn-primary {
+    background-color: #4f46e5;
+    color: white;
+}
+
+.recording-controls .btn-primary:hover:not(:disabled) {
+    background-color: #4338ca;
+    transform: translateY(-1px);
+}
+
+.recording-controls .btn-secondary {
+    background-color: #e0e7ff;
+    color: #3730a3;
+}
+
+.recording-controls .btn-secondary:hover:not(:disabled) {
+    background-color: #c7d2fe;
+    transform: translateY(-1px);
+}
