@@ -1,1 +1,13 @@
 <div id="root" style="height: 650px; width: 100%;"></div>
+<hr>
+
+<div class="recording-controls">
+<div *ngIf="isRecording" class="text-danger">Recording in progress...</div>
+
+  <button (click)="startRecording()" [disabled]="isRecording">
+    Start Recording
+  </button>
+  <button (click)="stopRecording()" [disabled]="!isRecording">
+    Stop Recording
+  </button>
+</div>

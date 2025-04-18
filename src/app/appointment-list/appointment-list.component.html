@@ -13,6 +13,7 @@
         <th>Expert</th>
         <th>Driver</th>
         <th>Actions</th>
+        <th>Meeting Summary PDF</th>
       </tr>
     </thead>
     <tbody>
@@ -28,6 +29,9 @@
       
         <td>{{ appointment.expert.name }}</td>
         <td>{{ appointment.driver ? appointment.driver.nameDriver : 'No Driver' }}</td>
+
+        
+
         <td>
           <div class="action-buttons" *ngIf="appointment.status !== 'canceled'">
 
@@ -42,6 +46,12 @@
 
           </div>
             
+        </td>
+        <td *ngIf="appointment.processingComplete">
+          <!-- Button that triggers the download function -->
+          <button (click)="downloadPDF(appointment.idAppointment)" class="btn btn-info btn-sm">
+            Download PDF
+          </button>
         </td>
         
         
@@ -84,6 +94,7 @@
           </div>
         </td>
         
+        
       </tr>
     </tbody>
   </table>
@@ -102,6 +113,7 @@
         <th>Expert</th>
         <th>Driver</th>
         <th>Actions</th>
+        <th>Meeting Summary PDF</th>
       </tr>
     </thead>
     <tbody>
@@ -112,6 +124,12 @@
         <td>{{ appointment.expert.name }}</td>
         <td>{{ appointment.driver ? appointment.driver.nameDriver : 'No Driver' }}</td>
         <td><button class="btn btn-danger btn-sm" (click)="openDeleteModal(appointment)"> X </button></td>
+        <td *ngIf="appointment.processingComplete">
+          <!-- Button that triggers the download function -->
+          <button (click)="downloadPDF(appointment.idAppointment)" class="btn btn-info btn-sm">
+            Download PDF
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>

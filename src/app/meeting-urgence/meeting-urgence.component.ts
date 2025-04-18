@@ -2,6 +2,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import {ZegoUIKitPrebuilt} from "@zegocloud/zego-uikit-prebuilt";
 import { ActivatedRoute, Router } from '@angular/router';  // Added Router
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -10,11 +11,21 @@ import { ActivatedRoute, Router } from '@angular/router';  // Added Router
   styleUrls: ['./meeting-urgence.component.css']
 })
 export class MeetingUrgenceComponent implements OnInit, AfterViewInit {
-  constructor(private route: ActivatedRoute) {}
+
+  appointmentId!: string | null;
+
+  isRecording = false;
+  mediaRecorder!: MediaRecorder;
+
+  audioChunks: Blob[] = [];
+
+  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+
 
   ngOnInit(): void {
-    // Initialisation ici si nécessaire
+    this.appointmentId = this.route.snapshot.queryParamMap.get('roomID');
   }
+  
 
   ngAfterViewInit(): void {
     this.initZegoKit();
@@ -70,4 +81,55 @@ export class MeetingUrgenceComponent implements OnInit, AfterViewInit {
       showLayoutButton: true,
     });
   }
+
+
+  startRecording() {
+    navigator.mediaDevices.getUserMedia({ audio: true })
+      .then(stream => {
+        this.mediaRecorder = new MediaRecorder(stream);
+        this.audioChunks = [];  // Clear old chunks before starting new recording.
+  
+        this.mediaRecorder.ondataavailable = event => {
+          this.audioChunks.push(event.data);
+        };
+        
+        this.mediaRecorder.onstop = () => {
+          const audioBlob = new Blob(this.audioChunks, { type: 'audio/wav' });
+          const formData = new FormData();
+          formData.append('file', audioBlob, 'recording.wav');
+          formData.append('appointmentId', this.appointmentId || '');
+
+  
+          this.http.post('/api/meetings/process-recording', formData)
+            .subscribe({
+              next: (response: any) => {
+                console.log('Processing complete:', response.pdfUrl);
+              },
+              error: error => {
+                console.error('Error uploading recording:', error);
+              }
+            });
+          
+          this.audioChunks = [];  // Clear after sending
+        };
+        
+        this.mediaRecorder.start();
+        this.isRecording = true;
+      })
+      .catch(error => {
+        console.error('Microphone access denied or error:', error);
+      });
+  }
+  
+  stopRecording() {
+    if (this.mediaRecorder && this.isRecording) {
+      this.mediaRecorder.stop();
+      this.isRecording = false;
+    }
+  }
+  
+
+
+
+
 }

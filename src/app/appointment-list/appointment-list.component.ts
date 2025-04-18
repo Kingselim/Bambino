@@ -164,4 +164,24 @@ appointmentsPerPage: number = 5;  // Or any number you want
   }
 
 
+
+
+
+
+
+
+  downloadPDF(appointmentId: number): void {
+    const pdfUrl = `http://localhost:8089/download/summary/meeting-summary-${appointmentId}.pdf`;
+
+    // Trigger file download by creating an invisible link and clicking it programmatically
+    const link = document.createElement('a');
+    link.href = pdfUrl;
+    link.target = '_blank';
+    link.click();
+  }
+
+
+
+
+
 }
