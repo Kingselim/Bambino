@@ -11,6 +11,8 @@ public class AppointmentDTO {
 
     private String transactionId;
     private String paymentStatus; // PENDING, COMPLETED, FAILED
+    private String transcriptPdfPath;
+    private boolean processingComplete;
 
     // Constructors
     public AppointmentDTO() {}
@@ -99,5 +101,21 @@ public class AppointmentDTO {
 
     public void setPaymentStatus(String paymentStatus) {
         this.paymentStatus = paymentStatus;
+    }
+
+    public String getTranscriptPdfPath() {
+        return transcriptPdfPath;
+    }
+
+    public void setTranscriptPdfPath(String transcriptPdfPath) {
+        this.transcriptPdfPath = transcriptPdfPath;
+    }
+
+    public boolean isProcessingComplete() {
+        return processingComplete;
+    }
+
+    public void setProcessingComplete(boolean processingComplete) {
+        this.processingComplete = processingComplete;
     }
 }

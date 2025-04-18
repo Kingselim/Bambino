@@ -252,6 +252,10 @@ public class AppointmentServiceImpl implements IAppointmentService {
     response.setDescription(appointment.getDescription());
     response.setAppointmentDateTime(appointment.getAppointmentDateTime());
 
+    response.setTranscriptPdfPath(appointment.getTranscriptPdfPath());
+    response.setProcessingComplete(appointment.isProcessingComplete());
+
+
     // Set User info
     UserDTO userDTO = new UserDTO();
     userDTO.setId(appointment.getUser().getId());
