@@ -23,6 +23,12 @@ public class Appointment {
   private String Description;
   private String AppointmentDateTime;
 
+  private String transactionId;
+  private String paymentStatus; // PENDING, COMPLETED, FAILED
+
+  private String transcriptPdfPath;
+  private boolean processingComplete;
+
   @ManyToOne
   @JoinColumn(name = "user_id", nullable = false)
   private User user;
@@ -99,5 +105,21 @@ public class Appointment {
 
   public void setDriver(Driver driver) {
     this.driver = driver;
+  }
+
+  public String getTransactionId() {
+    return transactionId;
+  }
+
+  public void setTransactionId(String transactionId) {
+    this.transactionId = transactionId;
+  }
+
+  public String getPaymentStatus() {
+    return paymentStatus;
+  }
+
+  public void setPaymentStatus(String paymentStatus) {
+    this.paymentStatus = paymentStatus;
   }
 }

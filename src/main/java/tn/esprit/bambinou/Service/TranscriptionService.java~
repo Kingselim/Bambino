@@ -1,0 +1,38 @@
+package tn.esprit.bambinou.Service;
+
+
+import org.vosk.Model;
+import org.vosk.Recognizer;
+import org.vosk.LibVosk;
+import java.io.InputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+
+public class TranscriptionService {
+
+    static {
+        LibVosk.setLogLevel(0);
+    }
+
+    public String transcribeAudio(String audioFilePath) throws IOException {
+        try (Model model = new Model("src/main/resources/model");
+             InputStream ais = new FileInputStream(audioFilePath);
+             Recognizer recognizer = new Recognizer(model, 16000)) {  // 16kHz expected sample rate
+
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+
+            StringBuilder result = new StringBuilder();
+
+            while ((bytesRead = ais.read(buffer)) >= 0) {
+                if (recognizer.acceptWaveForm(buffer, bytesRead)) {
+                    result.append(recognizer.getResult()).append("\n");
+                } else {
+                    result.append(recognizer.getPartialResult()).append("\n");
+                }
+            }
+            result.append(recognizer.getFinalResult());
+            return result.toString();
+        }
+    }
+}

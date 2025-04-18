@@ -1,0 +1,22 @@
+package tn.esprit.bambinou.Controller;
+
+@RestController
+@RequestMapping("/download")
+public class FileController {
+
+    @GetMapping("/summary/{filename:.+}")
+    public ResponseEntity<Resource> downloadSummary(@PathVariable String filename) {
+        try {
+            Path file = Paths.get("summaries").resolve(filename);
+            Resource resource = new UrlResource(file.toUri());
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .header(HttpHeaders.CONTENT_DISPOSITION,
+                            "attachment; filename=\"" + filename + "\"")
+                    .body(resource);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+}
