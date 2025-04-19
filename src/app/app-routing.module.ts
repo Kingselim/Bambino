@@ -11,6 +11,8 @@ import { CoachingComponent } from './coaching/coaching.component';
 import { MonthlyTrackingComponent } from './monthly-tracking/monthly-tracking.component';
 import { SemesterTrackingComponent } from './semester-tracking/semester-tracking.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
+import { PregnancyJournalComponent } from './pregnancy-journal/pregnancy-journal.component';
+import { PregnancyJournalSectionComponent } from './pregnancy-journal-section/pregnancy-journal-section.component';
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full' }, // Redirection au chargement
   {path: 'about', component: AboutComponent},
@@ -24,7 +26,9 @@ const routes: Routes = [
   {path :'Coaching' , component:CoachingComponent},
   { path: 'monthly-tracking/:id', component: MonthlyTrackingComponent },
   {path:'semester-tracking/:id', component : SemesterTrackingComponent},
-  { path: 'todo', component: TodoListComponent }
+  { path: 'todo-list/:id', component: TodoListComponent },
+  {path:'journal/:id' ,component: PregnancyJournalComponent},
+  { path: 'journal-section/:id', component: PregnancyJournalSectionComponent }
 
 
 ];

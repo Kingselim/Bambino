@@ -21,7 +21,11 @@ import {MonthlyTrackingComponent} from './monthly-tracking/monthly-tracking.comp
 import { SemesterTrackingComponent } from './semester-tracking/semester-tracking.component';
 import { NgChartsModule } from 'ng2-charts';
 import { TodoListComponent } from './todo-list/todo-list.component';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { PregnancyJournalComponent } from './pregnancy-journal/pregnancy-journal.component';
+import { PregnancyJournalSectionComponent } from './pregnancy-journal-section/pregnancy-journal-section.component';
+import { ChatbotMedicalComponent } from './chatbot-medical/chatbot-medical.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +42,10 @@ import { TodoListComponent } from './todo-list/todo-list.component';
     MonthlyTrackingComponent,
     SemesterTrackingComponent,
     TodoListComponent,
+    PregnancyJournalComponent,
+    PregnancyJournalSectionComponent,
+    ChatbotMedicalComponent,
+    
 
     
    
@@ -50,6 +58,8 @@ import { TodoListComponent } from './todo-list/todo-list.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    MatSnackBarModule,
     NgChartsModule
 
 

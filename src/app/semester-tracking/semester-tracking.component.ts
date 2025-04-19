@@ -6,6 +6,9 @@ import { ActivatedRoute } from '@angular/router';
 import { ChartDataset, ChartOptions, Chart, registerables } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
 import { TodoListComponent } from '../todo-list/todo-list.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+
 Chart.register(...registerables, annotationPlugin);
 
 @Component({
@@ -25,6 +28,41 @@ export class SemesterTrackingComponent implements OnInit {
   savedTrimesters: number[] = [];
   labels: string[] = [];
   currentView: 'form' | 'todo' = 'form';
+  currentTrackingType: 'monthly' | 'semester' = 'monthly'; // ou 'semester'
+  moodCounts: { [mood: string]: number } = {};
+  adviceMessage: string = '';
+  aiResult: any = null;
+  autoInterpretationMessage: string | null = null;
+  chatbotMessage: string | null = null;
+  moodChartLabels: string[] = ['😊 Happy', '😌 Stable', '😠 Irritable', '😢 Sad'];
+moodChartColors: string[] = ['#8BC34A', '#4FC3F7', '#FFC107', '#E57373'];
+moodData: ChartDataset<'doughnut'>[] = [
+  {
+    data: [],
+    label: 'Répartition des émotions',
+    backgroundColor: ['#8BC34A', '#4FC3F7', '#FFC107', '#E57373']
+  }
+];
+moodChartOptions: ChartOptions<'doughnut'> = {
+  responsive: true,
+  plugins: {
+    legend: {
+      display: true,
+      position: 'bottom'
+    },
+    tooltip: {
+      callbacks: {
+        label: (context) => {
+          const total = (context.dataset.data as number[]).reduce((a, b) => a + b, 0);
+          const value = context.raw as number;
+          const percent = ((value / total) * 100).toFixed(1);
+          return `${context.label}: ${percent}%`;
+        }
+      }
+    }
+  }
+};
+
   tasks: { text: string; done: boolean }[] = [];
   newTask: string = '';
   weightData: ChartDataset<'line'>[] = [
@@ -104,6 +142,9 @@ export class SemesterTrackingComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private snackBar: MatSnackBar,
+    private router: Router,
+
     private forumService: ForumService
   ) {
     this.semesterForm = this.fb.group({
@@ -121,6 +162,8 @@ export class SemesterTrackingComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const id = params['id'];
+      const url = this.router.url;
+      this.currentTrackingType = url.includes('semester') ? 'semester' : 'monthly';
       this.idPregnancyTracking = +id;
       if (!isNaN(this.idPregnancyTracking)) {
         this.loadTrackings();
@@ -128,6 +171,16 @@ export class SemesterTrackingComponent implements OnInit {
         this.errorMessage = 'ID de grossesse invalide';
       }
     });
+    this.updateMoodChart();
+if (this.idPregnancyTracking) {
+  this.forumService.getInterpretation(this.idPregnancyTracking).subscribe({
+    next: (msg) => this.autoInterpretationMessage = msg,
+    error: () => this.autoInterpretationMessage = 'Erreur d’analyse automatique.'
+  });
+
+  this.checkForChatbotTrigger();
+}
+
   }
 
   onSubmit(): void {
@@ -161,8 +214,12 @@ export class SemesterTrackingComponent implements OnInit {
 
     request$.subscribe({
       next: (updatedForum) => {
-        alert(this.selectedForumId ? '✅ Mise à jour réussie' : '✅ Enregistrement réussi');
 
+        this.snackBar.open('Pregnancy tracking successfully saved!', 'Close', {
+          duration: 4000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+        });
         if (!this.savedTrimesters.includes(this.currentTrimester)) {
           this.savedTrimesters.push(this.currentTrimester);
         }
@@ -181,8 +238,11 @@ export class SemesterTrackingComponent implements OnInit {
         this.updateCharts();
       },
       error: () => {
-        this.errorMessage = 'Erreur lors de l\'enregistrement ou mise à jour';
-      }
+        this.snackBar.open('Error while saving tracking!', 'Close', {
+          duration: 4000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+        });      }
     });
   }
 
@@ -198,6 +258,11 @@ export class SemesterTrackingComponent implements OnInit {
   // 👉 Méthode pour changer d'affichage
   toggleView(view: 'form' | 'todo') {
     this.currentView = view;
+    if (this.idPregnancyTracking) {
+      this.router.navigate(['/todo-list', this.idPregnancyTracking], {
+        queryParams: { context: 'semester' }
+      });
+          } 
   }
   addTask() {
     if (this.newTask.trim()) {
@@ -266,4 +331,110 @@ export class SemesterTrackingComponent implements OnInit {
       }
     });
   }
+  getMoodSummary(): { [key: string]: number } {
+    const moodCounts: { [key: string]: number } = {
+      HAPPY: 0,
+      STABLE: 0,
+      IRRITABLE: 0,
+      SAD: 0
+    };
+
+    this.trackings.forEach(t => {
+      const mood = t.moodSwings?.toUpperCase();
+      if (mood && moodCounts.hasOwnProperty(mood)) {
+        moodCounts[mood]++;
+      }
+    });
+
+    const dominantMood = Object.keys(moodCounts).reduce((a, b) => moodCounts[a] > moodCounts[b] ? a : b);
+
+    if (dominantMood === 'SAD') {
+      this.adviceMessage = "It's important to take care of your emotional well-being ❤️";
+    } else if (dominantMood === 'HAPPY') {
+      this.adviceMessage = "Your pregnancy has been full of joyful moments 😊. Keep going and enjoy these positive experiences!";
+    } else if (dominantMood === 'IRRITABLE') {
+      this.adviceMessage = "Some moments of irritability were present 😠. Make sure to rest and seek support if needed.";
+    } else if (dominantMood === 'STABLE') {
+      this.adviceMessage = "Your mood has remained mostly stable 😌. Keep taking care of yourself and listening to your needs.";
+    }
+    return moodCounts;
+  }
+  getMoodConclusion(): string {
+    const moodCounts = this.getMoodSummary();
+    const maxMood = Object.keys(moodCounts).reduce((a, b) => moodCounts[a] > moodCounts[b] ? a : b);
+  
+    const messages: { [key: string]: string } = {
+      HAPPY: 'Your pregnancy has been filled with joyful moments 🌞.',
+      STABLE: 'Your pregnancy has been mostly stable and balanced ⚖️.',
+      IRRITABLE: 'Your pregnancy has had some irritable moments 😤. Stay strong!',
+      SAD: 'Your pregnancy has been emotionally challenging 😢. Be proud of yourself ❤️.'
+    };
+  
+    return messages[maxMood] || "Thank you for completing the 9 months!";
+  }
+  updateMoodChart(): void {
+    const moodCounts = this.getMoodSummary();
+    const total = Object.values(moodCounts).reduce((sum, count) => sum + count, 0) || 1;
+  
+    this.moodData[0].data = [
+      Math.round((moodCounts['HAPPY'] * 100) / total),
+      Math.round((moodCounts['STABLE'] * 100) / total),
+      Math.round((moodCounts['IRRITABLE'] * 100) / total),
+      Math.round((moodCounts['SAD'] * 100) / total)
+    ];
+  }
+  getMoodStatsSummary(): string {
+    const moodCounts = this.getMoodSummary();
+    const total = Object.values(moodCounts).reduce((sum, count) => sum + count, 0) || 1;
+  
+    const percentages = {
+      HAPPY: Math.round((moodCounts['HAPPY'] / total) * 100),
+      STABLE: Math.round((moodCounts['STABLE'] / total) * 100),
+      IRRITABLE: Math.round((moodCounts['IRRITABLE'] / total) * 100),
+      SAD: Math.round((moodCounts['SAD'] / total) * 100)
+    };
+  
+    const parts = [];
+    if (percentages.HAPPY > 0) parts.push(`😊 ${percentages.HAPPY}% Happy`);
+    if (percentages.STABLE > 0) parts.push(`😌 ${percentages.STABLE}% Stable`);
+    if (percentages.IRRITABLE > 0) parts.push(`😠 ${percentages.IRRITABLE}% Irritable`);
+    if (percentages.SAD > 0) parts.push(`😢 ${percentages.SAD}% Sad`);
+  
+    return parts.length > 0 ? parts.join(' / ') : 'No data available..';
+  }
+  
+  
+  
+  
+  analyzeSymptoms(): void {
+    if (!this.selectedForumId) {
+      this.snackBar.open('No trimester selected for analysis.', 'Close', {
+        duration: 3000
+      });
+      return;
+    }
+  
+    this.forumService.analyzeSymptomsByForum(this.selectedForumId).subscribe({
+      next: (result) => {
+        this.aiResult = result;
+      },
+      error: () => {
+        this.snackBar.open("❌ Error during symptom analysis.", 'Close', {
+          duration: 4000
+        });
+      }
+    });
+  }
+  
+
+checkForChatbotTrigger() {
+  this.forumService.checkChatbotAlert(this.idPregnancyTracking!).subscribe({
+    next: (res: any) => {
+      if (res.triggerChat) {
+        this.chatbotMessage = res.message;
+      }
+    }
+  });
+}
+
 }

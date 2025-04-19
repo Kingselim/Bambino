@@ -4,6 +4,10 @@ import { ActivatedRoute } from '@angular/router';
 import { Forum } from '../model/Forum';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ForumService } from 'src/app/service/forum.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { PregnancyJournal } from '../model/PregnancyJournal';
+
 import { ChartDataset, ChartOptions ,Chart, registerables} from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation'; // ✅ plugin des annotations
 
@@ -25,8 +29,16 @@ export class MonthlyTrackingComponent implements OnInit {
   savedMonths: number[] = [];
   labels: string[] = [];
   currentView: 'form' | 'todo' = 'form';
+  currentTrackingType: 'monthly' | 'semester' = 'monthly'; // ou 'semester'
+  moodCounts: { [mood: string]: number } = {};
+  adviceMessage: string = '';
   tasks: { text: string; done: boolean }[] = [];
   newTask: string = '';
+  aiResult: any = null;
+  autoInterpretationMessage: string | null = null;
+  chatbotMessage: string | null = null;
+
+
   weightData: ChartDataset<'line'>[] = [
     { data: [], label: 'Poids (kg)', tension: 0.4 }
   ];
@@ -103,6 +115,38 @@ pressureChartOptions: ChartOptions<'line'> = {
     }
   }
 };
+moodChartLabels: string[] = ['😊 Happy', '😌 Stable', '😠 Irritable', '😢 Sad'];
+moodChartColors: string[] = ['#8BC34A', '#4FC3F7', '#FFC107', '#E57373'];
+moodData: ChartDataset<'doughnut'>[] = [
+  {
+    data: [],
+    label: 'Répartition des émotions',
+    backgroundColor: ['#8BC34A', '#4FC3F7', '#FFC107', '#E57373']
+  }
+];
+
+
+moodChartOptions: ChartOptions<'doughnut'> = {
+  responsive: true,
+  plugins: {
+    legend: {
+      display: true,
+      position: 'bottom'
+    },
+    tooltip: {
+      callbacks: {
+        label: (context) => {
+          const total = (context.dataset.data as number[]).reduce((a, b) => a + b, 0);
+          const value = context.raw as number;
+          const percent = ((value / total) * 100).toFixed(1);
+          return `${context.label}: ${percent}%`;
+        }
+      }
+    }
+    
+  }
+};
+
 
   updateCharts(): void {
     // Filtrer les mois enregistrés jusqu'au mois courant
@@ -117,7 +161,24 @@ pressureChartOptions: ChartOptions<'line'> = {
     // 👉 Méthode pour changer d'affichage
     toggleView(view: 'form' | 'todo') {
       this.currentView = view;
+    
+      if (view === 'todo') {
+        if (this.idPregnancyTracking) {
+          this.router.navigate(['/todo-list', this.idPregnancyTracking], {
+            queryParams: { context: 'monthly' }
+          });
+          
+                  } else {
+          this.snackBar.open('ID de grossesse manquant !', 'Fermer', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+          });
+        }
+      }
     }
+    
+    
     addTask() {
       if (this.newTask.trim()) {
         this.tasks.push({ text: this.newTask.trim(), done: false });
@@ -136,7 +197,11 @@ pressureChartOptions: ChartOptions<'line'> = {
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private snackBar: MatSnackBar,
+    private router: Router,
+
     private forumService: ForumService
+    
   ) {
     this.monthlyForm = this.fb.group({
       weight: ['', [Validators.required, Validators.min(30)]],
@@ -164,6 +229,8 @@ pressureChartOptions: ChartOptions<'line'> = {
     ngOnInit(): void {
       this.route.params.subscribe(params => {
         const id = +params['id'];
+        const url = this.router.url;
+        this.currentTrackingType = url.includes('semester') ? 'semester' : 'monthly';
         const reloadToken = this.route.snapshot.queryParamMap.get('reload');
       
       
@@ -180,6 +247,12 @@ pressureChartOptions: ChartOptions<'line'> = {
             this.savedMonths = cachedTrackings.map(t => t.month);
             this.loadMonthData();
             this.updateCharts();
+                    // ✅ 🟢 Restaurer le formulaire si une version temporaire existe
+        if (this.forumService.currentMonthlyForm) {
+          this.monthlyForm.patchValue(this.forumService.currentMonthlyForm);
+        }
+
+
           } else {
             this.idPregnancyTracking = id; // 🟢 à mettre avant le this.loadTrackings()
 
@@ -188,7 +261,29 @@ pressureChartOptions: ChartOptions<'line'> = {
         } else {
           this.errorMessage = 'ID de grossesse invalide';
         }
+        if (this.trackings.length === 2) {
+          const moodCounts = this.getMoodSummary();
+          this.moodData[0].data = [
+            moodCounts['HAPPY'],
+            moodCounts['STABLE'],
+            moodCounts['IRRITABLE'],
+            moodCounts['SAD']
+          ];
+        }
+        
+        
       });
+      this.updateMoodChart(); // doit être après assignation this.trackings
+      if (this.idPregnancyTracking) {
+        this.forumService.getInterpretation(this.idPregnancyTracking).subscribe({
+          next: (msg) => this.autoInterpretationMessage = msg,
+          error: () => this.autoInterpretationMessage = 'Erreur d’analyse automatique.'
+        });
+      }
+      if (this.idPregnancyTracking) {
+        this.checkForChatbotTrigger();
+      }
+      
     }
     
 
@@ -223,8 +318,17 @@ pressureChartOptions: ChartOptions<'line'> = {
 
       request$.subscribe({
         next: (updatedForum) => {
-          alert(this.selectedForumId ? '✅ Mise à jour réussie' : '✅ Enregistrement réussi');
-      
+          this.snackBar.open(
+            this.selectedForumId ? '✅ Month successfully updated!' : '✅ Month successfully saved!',
+            'Close',
+            {
+              duration: 4000,
+              horizontalPosition: 'right',
+              verticalPosition: 'top',
+              panelClass: ['snackbar-success']
+            }
+          );
+                
           if (!this.savedMonths.includes(this.currentMonth)) {
             this.savedMonths.push(this.currentMonth);
           }
@@ -243,9 +347,17 @@ pressureChartOptions: ChartOptions<'line'> = {
           // ✅ Appelle ici, bien dans le bloc `next`
           this.updateCharts();
         },
-        error: () => {
-          this.errorMessage = "Erreur lors de l'enregistrement ou mise à jour";
-        }
+       
+          error: () => {
+            this.errorMessage = "Erreur lors de l'enregistrement ou mise à jour";
+            this.snackBar.open('❌ Failed to save or update this month!', 'Close', {
+              duration: 4000,
+              horizontalPosition: 'right',
+              verticalPosition: 'top',
+              panelClass: ['snackbar-error']
+            });
+          }
+                  
       });
       
   }
@@ -253,6 +365,9 @@ pressureChartOptions: ChartOptions<'line'> = {
   nextMonth(): void {
     if (this.currentMonth < 9) {
       this.currentMonth++;
+      this.selectedForumId = null;
+       this.isEditing = false;
+
       this.loadMonthData();
     }
   }
@@ -260,6 +375,9 @@ pressureChartOptions: ChartOptions<'line'> = {
   previousMonth(): void {
     if (this.currentMonth > 1) {
       this.currentMonth--;
+      this.selectedForumId = null;
+      this.isEditing = false;
+
       this.loadMonthData();
     }
   }
@@ -268,7 +386,14 @@ pressureChartOptions: ChartOptions<'line'> = {
     if (month >= 1 && month <= 9) {
       this.currentMonth = month;
       this.loadMonthData();
+    } else {
+      this.selectedForumId = null;
+      this.isEditing = false;
+      this.monthlyForm.reset();
     }
+    
+    
+    
   }
 
   private loadMonthData(): void {
@@ -296,23 +421,147 @@ pressureChartOptions: ChartOptions<'line'> = {
   
 
   loadTrackings(): void {
-    if (this.forumService.trackings.length) {
-      this.trackings = this.forumService.trackings;
-      this.savedMonths = this.trackings.map(item => item.month);
-      this.loadMonthData();
-      this.updateCharts();
-    } else {
+    if (this.trackings.length >= 4) {
+      const conclusion = this.getMoodConclusion();
+      this.snackBar.open(conclusion, 'Fermer', {
+        duration: 7000,
+        horizontalPosition: 'right',
+        verticalPosition: 'top',
+        panelClass: ['snackbar-success']
+      });
+    }
+     else {
       this.forumService.getForumsByPregnancy(this.idPregnancyTracking!).subscribe({
         next: (data) => {
           this.trackings = data;
           this.savedMonths = data.map(item => item.month);
-          this.forumService.trackings = data; // ✅ CACHER LES DONNÉES
+          this.forumService.trackings = data;
           this.isLoading = false;
           this.loadMonthData();
           this.updateCharts();
+          this.updateMoodChart();
+        
+          // ✅ Affichage de la conclusion après 4 mois
+          if (this.trackings.length >= 4) {
+            const conclusion = this.getMoodConclusion();
+            this.snackBar.open(conclusion, 'Fermer', {
+              duration: 7000,
+              horizontalPosition: 'right',
+              verticalPosition: 'top',
+              panelClass: ['snackbar-success']
+            });
+          }
         }
         
       });
     }
   }
+  getMoodSummary(): { [key: string]: number } {
+    const moodCounts: { [key: string]: number } = {
+      HAPPY: 0,
+      STABLE: 0,
+      IRRITABLE: 0,
+      SAD: 0
+    };
+
+    this.trackings.forEach(t => {
+      const mood = t.moodSwings?.toUpperCase();
+      if (mood && moodCounts.hasOwnProperty(mood)) {
+        moodCounts[mood]++;
+      }
+    });
+
+    const dominantMood = Object.keys(moodCounts).reduce((a, b) => moodCounts[a] > moodCounts[b] ? a : b);
+
+    if (dominantMood === 'SAD') {
+      this.adviceMessage = "It's important to take care of your emotional well-being ❤️";
+    } else if (dominantMood === 'HAPPY') {
+      this.adviceMessage = "Your pregnancy has been full of joyful moments 😊. Keep going and enjoy these positive experiences!";
+    } else if (dominantMood === 'IRRITABLE') {
+      this.adviceMessage = "Some moments of irritability were present 😠. Make sure to rest and seek support if needed.";
+    } else if (dominantMood === 'STABLE') {
+      this.adviceMessage = "Your mood has remained mostly stable 😌. Keep taking care of yourself and listening to your needs.";
+    }
+
+    return moodCounts;
+  }
+  getMoodConclusion(): string {
+    const moodCounts = this.getMoodSummary();
+    const maxMood = Object.keys(moodCounts).reduce((a, b) => moodCounts[a] > moodCounts[b] ? a : b);
+  
+    const messages: { [key: string]: string } = {
+      HAPPY: 'Your pregnancy has been filled with joyful moments 🌞.',
+      STABLE: 'Your pregnancy has been mostly stable and balanced ⚖️.',
+      IRRITABLE: 'Your pregnancy has had some irritable moments 😤. Stay strong!',
+      SAD: 'Your pregnancy has been emotionally challenging 😢. Be proud of yourself ❤️.'
+    };
+  
+    return messages[maxMood] ||  "Thank you for completing the 9 months!";
+  }
+  updateMoodChart(): void {
+    const moodCounts = this.getMoodSummary();
+    const total = Object.values(moodCounts).reduce((sum, count) => sum + count, 0) || 1;
+  
+    this.moodData[0].data = [
+      Math.round((moodCounts['HAPPY'] * 100) / total),
+      Math.round((moodCounts['STABLE'] * 100) / total),
+      Math.round((moodCounts['IRRITABLE'] * 100) / total),
+      Math.round((moodCounts['SAD'] * 100) / total)
+    ];
+  }
+  getMoodStatsSummary(): string {
+    const moodCounts = this.getMoodSummary();
+    const total = Object.values(moodCounts).reduce((sum, count) => sum + count, 0) || 1;
+  
+    const percentages = {
+      HAPPY: Math.round((moodCounts['HAPPY'] / total) * 100),
+      STABLE: Math.round((moodCounts['STABLE'] / total) * 100),
+      IRRITABLE: Math.round((moodCounts['IRRITABLE'] / total) * 100),
+      SAD: Math.round((moodCounts['SAD'] / total) * 100)
+    };
+  
+    const parts = [];
+    if (percentages.HAPPY > 0) parts.push(`😊 ${percentages.HAPPY}% Happy`);
+    if (percentages.STABLE > 0) parts.push(`😌 ${percentages.STABLE}% Stable`);
+    if (percentages.IRRITABLE > 0) parts.push(`😠 ${percentages.IRRITABLE}% Irritable`);
+    if (percentages.SAD > 0) parts.push(`😢 ${percentages.SAD}% Sad`);
+  
+    return parts.length > 0 ? parts.join(' / ') : 'No data available.';
+  }
+  
+  
+  
+  
+  analyzeSymptoms(): void {
+    if (!this.selectedForumId) {
+      this.snackBar.open('No trimester selected for analysis.', 'Close', {
+        duration: 3000
+      });
+      return;
+    }
+  
+    this.forumService.analyzeSymptomsByForum(this.selectedForumId).subscribe({
+      next: (result) => {
+        this.aiResult = result;
+      },
+      error: () => {
+        this.snackBar.open("❌ Error during symptom analysis.", 'Close', {
+          duration: 4000
+        });
+      }
+    });
+  }
+  
+
+checkForChatbotTrigger() {
+  this.forumService.checkChatbotAlert(this.idPregnancyTracking!).subscribe({
+    next: (res: any) => {
+      if (res.triggerChat) {
+        this.chatbotMessage = res.message;
+      }
+    }
+  });
+}
+
+  
 }

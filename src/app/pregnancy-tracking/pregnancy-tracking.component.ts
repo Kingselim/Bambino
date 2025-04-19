@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';  // Import Router
 import { PregnancyTrackingService } from 'src/app/service/pregnancy-tracking.service';
 import { PregnancyTrackings } from '../model/PregnancyTracking';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-pregnancy-tracking',
@@ -16,7 +17,10 @@ export class PregnancyTrackingComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private trackingService: PregnancyTrackingService,
-    private router: Router  // Inject Router
+    private router: Router ,
+    private snackBar: MatSnackBar
+
+     // Inject Router
   ) {}
 
   ngOnInit() {
@@ -33,8 +37,12 @@ export class PregnancyTrackingComponent implements OnInit {
       this.trackingService.addPregnancyTracking(this.pregnancytracking).subscribe({
         next: (response) => {
           console.log('Success:', response);
-          alert('Suivi enregistré avec succès!');
-          // Navigate based on the interval choice
+          this.snackBar.open('Pregnancy tracking successfully saved!', 'Close', {
+            duration: 4000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+          });
+                    // Navigate based on the interval choice
           switch (this.pregnancyForm.value.intervalChoice) {
             case 'MONTH':
               this.router.navigate([ '/monthly-tracking', response.idPregnancyTracking]); // Navigate to form1 if the choice is MONTH
@@ -48,8 +56,12 @@ export class PregnancyTrackingComponent implements OnInit {
         },
         error: (error) => {
           console.error('Error:', error);
-          alert('Erreur lors de l\'enregistrement du suivi!');
-        }
+          this.snackBar.open('Error while saving tracking!', 'Close', {
+            duration: 4000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+          });
+                  }
       });
     }
   }

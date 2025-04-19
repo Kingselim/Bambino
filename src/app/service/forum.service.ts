@@ -44,5 +44,16 @@ export class ForumService {
   updateForum(id: number, forum: Forum): Observable<Forum> {
     return this.http.put<Forum>(`${this.apiUrl}/modify/${id}`, forum);
   }
+  analyzeSymptomsByForum(idForum: number) {
+    return this.http.get<any>(`http://localhost:8089/ia/predict-disease-by-forum/${idForum}`);
+  }
   
+  // pregnancy-tracking.service.ts
+getInterpretation(id: number): Observable<string> {
+  return this.http.get(`http://localhost:8089/pregnancy-tracking/interpret/${id}`, { responseType: 'text' });
+}
+checkChatbotAlert(id: number) {
+  return this.http.get(`http://localhost:8089/ia/chatbot-alert/${id}`);
+}
+
 }
