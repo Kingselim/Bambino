@@ -16,6 +16,11 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { RestorePasswordComponent } from './restore-password/restore-password.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { ChatComponent } from './chat/chat.component';
+import { WebcamModule } from 'ngx-webcam';
+import { WebcamComponent } from './webcam/webcam.component';
+import { FormsModule } from '@angular/forms';
+import { MinichatComponent } from './minichat/minichat.component';
+
 @NgModule({
   declarations: [
     BackofficeComponent,
@@ -31,16 +36,24 @@ import { ChatComponent } from './chat/chat.component';
     ForgotPasswordComponent,
     RestorePasswordComponent,
     UserProfileComponent,
-    ChatComponent
+    ChatComponent,
+    WebcamComponent,
+    MinichatComponent
+    
+   
     
   ],
   imports: [
     CommonModule,
     BackofficeRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    WebcamModule,
+    FormsModule
 
     
     
-  ]
+  ],
+  exports: [MinichatComponent] // 👈 IMPORTANT : exporter le composant
+
 })
 export class BackofficeModule { }

@@ -65,14 +65,14 @@
           <div class="main-header-logo">
             <!-- Logo Header -->
             <div class="logo-header" data-background-color="dark">
-              <a href="index.html" class="logo">
+              <!-- <a href="index.html" class="logo">
                 <img
                   src="assets/img/kaiadmin/logo_light.svg"
                   alt="navbar brand"
                   class="navbar-brand"
                   height="20"
                 />
-              </a>
+              </a> -->
               <div class="nav-toggle">
                 <button class="btn btn-toggle toggle-sidebar">
                   <i class="gg-menu-right"></i>
@@ -136,8 +136,8 @@
                               </span>
                             </a>
                           </div>
-                          <div class="view-profile">
-                            <a href="#" class="btn btn-secondary w-100">View Full Profile</a>
+                          <div class="view-profile" [ngStyle]="{'!background-color':couleur}">
+                            <a href="#" class="btn w-100" [ngStyle]="{'background-color':couleur,'color':fontcouleur}" >View Full Profile</a>
                           </div>
                         </div>
                       </div>
@@ -159,8 +159,98 @@
                       </div>
                     </div>
                   </div>
+                  <!-- <div class="row"> 
+                    <div class="col-md-3">
+                        <div class="card card-round">
+                            <div class="card-header">
+                                <div class="card-head-row card-tools-still-right">
+                                    <h4 class="card-title">Users Details</h4>
+                                      <div class="card-tools">
+                                          <button class="btn btn-icon btn-link btn-primary btn-xs">
+                                              <span class="fa fa-angle-down"></span>
+                                          </button>
+                                          <button class="btn btn-icon btn-link btn-primary btn-xs btn-refresh-card">
+                                              <span class="fa fa-sync-alt"></span>
+                                          </button>
+                                          <button class="btn btn-icon btn-link btn-primary btn-xs">
+                                              <span class="fa fa-times"></span>
+                                          </button>
+                                      </div>
+                                </div>
+                                <p class="card-category">
+                                    Map of the distribution of users around the world
+                                </p>
+                            </div>
+                              <div *ngIf="CurrentUser.image != null" class="avatar avatar-xl">
+                                <img src="http://localhost:8089/images/{{CurrentUser.image}}" alt="image{{CurrentUser.name}}" class="avatar-img rounded-circle" [routerLink]="['/backoffice/webcam', CurrentUser.id]" style="cursor: pointer;">
+                              </div>
+                              <div *ngIf="CurrentUser.image == null" class="avatar avatar-xl">
+                                <img src="../../../assets/BackOffice/assets/img/cercle-bleu-utilisateur-blanc_78370-4707.avif" alt="image{{CurrentUser.name}}" class="avatar-img rounded-circle" [routerLink]="['/backoffice/webcam', CurrentUser.id]" style="cursor: pointer;">
+                              </div>
+
+                              <div style="padding: 20px;">
+                                    <p><span>📌 Nom :</span> {{ CurrentUser.name }}</p>
+                                    <p><span>🎂 Âge :</span> {{ CurrentUser.age }}</p>
+                                    <p><span>📧 Email :</span> {{ CurrentUser.email }}</p>
+                                     <p><span>🔑 Mot de passe :</span> {{ CurrentUser.password }}</p> 
+                                    <p><span> 📞 Phone :</span> {{ CurrentUser.phone }}</p>
+                                    <p><span>🌎 Country :</span> {{CurrentUser.country}}</p>
+                                    <p *ngIf="CurrentUser.status == 1"><span >📌 Statut :</span> <span style="color:green;"> Active </span> </p>
+                                    <p *ngIf="CurrentUser.status == 0"><span >📌 Statut :</span> <span style="color:red;"> Blocked </span> </p>
+                                    <p><span>🛠 Rôles :</span> 
+                                        <span *ngFor="let role of CurrentUser.roleTypes; let i = index">
+                                            {{ role.role }}<span *ngIf="i < CurrentUser.roleTypes.length - 1">, </span>
+                                          </span>
+                                    </p>
+                              </div>
+                    </div> -->
+                    
+                    <div class="row">
+                      <div class="col-md-4">
+                    <div class="profile-container">
+                      <div class="profile-card" >
+                        
+                        <!-- Partie gauche : image -->
+                        <div class="profile-image" [ngStyle]="{'background-color':couleur}">
+                          <img *ngIf="CurrentUser.image != null" 
+                               [src]="'http://localhost:8089/images/' + CurrentUser.image" 
+                               [alt]="'image' + CurrentUser.name" 
+                               [routerLink]="['/backoffice/webcam', CurrentUser.id]">
+                          
+                          <img *ngIf="CurrentUser.image == null" 
+                               src="../../../assets/BackOffice/assets/img/cercle-bleu-utilisateur-blanc_78370-4707.avif" 
+                               [alt]="'image' + CurrentUser.name" 
+                               [routerLink]="['/backoffice/webcam', CurrentUser.id]">
+                        </div>
+                    
+                        <!-- Partie droite : infos -->
+                        <div class="profile-details">
+                          <h2 class="profile-name">👤 {{ CurrentUser.name }}</h2>
+                          <p><strong>🎂 Âge :</strong> {{ CurrentUser.age }}</p>
+                          <p><strong>📧 Email :</strong> {{ CurrentUser.email }}</p>
+                          <p><strong>📞 Téléphone :</strong> {{ CurrentUser.phone }}</p>
+                          <p><strong>🌍 Pays :</strong> {{ CurrentUser.country }}</p>
+                          <p>
+                            <strong>📌 Statut :</strong>
+                            <span *ngIf="CurrentUser.status == 1" class="status-active">Actif</span>
+                            <span *ngIf="CurrentUser.status == 0" class="status-blocked">Bloqué</span>
+                          </p>
+                          <p><strong>🛠 Rôles :</strong>
+                            <span *ngFor="let role of CurrentUser.roleTypes; let i = index">
+                              {{ role.role }}<span *ngIf="i < CurrentUser.roleTypes.length - 1">, </span>
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                      
+                    
+                 </div>
+
+                
               
-              <div class="col-sm-6 col-md-3">
+              <!-- <div class="col-sm-6 col-md-3">
                 <div class="card card-stats card-round">
                   <div class="card-body">
                     <div class="row align-items-center">
@@ -222,17 +312,22 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
             
+            
+              
+              
+              
+            </div>
            
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-md-4">
                 <div class="card card-round">
               <div id="world-map" style="width: 100%; height: 500px;"></div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
         
@@ -242,7 +337,7 @@
       </div>
 
       <!-- Custom template | don't include it in your project! -->
-      <div class="custom-template">
+      <!-- <div class="custom-template">
         <div class="title">Settings</div>
         <div class="custom-content">
           <div class="switcher">
@@ -433,7 +528,7 @@
         <div class="custom-toggle">
           <i class="icon-settings"></i>
         </div>
-      </div>
+      </div> -->
       <!-- End Custom template -->
     </div>
     <!--   Core JS Files   -->

@@ -302,17 +302,20 @@
                     href="#"
                     aria-expanded="false"
                   >
-                    <div class="avatar-sm">
+                    <div  *ngIf="User.image == null" class="avatar-sm">
                       <img
                         src="../../../assets/BackOffice/assets/img/cercle-bleu-utilisateur-blanc_78370-4707.avif"
                         alt="..."
                         class="avatar-img rounded-circle"
                       />
                     </div>
+                    <div *ngIf="User.image != null" class="avatar avatar-sm">
+                      <img src="http://localhost:8089/images/{{User.image}}" alt="image{{User.name}}" class="avatar-img rounded-circle" [routerLink]="['/backoffice/webcam', User.id]" style="cursor: pointer;">
+                      </div>
                     
                     <span class="profile-username">
                       <span class="op-7">Hi,</span>
-                      <span class="fw-bold">{{CurrentName}}</span>
+                      <span class="fw-bold">{{User.name}}</span>
                     </span>
                   </a>
                   <ul class="dropdown-menu dropdown-user animated fadeIn">

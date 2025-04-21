@@ -380,6 +380,7 @@ function changeContainer(){
 	}
 }
 
+
 $('#show-signup').on('click', function(){ 
 	showSignUp = true;
 	showSignIn = false;

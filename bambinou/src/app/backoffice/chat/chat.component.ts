@@ -28,16 +28,26 @@ export class ChatComponent {
   listMessageEnvoye: Message[] = [];
   listMessageRecu: Message[] = [];
   listMessage! : Message[];
-  id : number = 4;
+  id! : number;   // id de conversation
   MessageForm: FormGroup;
   private intervalId: any;
   listUsers! : User[];
+  userSender! : User;
 
   // ici cest pour la creation dune nouvelle conversation
   UserConv! : User;
 
   //ici pour la suppresion dune conv
   RemoveConv! : Conversation;
+
+
+  contextMenuVisible = false;
+  contextMenuPosition = { x: 0, y: 0 };
+  selectedConv: any = null;
+
+  couleur!:string
+  fontcouleur!:string
+  role!:string
   constructor(private authService: AuthService,private rt:Router,private UserService: UserServiceService, private ConversationService: ConversationService, private MessageService: MessageService) {
     this.MessageForm = new FormGroup({
       message: new FormControl('', [Validators.required])
@@ -45,10 +55,26 @@ export class ChatComponent {
    }
   
   ngOnInit() {
+    document.addEventListener('click', () => {
+      this.contextMenuVisible = false;
+    });
     //const token = localStorage.getItem('token');
     const token = sessionStorage.getItem('token');
     if (token) {
       const decodedToken = this.authService.getDecodedToken(token);
+      if(decodedToken.role[0].role=='ADMIN'){
+        this.couleur="#1572e8";
+        this.role="ADMIN";
+    
+        console.log("couleur dans if admin",this.couleur);
+      }
+      else{
+        this.couleur="#d63384";
+        this.fontcouleur="white";
+        this.role="PATIENT";
+        console.log("couleur dans if patient",this.couleur);
+    
+      }
       if (decodedToken) {
         this.CurrentEmail = decodedToken.sub;
         this.CurrentName = decodedToken.name;
@@ -63,7 +89,7 @@ export class ChatComponent {
           this.ConversationService.getConversationsByUser(this.User.id).subscribe(data => {
           console.log("Conversations récupérées :", data);
           this.listConversation = data;
-
+            
 
 
           this.listConversation.forEach(conv => {
@@ -75,6 +101,7 @@ export class ChatComponent {
          
           this.MessageService.getMessagesByConversation(this.id).subscribe(data => {
             console.log("les messages sont  récupérées :", data);
+           
 
             this.listMessage = data
             console.log('le nombre de message est :', this.listMessage.length);
@@ -83,6 +110,8 @@ export class ChatComponent {
               if (msg.sender.id == this.User.id) {
                 this.listMessageEnvoye = [...this.listMessageEnvoye, msg];
                 console.log(msg);
+                
+                
               } else {
                 this.listMessageRecu = [...this.listMessageRecu, msg];
                 console.log(msg);
@@ -174,6 +203,10 @@ export class ChatComponent {
 
   removeconversation(id : number){
     this.RemoveConv = this.listConversation.find(conv => conv.idConversation == id)!;
+    this.RemoveConv.messages.forEach(msg => {
+      this.MessageService.deleteMessage(msg.idMessage).subscribe()
+    })
+    
     this.ConversationService.removeUserFromConversation(id, this.User.id).subscribe(
      
     )
@@ -187,6 +220,24 @@ export class ChatComponent {
     this.ConversationService.deleteConversation(id).subscribe(
       ()=> this.ngOnInit()
     )
+  }
+
+
+  onRightClick(event: MouseEvent, conv: any): void {
+    event.preventDefault();
+    this.contextMenuVisible = true;
+    this.contextMenuPosition = {
+      x: event.clientX,
+      y: event.clientY
+    };
+    this.selectedConv = conv;
+  }
+
+  deleteConversation(conv: any): void {
+    this.contextMenuVisible = false;
+    console.log('Suppression de la conversation :', conv);
+    // Ici tu appelles ton service ou supprimes de ton tableau
+    this.removeconversation(conv.idConversation);
   }
 
 }

@@ -12,4 +12,5 @@ export class User {
     status! : number
     password! : string
     roleTypes!  : RoleType[];
+    image! : string
     }

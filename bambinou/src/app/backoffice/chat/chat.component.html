@@ -114,13 +114,13 @@
               class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
             >
               <div>
-                <h3 class="fw-bold mb-3">Dashboard</h3>
+                <h3 class="fw-bold mb-3">Chat</h3>
                 <h6 class="op-7 mb-2">Welcome to Bambino's Chat Section</h6>
               </div>
-              <div class="ms-md-auto py-2 py-md-0">
+              <!-- <div class="ms-md-auto py-2 py-md-0">
                 <a [routerLink]="['/backoffice/user']" class="btn btn-label-info btn-round me-2">Manage</a>
                 <a [routerLink]="['/backoffice/user/add']" class="btn btn-primary btn-round">Add User</a>
-              </div>
+              </div> -->
             </div>
            
             
@@ -132,20 +132,30 @@
                         <div class="card-body">
                           <div class="card-title fw-mediumbold">Chats</div>
                           <div class="card-list">
-                            <div class="item-list" *ngFor="let conv of listConversation">
+                            <div class="item-list" *ngFor="let conv of listConversation" (click)="setconversation(conv.idConversation)"  (contextmenu)="onRightClick($event, conv)" style="cursor: pointer;">
                               <div class="avatar">
                                 <img src="../../../assets/BackOffice/assets/img/cercle-bleu-utilisateur-blanc_78370-4707.avif" alt="..." class="avatar-img rounded-circle">
                               </div>
                               <div  class="info-user ms-3">
-                                <div class="username" *ngFor="let user of conv.users">{{user.name}}</div>
+                                <div class="username" *ngFor="let user of conv.users">{{user.name}}</div> 
                                 <div class="status"></div>
                               </div>
-                              <button class="btn btn-icon btn-primary btn-round btn-xs" (click)="removeconversation(conv.idConversation)">
+                              <!-- <button class="btn btn-icon btn-primary btn-round btn-xs" (click)="removeconversation(conv.idConversation)">
                                 <i class="fas fa-trash-alt"></i>
                               </button>
                               <button class="btn btn-icon btn-primary btn-round btn-xs" (click)="setconversation(conv.idConversation)">
                                 <i class="fa fa-plus"></i>
-                              </button>
+                              </button> -->
+                              <!-- Menu contextuel personnalisé -->
+                              <!-- Menu contextuel personnalisé -->
+                              <div
+                              class="custom-context-menu"
+                              *ngIf="contextMenuVisible"
+                              [ngStyle]="{ top: contextMenuPosition.y + 'px', left: contextMenuPosition.x + 'px' }"
+                              (click)="deleteConversation(selectedConv)"
+                              >&nbsp;
+                              Supprimer 🚨
+                              </div>
                             </div>
                            
                            
@@ -154,24 +164,26 @@
                       </div>
                       <div class="card card-info card-annoucement card-round">
                         <div class="card-body text-center">
-                          <div class="card-opening">Welcome Rian,</div>
+  
+                          <div class="card-opening">Welcome <span style="font-weight: bold;">{{CurrentName}}</span></div>
                           <div class="card-desc">
-                            Congrats and best wishes for success in your brand new
-                            life! I knew that you would do this!
+                            <img src="../../../assets/BackOffice/assets/img/discussion.avif" alt="" style="width:220px; border-radius: 20px;">
+
                           </div>
-                          <div class="card-detail">
+                          <!-- <div class="card-detail">
                             <div class="btn btn-light btn-rounded">View Detail</div>
-                          </div>
+                          </div> -->
                         </div>
                       </div>
                     </div>
                     <div class="col-md-4" style="width: 900px; ">
-                        <div class="card card-chat card-round" style="height: 600px;">
-                          <div class="card-header bg-primary text-white text-center" style="border-radius: 15px 15px 0px 0px; background-color: #61a7f2;">
-                            <h5 style="color: white;">Discussion</h5>
+                        <div class="card card-chat card-round" style="height: 500px;">
+                          <!-- bg-primary -->
+                          <div class="card-header  text-white text-center" style="border-radius: 15px 15px 0px 0px;" [ngStyle]="{'background-color':couleur}">
+                            <h5 style="color: white;"><span style="font-weight: bold;">Discussion </span></h5>
                           </div>
                           <div class="card-body chat-box" style="height: 300px; overflow-y: auto;">
-                            <div class="message received" *ngFor="let message of listMessage">
+                            <div class="message " *ngFor="let message of listMessage" [ngClass]="{'sent': message.sender.id === User.id, 'received': message.sender.id !== User.id}">
                                 <p><strong>{{message.sender.name}}:</strong> {{message.message}}</p>
                               </div>
                             <!-- Messages affichés ici -->
@@ -181,6 +193,7 @@
                             <div class="message sent text-end" *ngFor="let messagee of listMessageEnvoye">
                               <p ><strong>Moi:</strong> {{messagee.message}}</p>
                             </div> -->
+                            
                           </div>
                           <div class="card-footer">
                             <div class="input-group">
@@ -195,7 +208,10 @@
                   
                   </div>
 
-                  <div class="col-md-4">
+                  
+                  <div class="row">
+
+                <div class="col-md-4" >
                 <div class="card card-round">
                   <div class="card-body">
                     <div class="card-head-row card-tools-still-right">
@@ -213,10 +229,11 @@
                         </div>
                       </div>
                     </div>
-                    <div class="card-list py-4">
-                      <div class="item-list" *ngFor="let user of listUsers">
+                    <div class="card-list py-4" style="max-height: 400px; overflow-y: auto;">
+                      <div class="item-list d-flex align-items-center mb-3" *ngFor="let user of listUsers">
                         <div class="avatar">
-                          <img src="../../../assets/BackOffice/assets/img/cercle-bleu-utilisateur-blanc_78370-4707.avif" alt="..." class="avatar-img rounded-circle">
+                          <img src="../../../assets/BackOffice/assets/img/cercle-bleu-utilisateur-blanc_78370-4707.avif"
+                               alt="..." class="avatar-img rounded-circle">
                         </div>
                         <div class="info-user ms-3">
                           <div class="username">{{user.name}}</div>
@@ -229,23 +246,22 @@
                           <i class="fas fa-ban"></i>
                         </button>
                       </div>
-                    
-                      
-                     
-                      
-                      
                     </div>
+                    
                   </div>
                 </div>
+               
+
                 
               </div>
-           
+                  </div>
             
-           
+
            
           </div>
+
         </div>
-        
+
 
         <app-backoffice-footer></app-backoffice-footer>
 

@@ -44,7 +44,7 @@ export class SignupFormComponent {
       name: new FormControl('',[Validators.required]),
       age: new FormControl('',[Validators.required]),
       email: new FormControl('',[Validators.required, Validators.minLength(10)]),// controle de saisie
-      password: new FormControl('',[Validators.required, Validators.minLength(10)]),
+      password: new FormControl('',[Validators.required, Validators.minLength(6)]),
       roleTypes: new FormControl('',[Validators.required]),
       phone: new FormControl('',[Validators.required,Validators.minLength(8)]),
       country: new FormControl('',[Validators.required])

@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
-
 import { FooterComponent } from './footer/footer.component';
 import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
@@ -20,7 +19,7 @@ import { CoachingComponent } from './coaching/coaching.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ForgotPasswordComponent } from './backoffice/forgot-password/forgot-password.component';
-
+import { UserProfileFrontComponent } from './user-profile-front/user-profile-front.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,6 +33,7 @@ import { ForgotPasswordComponent } from './backoffice/forgot-password/forgot-pas
     AppointmentComponent,
     ShopComponent,
     CoachingComponent,
+    UserProfileFrontComponent
    
     
     
@@ -43,7 +43,8 @@ import { ForgotPasswordComponent } from './backoffice/forgot-password/forgot-pas
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BackofficeModule
 
   ],
   providers: [

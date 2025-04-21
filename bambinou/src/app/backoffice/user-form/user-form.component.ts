@@ -55,10 +55,11 @@ export class UserFormComponent {
       name: new FormControl('',[Validators.required]),
       age: new FormControl('',[Validators.required]),
       email: new FormControl('',[Validators.required, Validators.minLength(10)]),// controle de saisie
-      password: new FormControl('',[Validators.required, Validators.minLength(10)]),
+      password: new FormControl('',[Validators.required, Validators.minLength(6)]),
       roleTypes: new FormControl('',[Validators.required]),
       phone: new FormControl('',[Validators.required,Validators.minLength(8)]),
-      country: new FormControl('',[Validators.required])
+      country: new FormControl('',[Validators.required]),
+      image: new FormControl('')
       });
     }
 
@@ -78,7 +79,8 @@ export class UserFormComponent {
             password: this.User.password,
             roleTypes: this.User.roleTypes[0].id,
             phone: this.User.phone,
-            country: this.User.country
+            country: this.User.country,
+            image: this.User.image
           })
         }
       )
@@ -89,6 +91,7 @@ export class UserFormComponent {
         const newUser = {
           ...this.Userform.value, // Récupère title et description
           roleTypes: [{ id: this.Userform.value.roleTypes }]
+          
         };
         console.log(this.Userform.value);
 

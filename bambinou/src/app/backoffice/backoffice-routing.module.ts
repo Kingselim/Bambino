@@ -14,6 +14,8 @@ import { RestorePasswordComponent } from './restore-password/restore-password.co
 import { User } from '../model/User';
 import {UserProfileComponent} from './user-profile/user-profile.component'
 import { ChatComponent } from './chat/chat.component';
+import { WebcamComponent } from './webcam/webcam.component';
+import {MinichatComponent} from './minichat/minichat.component'
 const routes: Routes = [
  // { path: 'dashboard', component: DashboardComponent },
 
@@ -28,7 +30,11 @@ const routes: Routes = [
     {path: 'forgotpassword', component: ForgotPasswordComponent},
     {path: 'restorepassword/:id', component: RestorePasswordComponent},
     {path:'user/profile/:id', component: UserProfileComponent,canActivate: [AuthGuard]},
-    {path: 'user/chat', component: ChatComponent,canActivate: [AuthGuard]}
+    {path: 'user/chat', component: ChatComponent,canActivate: [AuthGuard]},
+    { path: 'webcam', component: WebcamComponent }, // ⬅️ Route vers ta page webcam
+    { path: 'webcam/:id', component: WebcamComponent,canActivate: [AuthGuard] }, // ⬅️ Route vers ta page webcam
+    { path: 'minichat', component: MinichatComponent},
+
     // { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
   ] 
 }

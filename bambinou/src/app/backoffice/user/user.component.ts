@@ -16,7 +16,14 @@ export class UserComponent {
   listUser!: User[]; 
 
   searchTerm: string = "";
-  
+  selectedRole: string = '';
+  roles: string[] = [
+    'PATIENT', 'ADMIN', 'COACH', 'NUTRITIONIST',
+    'PEDIATRICIAN', 'GENERALIST', 'BABYSITTER', 'GYNECOLOGIST'
+  ];
+
+
+
   CurrentEmail! : string;
 
   constructor(private userService: UserServiceService, private authService: AuthService) { }
@@ -58,9 +65,15 @@ export class UserComponent {
   
   get filteredUser(): User[] {
     return this.listUser.filter(user =>
-      user.id.toString().toLowerCase().includes(this.searchTerm.toLowerCase())
+      user.name.toString().toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
   
-  
+  get filteredUsers() {
+    return this.listUser.filter(user => {
+      const matchName = user.name.toLowerCase().includes(this.searchTerm.toLowerCase());
+      const matchRole = this.selectedRole ? user.roleTypes[0].role === this.selectedRole : true;
+      return matchName && matchRole;
+    });
+  }
 }

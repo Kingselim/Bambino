@@ -8,7 +8,9 @@ import {AlimentationComponent} from './alimentation/alimentation.component';
 import {AppointmentComponent} from './appointment/appointment.component';
 import {ShopComponent} from './shop/shop.component';
 import { CoachingComponent } from './coaching/coaching.component';
-
+import('./backoffice/backoffice.module')
+import {UserProfileFrontComponent} from './user-profile-front/user-profile-front.component';
+import { AuthGuard } from './auth.guard';
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full' }, // Redirection au chargement
   {path: 'about', component: AboutComponent},
@@ -19,8 +21,8 @@ const routes: Routes = [
   {path: 'Alimentation', component:AlimentationComponent},
   {path: 'Appointment' , component:AppointmentComponent},
   {path: 'Shop' , component:ShopComponent},
-  {path :'Coaching' , component:CoachingComponent}
-
+  {path :'Coaching' , component:CoachingComponent},
+  {path:'userProfile/:id' , component:UserProfileFrontComponent,canActivate: [AuthGuard]}
   
 ];
 
