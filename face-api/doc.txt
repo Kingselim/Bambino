@@ -1,0 +1,24 @@
+Tout se qui suit doit etre dans l'environement python:
+
+python3 -m venv venv
+
+source venv/bin/activate
+
+pour desactiver l'en de python : Deactivate
+
+lancer le serveur : uvicorn face_api3:app --reload --port 8000
+
+
+NB: face_api3 heya eli temchi 
+
+docs:
+    esna3 dossier
+    sob el virtual enviroment : python3 -m venv venv
+    activih : source venv/bin/activate
+    7ot el fichier face_api3
+    lanci el serveur : uvicorn face_api3:app --reload --port 8000
+
+
+
+
+
