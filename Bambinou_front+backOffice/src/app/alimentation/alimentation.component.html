@@ -1,0 +1,229 @@
+<div class="container mt-4">
+  <!-- Error Message -->
+  <div *ngIf="error" class="error-message alert alert-danger">
+    {{ error }}
+    <button type="button" class="btn-close" (click)="error = null"></button>
+  </div>
+
+  <!-- Nutrition Calculator for Babies -->
+  
+
+  <!-- Controls Section -->
+  <div class="card mb-4">
+    <div class="card-header bg-light">
+      <h3 class="mb-0">Filtres et Recherche</h3>
+    </div>
+    <div class="card-body">
+      <!-- Search -->
+      <div class="mb-3">
+        <input
+          id="searchInput"
+          type="text"
+          class="form-control"
+          [(ngModel)]="searchQuery"
+          (ngModelChange)="onSearchChange()"
+          placeholder="Entrez un terme de recherche..."
+        />
+      </div>
+
+      <!-- Filters -->
+      <div class="row">
+        <div class="col-md-6 mb-3" *ngFor="let filter of ['calories', 'protein']">
+          <label class="form-label text-capitalize">{{ filter }}</label>
+          <div class="input-group">
+            <input
+              type="number"
+              class="form-control"
+              placeholder="Min"
+              [(ngModel)]="filters[filter].min"
+              (ngModelChange)="onFilterChange()"
+            />
+            <span class="input-group-text">-</span>
+            <input
+              type="number"
+              class="form-control"
+              placeholder="Max"
+              [(ngModel)]="filters[filter].max"
+              (ngModelChange)="onFilterChange()"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Sort -->
+      <div class="mb-3">
+        <label for="sortSelect" class="form-label">Trier par</label>
+        <div class="input-group">
+          <select
+            id="sortSelect"
+            class="form-select"
+            [(ngModel)]="sortColumn"
+            (ngModelChange)="onSortChange($event)"
+          >
+            <option *ngFor="let column of displayedColumns" [value]="column">
+              {{ column | titlecase }}
+            </option>
+          </select>
+          <button
+            class="btn btn-outline-secondary"
+            (click)="onSortChange(sortColumn)"
+            title="Inverser l'ordre"
+          >
+            <i class="bi" [ngClass]="sortDirection === 'asc' ? 'bi-sort-up' : 'bi-sort-down'"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Reset Button -->
+      <button class="btn btn-secondary" (click)="resetFilters()">Réinitialiser</button>
+    </div>
+  </div>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="loading" class="text-center my-4">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p>Chargement des données d'alimentation...</p>
+  </div>
+
+  <!-- Data Cards -->
+  <div class="card">
+    <div class="card-header bg-light">
+      <h3 class="mb-0">Liste des Données Nutritionnelles</h3>
+    </div>
+    <div class="card-body">
+      <div *ngIf="!loading && filteredAndSortedData.length === 0 && !error" class="no-data alert alert-info">
+        Aucune donnée nutritionnelle disponible avec les filtres actuels.
+      </div>
+
+      <div class="row" *ngIf="filteredAndSortedData.length > 0">
+        <div class="col-md-6 col-lg-4 mb-4" *ngFor="let item of filteredAndSortedData">
+          <div class="card shadow-sm border-0 h-100" style="border-radius: 20px; background-color: #f8f9fa;">
+            <div class="card-body">
+              <h5 class="card-title fw-bold text-primary">🍽️ Nutrition #{{ item.idNutrition }}</h5>
+              <p><span class="fw-semibold">📝 Description:</span> {{ item.description }}</p>
+              <p><span class="fw-semibold">📋 Recommandation:</span> {{ item.recommendation }}</p>
+              <hr>
+              <p><span class="fw-semibold">🔥 Calories:</span> {{ item.calories }} kcal</p>
+              <p><span class="fw-semibold">💪 Protéines:</span> {{ item.protein }} g</p>
+              <p><span class="fw-semibold">🍞 Glucides:</span> {{ item.glucide }} g</p>
+              <p><span class="fw-semibold">🥑 Lipides:</span> {{ item.lipide }} g</p>
+              <p><span class="fw-semibold">🍊 Vitamines:</span> {{ item.vitamin }} mg</p>
+              <p><span class="fw-semibold">👥 Abonnés:</span> {{ item.nbFollowers }}</p>
+              <div class="text-end mt-3">
+                <button class="btn btn-outline-primary btn-sm" (click)="viewPosts(item.idNutrition)">
+                  Voir les posts 🔍
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card mb-4">
+        <div class="card-header bg-light">
+          <h3 class="mb-0">Calculatrice de Besoins Nutritionnels pour Bébés</h3>
+        </div>
+        <div class="card-body">
+          <form (ngSubmit)="calculateNutrition()">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Âge (mois)</label>
+                <input type="number" class="form-control" [(ngModel)]="nutritionForm.ageMonths" name="ageMonths" required min="0" max="12">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Poids (kg)</label>
+                <input type="number" class="form-control" [(ngModel)]="nutritionForm.weight" name="weight" required min="2" max="15" step="0.1">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Calculer</button>
+          </form>
+    
+          <!-- Calculation Error -->
+          <div *ngIf="calculationError" class="alert alert-danger mt-3">
+            {{ calculationError }}
+          </div>
+    
+          <!-- Results Section -->
+          <div *ngIf="nutritionResults" class="mt-4">
+            <h4>Besoins nutritionnels quotidiens</h4>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Macronutriments</h5>
+                    <p><strong>Calories:</strong> {{ nutritionResults.calories | number:'1.0-0' }} kcal</p>
+                    <p><strong>Protéines:</strong> {{ nutritionResults.protein | number:'1.1-1' }} g</p>
+                    <p><strong>Glucides:</strong> {{ nutritionResults.carbs | number:'1.1-1' }} g</p>
+                    <p><strong>Lipides:</strong> {{ nutritionResults.fat | number:'1.1-1' }} g</p>
+                    <p class="text-muted">Note : Ces valeurs sont indicatives et basées sur les besoins moyens pour l'âge et le poids. Consultez un pédiatre pour des recommandations personnalisées.</p>
+                    <p class="text-info" *ngIf="nutritionResults">Les aliments affichés ci-dessous ont au moins {{ (nutritionResults.calories / 10) | number:'1.0-0' }} kcal par portion pour répondre aux besoins calculés.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="deficiencyReport" class="alert alert-info mt-4">
+            <h5>🍼 Rapport de Carence Nutritionnelle</h5>
+            <ul>
+              <li><strong>Calories :</strong> {{ deficiencyReport.totalCalories }} kcal</li>
+              <li><strong>Protéines :</strong> {{ deficiencyReport.totalProtein }} g</li>
+              <li><strong>Glucides :</strong> {{ deficiencyReport.totalGlucide }} g</li>
+              <li><strong>Lipides :</strong> {{ deficiencyReport.totalLipide }} g</li>
+              <li><strong>Vitamines :</strong> {{ deficiencyReport.totalVitamin }} mg</li>
+            </ul>
+            <p class="mt-2">
+              <strong>⚠️ Carences détectées :</strong>
+              <ul>
+                <li *ngIf="deficiencyReport.lowCalories">Calories insuffisantes</li>
+                <li *ngIf="deficiencyReport.lowVitamin">Vitamines insuffisantes</li>
+                <li *ngIf="deficiencyReport.unbalancedMacronutrients">Macronutriments déséquilibrés</li>
+                <li *ngIf="!deficiencyReport.lowCalories && !deficiencyReport.lowVitamin && !deficiencyReport.unbalancedMacronutrients">
+                  Aucune carence détectée 🎉
+                </li>
+              </ul>
+            
+            <p><strong>🩺 Recommandation :</strong> {{ deficiencyReport.recommendation }}</p>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card p-4">
+    <h3>Formulaire Nutritionnel 🍽️</h3>
+  
+    <form [formGroup]="nutritionRecommendationForm" (ngSubmit)="getRecommendation()">
+      <div class="mb-3">
+        <label>Calories</label>
+        <input type="number" class="form-control" formControlName="calories">
+      </div>
+      <div class="mb-3">
+        <label>Protéines (g)</label>
+        <input type="number" class="form-control" formControlName="protein">
+      </div>
+      <div class="mb-3">
+        <label>Glucides (g)</label>
+        <input type="number" class="form-control" formControlName="glucide">
+      </div>
+      <div class="mb-3">
+        <label>Lipides (g)</label>
+        <input type="number" class="form-control" formControlName="lipide">
+      </div>
+      <div class="mb-3">
+        <label>Vitamines (mg)</label>
+        <input type="number" class="form-control" formControlName="vitamin">
+      </div>
+  
+      <button type="submit" class="btn btn-success">Générer la recommandation IA</button>
+    </form>
+  
+    <div *ngIf="recommendation" class="mt-4 alert alert-info">
+      <h5>🧠 Recommandation IA :</h5>
+      <p>{{ recommendation }}</p>
+    </div>
+  </div>
+  
+</div>

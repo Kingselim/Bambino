@@ -1,0 +1,39 @@
+/* src/app/app.component.css */
+.main-content {
+    margin-left: 250px; /* Matches sidebar width */
+    padding: 20px;
+  }
+  /* src/app/app-sidebar/app-sidebar.component.css */
+.sidebar {
+    position: fixed;
+    top: 60px; /* Adjust this to match the navbar height */
+    left: 0;
+    width: 250px; /* As determined earlier */
+    height: calc(100vh - 60px); /* Full height minus navbar height */
+    background-color: #1e293b; /* Dark color from screenshot */
+    color: #fff;
+    overflow-y: auto; /* Allow scrolling if content overflows */
+    z-index: 1000; /* Ensure sidebar is above content */
+  }
+  
+  /* Style for sidebar links */
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .sidebar ul li {
+    padding: 10px 20px;
+  }
+  
+  .sidebar ul li a {
+    color: #a1a5b7; /* Light gray from screenshot */
+    text-decoration: none;
+    display: block;
+  }
+  
+  .sidebar ul li a:hover {
+    color: #fff;
+    background-color: #2d3748; /* Slightly lighter on hover */
+  }
