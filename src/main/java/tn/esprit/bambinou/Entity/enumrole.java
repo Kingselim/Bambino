@@ -1,5 +1,0 @@
-package tn.esprit.bambinou.Entity;
-
-public enum enumrole {
-    PATIENT,ADMIN,COACH,NUTRITIONIST,PEDIATRICIAN,GENERALIST,BABYSITTER, GYNECOLOGIST
-}
