@@ -1,0 +1,130 @@
+.table-container {
+    overflow-x: auto;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+  }
+  
+  th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  thead {
+    background-color: #f1f1f1;
+  }
+  
+  /* Badges de statut */
+  .badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.85em;
+    font-weight: bold;
+    text-transform: capitalize;
+    color: white;
+  }
+  
+  .badge-success {
+    background-color: #28a745;
+  }
+  
+  .badge-warning {
+    background-color: #ffc107;
+    color: black;
+  }
+  
+  .badge-danger {
+    background-color: #dc3545;
+  }
+  
+  .badge-secondary {
+    background-color: #6c757d;
+  }
+  
+  .add-button-container {
+    margin-top: 1rem;
+    text-align: right;
+  }
+  
+  .add-button {
+    padding: 8px 16px;
+    background-color: #ff4081;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+  }
+  
+  .add-button:hover {
+    background-color: #e91e63;
+  }
+
+  /* Alignement horizontal et vertical des cellules */
+td, th {
+  vertical-align: middle;
+}
+
+/* Style pour l'avatar du babysitter */
+.avatar-img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  margin: auto;
+}
+
+/* Badge de statut CONFIRMED */
+.badge-confirmed {
+  background-color: #6f42c1;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  display: inline-block;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Actions (update/delete) */
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
+.action-buttons a {
+  font-size: 0.9rem;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.action-buttons .update-link {
+  color: #007bff;
+}
+
+.action-buttons .update-link:hover {
+  text-decoration: underline;
+}
+
+.action-buttons .delete-link {
+  color: #dc3545;
+}
+
+.action-buttons .delete-link:hover {
+  text-decoration: underline;
+}
+
+td, th {
+  vertical-align: middle !important;
+}
+
+
+  

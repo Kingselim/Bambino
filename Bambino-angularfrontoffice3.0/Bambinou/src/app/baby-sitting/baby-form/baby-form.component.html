@@ -1,0 +1,57 @@
+<div class="container py-4 d-flex justify-content-center">
+  <div class="babysitting-card bg-white shadow">
+    <h3 class="babysitting-section-title">Add a New Baby</h3>
+
+    <form #babyForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
+
+      <div class="mb-3">
+        <label>Name</label>
+        <input type="text" name="name" class="form-control rounded-pill px-4" [(ngModel)]="baby.name" required />
+      </div>
+
+      <div class="mb-3">
+        <label>Age</label>
+        <input type="number" name="age" class="form-control rounded-pill px-4" [(ngModel)]="baby.age" required />
+      </div>
+
+      <div class="mb-3">
+        <label>Date of Birth</label>
+        <input type="date" name="dateOfBirth" class="form-control rounded-pill px-4" [(ngModel)]="baby.dateOfBirth" required />
+      </div>
+
+      <div class="mb-3">
+        <label>Gender</label>
+        <select name="gender" class="form-control rounded-pill px-4" [(ngModel)]="baby.gender" required>
+          <option [ngValue]="null" disabled>Select gender</option>
+          <option value="MALE">Male</option>
+          <option value="FEMALE">Female</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label>Medical Condition</label>
+        <textarea name="medicalCondition" class="form-control px-4 rounded-4" rows="2" [(ngModel)]="baby.medicalCondition"></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label>Special Needs</label>
+        <textarea name="specialNeeds" class="form-control px-4 rounded-4" rows="2" [(ngModel)]="baby.specialNeeds"></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label>Favorite Activities</label>
+        <textarea name="favoriteActivities" class="form-control px-4 rounded-4" rows="2" [(ngModel)]="baby.favoriteActivities"></textarea>
+      </div>
+
+      <div class="mb-4">
+        <label>Emergency Contact</label>
+        <input type="text" name="emergencyContact" class="form-control rounded-pill px-4" [(ngModel)]="baby.emergencyContact" required />
+      </div>
+
+      <button type="submit" class="btn btn-pink-rounded w-100" [disabled]="!babyForm.valid">
+        Add Baby
+      </button>
+
+    </form>
+  </div>
+</div>

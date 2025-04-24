@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+.review-container {
+    max-width: 720px;
+    width: 100%;
+  }
+.review-card {
+    background-color: #fff6fa;
+    border-radius: 16px;
+    border-left: 5px solid #ff7aa8;
+    transition: transform 0.2s ease;
+  }
+  .review-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
+  }
+  .review-comment {
+    color: #333;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  .rating-stars i {
+    margin-right: 2px;
+  }
+  
+  

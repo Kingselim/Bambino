@@ -1,0 +1,45 @@
+<div class="container my-5">
+  <h2 class="text-center mb-4">👶 My Babies</h2>
+
+  <div class="text-end mb-4">
+    <a routerLink="/baby-sitting/baby-form" class="btn btn-success rounded-pill">
+      ➕ Add a New Baby
+    </a>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-md-6 col-lg-4" *ngFor="let baby of babies">
+      <div class="card shadow-sm p-3 baby-card h-100">
+        <div class="d-flex align-items-center mb-3">
+          <div class="avatar-circle me-3">
+            <i class="fa fa-child fa-2x text-white"></i>
+          </div>
+          <div>
+            <h5 class="mb-0">{{ baby.name }}</h5>
+            <small class="text-muted">{{ baby.gender }} • {{ baby.age }} years old</small>
+          </div>
+        </div>
+
+        <ul class="list-unstyled mb-3">
+          <li><strong>🩺 Medical Condition:</strong> {{ baby.medicalCondition }}</li>
+          <li><strong>🌟 Special Needs:</strong> {{ baby.specialNeeds }}</li>
+          <li><strong>📞 Emergency Contact:</strong> {{ baby.emergencyContact }}</li>
+        </ul>
+
+        <div class="text-end">
+          <a
+            [routerLink]="['/services/babysitting/baby-edit', baby.idBaby]"
+            class="btn btn-outline-primary btn-sm rounded-pill"
+            title="Edit Baby"
+          >
+            ✏️ Update
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="babies.length === 0" class="alert alert-info text-center mt-5">
+    No babies found for your account.
+  </div>
+</div>

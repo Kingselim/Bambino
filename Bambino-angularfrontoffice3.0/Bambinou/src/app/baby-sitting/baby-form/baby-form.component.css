@@ -1,0 +1,96 @@
+/* 🍼 FORMULAIRE BABYSITTING */
+
+.babysitting-card {
+  max-width: 600px;
+  width: 100%;
+  border-radius: 20px;
+  padding: 30px;
+}
+
+.babysitting-section-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ff4081;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.btn-pink-rounded {
+  background-color: #ff4081;
+  border-radius: 999px;
+  padding: 12px 24px;
+  color: white;
+  font-weight: 500;
+  font-size: 1rem;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn-pink-rounded:hover {
+  background-color: #e03671;
+}
+
+.review-box {
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.review-name {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.review-stars {
+  color: #fbbf24; /* jaune */
+  margin-bottom: 6px;
+  font-size: 1.1rem;
+}
+
+.review-form-title {
+  text-align: center;
+  font-weight: bold;
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+
+.btn-dark-rounded {
+  background-color: #111827;
+  color: white;
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-weight: 500;
+  border: none;
+  width: 100%;
+}
+.star-rating-container {
+  padding: 10px 15px;
+  border: 1px solid #ced4da;
+  border-radius: 50px;
+  background-color: #fff;
+  display: inline-block;
+}
+.star-icon {
+  font-size: 2rem;
+  cursor: pointer;
+  color: #ccc; /* ⭐ gris clair par défaut */
+  transition: color 0.3s ease;
+  margin-right: 6px;
+}
+
+.star-icon.text-warning {
+  color: #ffc107 !important; /* ⭐ jaune pour les étoiles sélectionnées */
+}
+
+.star-icon:hover {
+  color: #ffca2c;
+}
+select.form-control {
+  background-color: white !important;
+  color: #333 !important;
+}
+
+
+

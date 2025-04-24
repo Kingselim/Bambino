@@ -1,0 +1,65 @@
+<div class="container my-5 d-flex justify-content-center">
+  <div class="card p-4 shadow-lg" style="width: 100%; max-width: 600px;">
+    <h3 class="text-center text-primary mb-4">Review Babysitter</h3>
+
+    <form (ngSubmit)="submitReview()" #reviewForm="ngForm">
+      <!-- 🔹 Nom de l’utilisateur connecté -->
+      <div class="mb-3">
+        <label for="name" class="form-label">Your Name</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          class="form-control"
+          [(ngModel)]="review.name"
+          readonly
+        />
+      </div>
+
+      <!-- 🔹 Commentaire -->
+      <div class="mb-3">
+        <label for="comment" class="form-label">Comment</label>
+        <textarea
+          id="comment"
+          name="comment"
+          rows="3"
+          class="form-control"
+          required
+          [(ngModel)]="review.comment"
+        ></textarea>
+
+        <!-- 🔹 Bouton génération auto -->
+        <button
+          type="button"
+          class="btn btn-info btn-sm mt-2"
+          (click)="generatePositiveFeedback()"
+        >
+          🤖 Generate AI Comment
+        </button>
+      </div>
+
+      <!-- 🔹 Note -->
+      <div class="mb-3">
+        <label class="form-label">Rating</label>
+        <div class="d-flex gap-2">
+          <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+            <i
+              class="fa"
+              [ngClass]="{
+                'fa-star text-warning': (review.rating ?? 0) >= star,
+                'fa-star-o text-muted': (review.rating ?? 0) < star
+              }"
+              style="font-size: 1.5rem; cursor: pointer;"
+              (click)="setRating(star)"
+            ></i>
+          </ng-container>
+        </div>
+      </div>
+
+      <!-- 🔹 Bouton envoyer -->
+      <button type="submit" class="btn btn-primary w-100 mt-4">
+        Send Review
+      </button>
+    </form>
+  </div>
+</div>

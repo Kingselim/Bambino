@@ -1,0 +1,84 @@
+<div class="bambino-background py-4 px-3">
+  <div style="background-color: #ffe6f0; min-height: 100vh; padding: 2rem;">
+    <!-- tout le contenu ici -->
+  
+  <div class="row">
+  <div class="col-md-4" *ngFor="let babysitter of babysitters">
+    <div class="card p-3 shadow-sm">
+      <h4>{{ babysitter.name }}</h4>
+      <p class="star-rating">
+        ⭐ {{ getStars(averageRatings[babysitter.id] || 0) }}
+        <span style="font-size: 0.85rem;">
+          ({{ averageRatings[babysitter.id] || '0' }} / 5)
+        </span>
+      </p>            
+      <p>📝 Feedbacks: {{ reviewCounts[babysitter.id] || 0 }}</p>
+      
+      <p>📧Email : {{ babysitter.email }}</p>
+      <p>🎂Age : {{ babysitter.age }}</p>
+      <p class="fw-bold" [ngClass]="{
+        'text-success': riskLevels[babysitter.id] === 'Recommended',
+        'text-warning': riskLevels[babysitter.id] === 'Caution',
+        'text-danger': riskLevels[babysitter.id] === 'At-risk'
+      }">
+        🚨 Risk Level: {{ riskLevels[babysitter.id] || '...' }}
+      </p>
+      <p *ngIf="confidenceScores[babysitter.id] !== undefined && riskLevels[babysitter.id] !== 'Not enough data'"
+   [ngClass]="{
+     'text-success': confidenceScores[babysitter.id] >= 80,
+     'text-warning': confidenceScores[babysitter.id] >= 50 && confidenceScores[babysitter.id] < 80,
+     'text-danger': confidenceScores[babysitter.id] < 50
+   }"
+   style="font-size: 0.85rem;">
+  🧠 Confidence: {{ confidenceScores[babysitter.id] }}%
+</p>
+
+      
+
+      <!-- Boutons -->
+      <div class="d-flex justify-content-between mt-3">
+        <!-- Bouton de sélection -->
+        <button (click)="selectBabysitter(babysitter.id)" class="btn btn-choose">
+          💡 Choose
+        </button>
+        <!-- Bouton pour ajouter un feedback, seulement si contrat existe -->
+          <!-- Bouton pour ajouter un feedback -->
+          <button (click)="createContractAndReview(babysitter)" class="btn btn-success">
+            ✍️ Add Feedback
+          </button>
+          
+
+
+        <!-- Bouton pour voir les avis -->
+        <a [routerLink]="['/reviews/babysitter', babysitter.id]" class="btn btn-outline-primary">
+          ⭐ View all Feedbacks
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<hr class="section-divider">
+<!-- 👑 TOP RATED BABYSITTER -->
+  <div *ngIf="topRatedBabysitter" class="d-flex justify-content-center mb-4">
+  <div class="card p-4 shadow border border-warning" style="max-width: 620px; width: 100%;">
+    <h3 class="text-center text-warning">👑 Top Rated Babysitter</h3>
+    <h4 class="mt-2 text-center">{{ topRatedBabysitter.name }}</h4>
+    <p class="text-center">
+      ⭐ {{ getStars(averageRatings[topRatedBabysitter.id] || 0) }}
+      <span style="font-size: 2rem;"></span>
+      ({{ averageRatings[topRatedBabysitter.id] || '0' }} / 5)
+    </p>    
+    <p class="text-center">📝 Feedbacks: {{ reviewCounts[topRatedBabysitter.id] || 0 }}</p>
+    <p class="text-center">📧 {{ topRatedBabysitter.email }}</p>
+    <p class="text-center">🎂 Age: {{ topRatedBabysitter.age }}</p>
+    
+  </div>
+  </div>
+</div>
+
+  <ng-template #noData>
+  <p>Aucun babysitter trouvé.</p>
+  </ng-template>
+</div>
+
+  

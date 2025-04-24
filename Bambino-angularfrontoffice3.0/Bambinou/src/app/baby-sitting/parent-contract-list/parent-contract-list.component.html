@@ -1,0 +1,85 @@
+<div class="contract-list px-2 py-4">
+  <h3 class="text-center text-primary mb-4">📋 Your Babysitting Contracts</h3>
+
+  <div *ngIf="contracts.length > 0; else noContracts">
+    <div class="row g-4">
+      <div class="col-md-6" *ngFor="let contract of contracts">
+        <!-- 🌟 Carte visible -->
+        <div class="card shadow rounded-4 border-0 h-100 p-3 bg-white">
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <h5 class="fw-bold text-secondary">👩‍🍼 {{ contract.babysitter?.name }}</h5>
+            <span class="badge px-3 py-2 rounded-pill"
+              [ngClass]="{
+                'bg-success': contract.status === 'CONFIRMED',
+                'bg-warning text-dark': contract.status === 'PENDING',
+                'bg-danger': contract.status === 'CANCELLED'
+              }">
+              {{ contract.status }}
+            </span>
+          </div>
+
+          <ul class="list-unstyled">
+            <li><strong>🗓️ From:</strong> {{ contract.startDate | date: 'longDate' }}</li>
+            <li><strong>📅 To:</strong> {{ contract.endDate | date: 'longDate' }}</li>
+            <li><strong>⏱️ Duration:</strong> {{ contract.duration }} hours</li>
+            <li><strong>💰 Salary:</strong> {{ contract.salary }} TND</li>
+          </ul>
+
+          <div class="text-end mt-3">
+            <button
+              *ngIf="contract.idBabysitting"
+              class="btn btn-outline-primary btn-sm rounded-pill"
+              (click)="generatePdfFromContract(contract)">
+              📄 Download PDF
+            </button>
+          </div>
+        </div>
+
+        <!-- 📄 Zone cachée capturable par html2pdf -->
+        <div [id]="'pdf-content-' + contract.idBabysitting"
+             style="visibility: hidden; position: absolute; left: -9999px; top: 0;">
+          <div style="padding: 25px; font-family: 'Segoe UI', sans-serif; color: #333;">
+            <div style="text-align: center; margin-bottom: 25px;">
+              <img src="assets/img/Bambino.png" alt="Logo" width="100" style="margin-bottom: 10px;">
+              <h2 style="color: #ff4081;">Babysitting Contract Summary</h2>
+            </div>
+
+            <h4>📄 Contract Info</h4>
+            <p><strong>Start Date:</strong> {{ contract.startDate | date: 'longDate' }}</p>
+            <p><strong>End Date:</strong> {{ contract.endDate | date: 'longDate' }}</p>
+            <p><strong>Duration:</strong> {{ contract.duration }} hours</p>
+            <p><strong>Salary:</strong> {{ contract.salary }} TND</p>
+            <p><strong>Status:</strong> {{ contract.status }}</p>
+
+            <hr style="margin: 20px 0;">
+
+            <h4>👶 Babysitter Info</h4>
+            <p><strong>Name:</strong> {{ contract.babysitter?.name }}</p>
+            <p><strong>Email:</strong> {{ contract.babysitter?.email }}</p>
+            <p><strong>Age:</strong> {{ contract.babysitter?.age }}</p>
+
+            <hr style="margin: 20px 0;">
+
+            <h4>📝 Babysitter Review</h4>
+            <ng-container *ngIf="contract.review">
+              <p><strong>⭐ Rating:</strong> {{ contract.review.rating }}/5</p>
+              <p><strong>💬 Comment:</strong> {{ contract.review.comment }}</p>
+            </ng-container>
+            <ng-container *ngIf="!contract.review">
+              <p class="text-muted">No review submitted yet.</p>
+            </ng-container>
+
+            <footer style="text-align: center; margin-top: 30px; color: #aaa; font-size: 0.85rem;">
+              Ⓒ Bambino — Generated with 💖
+            </footer>
+          </div>
+        </div>
+        <!-- 🧾 Fin PDF -->
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noContracts>
+    <p class="text-muted text-center mt-5">😕 No babysitting contracts found for your account.</p>
+  </ng-template>
+</div>

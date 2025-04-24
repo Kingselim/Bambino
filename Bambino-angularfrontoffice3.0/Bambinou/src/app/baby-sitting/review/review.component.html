@@ -1,0 +1,13 @@
+<p>review works!</p>
+<div *ngIf="reviews.length > 0; else noReview">
+    <div *ngFor="let review of reviews" class="card p-3 mb-2 shadow-sm">
+      <strong>Rating:</strong> {{ review.rating }} / 5<br />
+      <strong>Comment:</strong> {{ review.comment }}<br />
+      <small class="text-muted">Date: {{ review.reviewDate | date: 'short' }}</small>
+    </div>
+  </div>
+  
+  <ng-template #noReview>
+    <p class="text-muted">No reviews yet for this babysitting contract.</p>
+  </ng-template>  
+  

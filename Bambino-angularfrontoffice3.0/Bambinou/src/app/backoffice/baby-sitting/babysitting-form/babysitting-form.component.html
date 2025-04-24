@@ -1,0 +1,149 @@
+<div class="container my-5 d-flex justify-content-center">
+  <div class="card p-4 shadow-lg babysitting-card">
+    <h2 class="text-center mb-4 text-primary">New Babysitting Contract</h2>
+
+    <form (ngSubmit)="onSubmit()" #babysittingForm="ngForm">
+      <!-- Duration -->
+      <label>Duration (hours)</label>
+      <input
+        type="number"
+        name="duration"
+        [(ngModel)]="babysitting.duration"
+        class="form-control rounded-pill px-4 mb-3"
+        placeholder="e.g., 4"
+        required
+        min="1"
+      />
+
+      <!-- Salary -->
+      <label>Salary (TND)</label>
+      <input
+        type="number"
+        name="salary"
+        [(ngModel)]="babysitting.salary"
+        class="form-control rounded-pill px-4 mb-3"
+        placeholder="e.g., 80"
+        required
+        min="10"
+      />
+
+      <!-- Status -->
+      <label>Status</label>
+      <select
+        name="status"
+        [(ngModel)]="babysitting.status"
+        class="form-control rounded-pill px-4 mb-3"
+        required
+      >
+      <option [ngValue]="null" disabled hidden>Select status</option>
+        <option value="PENDING">Pending</option>
+        <option value="CONFIRMED">Confirmed</option>
+        <option value="CANCELLED">Cancelled</option>
+      </select>
+
+      <!-- Dates -->
+      <label>Start Date</label>
+      <input
+        type="date"
+        name="startDate"
+        [(ngModel)]="startDateInput"
+        class="form-control rounded-pill px-4 mb-3"
+        required
+      />
+
+      <label>End Date</label>
+      <input
+        type="date"
+        name="endDate"
+        [(ngModel)]="endDateInput"
+        class="form-control rounded-pill px-4 mb-4"
+        required
+      />
+
+      <!-- Submit -->
+      <button
+        type="submit"
+        class="btn btn-lg w-100 text-white py-3"
+        [disabled]="babysittingForm.invalid"
+        style="background-color: #ff4081; border-radius: 999px;"
+      >
+        {{ isEditMode ? 'Update Contract' : 'Create Contract' }}
+      </button>
+    </form>
+
+<!-- Reviews Section -->
+<!-- <hr class="my-4" />
+<div class="mt-4">
+  <h4 class="text-center text-primary mb-3">Reviews for this Babysitter</h4>
+
+  <div *ngIf="reviews.length === 0" class="text-muted text-center">
+    Reviews for this Babysitter 0.
+  </div>
+
+  <div *ngFor="let review of reviews" class="review p-3 mb-3 border rounded bg-light">
+    <strong>{{ review.reviewerName }}</strong>
+
+    <div class="review-stars">
+      <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+        <i
+          class="fa"
+          [ngClass]="{
+            'fa-star': review.rating !== null && star <= review.rating,
+            'fa-star-o': review.rating === null || star > review.rating
+          }"
+        ></i>
+      </ng-container>
+    </div>
+    <p>{{ review.comment }}</p>
+  </div>
+</div> -->
+
+
+    <!-- Add Review -->
+    <!-- <hr class="my-4" />
+    <div class="mt-4">
+      <h4 class="text-center mb-3">Feed back</h4>
+
+      <form (ngSubmit)="submitReview()" #reviewForm="ngForm">
+        <input
+          type="text"
+          name="name"
+          [(ngModel)]="review.name"
+          class="form-control rounded-pill px-4 mb-3"
+          placeholder="Votre nom"
+          required
+        />
+
+        <label class="mb-2">Your review</label>
+        <div class="star-rating-container form-control mb-3">
+          <ng-container *ngFor="let star of [1,2,3,4,5]">
+            <i
+              class="fa"
+              [ngClass]="{
+                'fa-star': review.rating !== null && star <= review.rating,
+                'fa-star-o': review.rating === null || star > review.rating,
+                'text-warning': review.rating !== null && star <= review.rating
+              }"
+              style="font-size: 1.5rem; cursor: pointer;"
+              (click)="setRating(star)"
+            ></i>
+          </ng-container>
+        </div>
+        
+
+        <textarea
+          name="comment"
+          [(ngModel)]="review.comment"
+          class="form-control px-4 mb-3"
+          rows="3"
+          placeholder="Partagez votre expérience"
+          required
+        ></textarea>
+
+        <button type="submit" class="btn btn-dark w-100 rounded-pill py-2">Send</button>
+      </form>
+    </div> -->
+  </div>
+</div>
+
+      
