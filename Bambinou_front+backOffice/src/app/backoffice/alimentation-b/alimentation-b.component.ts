@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlimentationService, Alimentation } from '../../alimentation.service';
 import {UserServiceService} from "../../service/user-service.service"
+
 @Component({
   selector: 'app-alimentation-b',
   templateUrl: './alimentation-b.component.html',
@@ -9,11 +10,25 @@ import {UserServiceService} from "../../service/user-service.service"
 export class AlimentationBComponent implements OnInit {
   alimentations: Alimentation[] = [];
   filteredAlimentations: Alimentation[] = [];
-  currentAlimentation: Alimentation | null = null;
+  // currentAlimentation: Alimentation | null = null;
   isEditMode = false;
   error: string | null = null;
   loading = false;
   availableUsers: any[] = [];
+
+  currentAlimentation: Alimentation | null = {
+    recommendation: '',
+    description: '',
+    nbFollowers: 0,
+    calories: 0,
+    protein: 0,
+    glucide: 0,
+    lipide: 0,
+    vitamin: 0,
+    userName: ''
+  };
+  
+  
 
   // Search and filter state
   searchQuery: string = '';

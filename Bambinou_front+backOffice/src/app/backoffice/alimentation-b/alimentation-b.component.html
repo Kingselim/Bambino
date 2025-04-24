@@ -1,201 +1,17 @@
-<div class="alimentation-container">
-  <h2>Gestion d'Alimentation</h2>
+<!-- Action Button -->
+<div class="mb-3 text-end">
+  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#alimentationModal" (click)="initNewAlimentation()">
+    <i class="bi bi-plus-circle me-1"></i> Ajouter une nouvelle alimentation
+  </button>
+</div>
 
-  <!-- Error message -->
-  <div *ngIf="error" class="error-message alert alert-danger">
-    {{ error }}
-    <button (click)="error = null" class="btn-close"></button>
-  </div>
-
-  <!-- Controls Section -->
-  <div class="card mb-4">
-    <div class="card-header ">
-      <h3 class="mb-0">Filtres et Recherche</h3>
-    </div>
-    <div class="card-body">
-      <!-- Search -->
-      <div class="mb-3">
-        <label for="searchInput" class="form-label">Rechercher par recommandation ou description</label>
-        <input
-          id="searchInput"
-          type="text"
-          class="form-control"
-          [(ngModel)]="searchQuery"
-          (ngModelChange)="onSearchChange()"
-          placeholder="Entrez un terme de recherche..."
-        />
-      </div>
-
-      <!-- Filters -->
-      <div class="row">
-        <div class="col-md-6 mb-3" *ngFor="let filter of ['calories', 'protein']">
-          <label class="form-label text-capitalize">{{ filter === 'protein' ? 'Protéines' : 'Calories' }}</label>
-          <div class="input-group">
-            <input
-              type="number"
-              class="form-control"
-              placeholder="Min"
-              [(ngModel)]="filters[filter].min"
-              (ngModelChange)="onFilterChange()"
-            />
-            <span class="input-group-text">-</span>
-            <input
-              type="number"
-              class="form-control"
-              placeholder="Max"
-              [(ngModel)]="filters[filter].max"
-              (ngModelChange)="onFilterChange()"
-            />
-          </div>
-        </div>
-      </div>
-
-      <!-- Sort -->
-      <div class="mb-3">
-        <label for="sortSelect" class="form-label">Trier par</label>
-        <div class="input-group">
-          <select
-            id="sortSelect"
-            class="form-select"
-            [(ngModel)]="sortColumn"
-            (ngModelChange)="onSortChange($event)"
-          >
-            <option *ngFor="let column of displayedColumns" [value]="column">
-              {{ column === 'idNutrition' ? 'ID' : column === 'nbFollowers' ? 'Abonnés' : column === 'protein' ? 'Protéines' : column === 'glucide' ? 'Glucides' : column === 'lipide' ? 'Lipides' : (column | titlecase) }}
-            </option>
-          </select>
-          <button
-            class="btn btn-outline-secondary"
-            (click)="onSortChange(sortColumn)"
-            title="Inverser l'ordre"
-          >
-            <i class="bi" [ngClass]="sortDirection === 'asc' ? 'bi-sort-up' : 'bi-sort-down'"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Reset Button -->
-      <button class="btn btn-secondary" (click)="resetFilters()">Réinitialiser</button>
-    </div>
-  </div>
-
-  <!-- Edit/Create Form -->
-  <div *ngIf="currentAlimentation" class="edit-form card mb-4">
-    <div class="card-header">
-      {{ isEditMode ? 'Modifier Alimentation' : 'Créer Nouvelle Alimentation' }}
-    </div>
-    <div class="card-body">
-      <form (ngSubmit)="saveAlimentation()">
-        <div class="form-group">
-          <label>Nom de l'utilisateur</label>
-          <select class="form-select"
-        [(ngModel)]="currentAlimentation.userName"
-        name="userName" required>
-  <option [ngValue]="null" disabled selected>Choisir un utilisateur</option>
-  <option *ngFor="let user of availableUsers" [value]="user.name">
-    {{ user.name }} ({{ user.email }})
-  </option>
-</select>
-        </div>
-        
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label>Recommandation</label>
-              <input type="text" class="form-control" 
-                     [(ngModel)]="currentAlimentation.recommendation" 
-                     name="recommendation" required>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label>Abonnés</label>
-              <input type="number" class="form-control" 
-                     [(ngModel)]="currentAlimentation.nbFollowers" 
-                     name="nbFollowers">
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Description</label>
-          <textarea class="form-control" 
-                    [(ngModel)]="currentAlimentation.description" 
-                    name="description" required></textarea>
-        </div>
-
-        <div class="row">
-          <div class="col-md-3">
-            <div class="form-group">
-              <label>Calories</label>
-              <input type="number" class="form-control" 
-                     [(ngModel)]="currentAlimentation.calories" 
-                     name="calories">
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="form-group">
-              <label>Protéines (g)</label>
-              <input type="number" class="form-control" 
-                     [(ngModel)]="currentAlimentation.protein" 
-                     name="protein">
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="form-group">
-              <label>Glucides (g)</label>
-              <input type="number" class="form-control" 
-                     [(ngModel)]="currentAlimentation.glucide" 
-                     name="glucide">
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="form-group">
-              <label>Lipides (g)</label>
-              <input type="number" class="form-control" 
-                     [(ngModel)]="currentAlimentation.lipide" 
-                     name="lipide">
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Vitamines</label>
-          <input type="number" class="form-control" 
-                 [(ngModel)]="currentAlimentation.vitamin" 
-                 name="vitamin">
-        </div>
-
-        <div class="form-actions">
-          <button type="submit" class="btn btn-primary">
-            {{ isEditMode ? 'Mettre à jour' : 'Créer' }}
-          </button>
-          <button type="button" class="btn btn-secondary" 
-                  (click)="cancelEdit()">
-            Annuler
-          </button>
-        </div>
-      </form>
-    </div>
-    <div *ngIf="error" class="alert alert-danger mt-2">
-      {{ error }}
-    </div>
-  </div>
-
-  <!-- Action buttons -->
-  <div class="mb-3">
-    <button (click)="initNewAlimentation()" class="btn btn-no-bg">
-      Ajouter une nouvelle alimentation
-    </button>
-  </div>
-
-  <!-- Alimentation table -->
-  <!-- Alimentation Cards -->
+<!-- Alimentation Cards -->
+<h3 class="mb-4 text-center text-primary">Liste des Aliments</h3>
 <div class="row" *ngIf="filteredAlimentations.length > 0">
   <div class="col-md-6 col-lg-4 mb-4" *ngFor="let alimentation of filteredAlimentations">
-    <div class="card shadow-sm border-0 h-100" style="border-radius: 20px; background-color: #f8f9fa;">
+    <div class="card shadow-sm border-0 h-100 animate-card" style="border-radius: 20px; background-color: #fdeff4;">
       <div class="card-body">
-        <h5 class="card-title fw-bold text-primary">🍽️ Alimentation #{{ alimentation.idNutrition }}</h5>
+        <h5 class="card-title fw-bold text-primary">🥗 Alimentation #{{ alimentation.idNutrition }}</h5>
         <p><span class="fw-semibold">📋 Recommandation :</span> {{ alimentation.recommendation }}</p>
         <p><span class="fw-semibold">📝 Description :</span> {{ alimentation.description }}</p>
         <hr>
@@ -206,10 +22,10 @@
         <p><span class="fw-semibold">🍊 Vitamines :</span> {{ alimentation.vitamin }} mg</p>
         <p><span class="fw-semibold">👥 Abonnés :</span> {{ alimentation.nbFollowers }}</p>
         <div class="text-end mt-3">
-          <button (click)="editAlimentation(alimentation)" class="btn btn-outline-warning btn-sm me-2">
+          <button class="btn btn-outline-warning btn-sm me-2" data-bs-toggle="modal" data-bs-target="#alimentationModal" (click)="editAlimentation(alimentation)">
             ✏️ Modifier
           </button>
-          <button (click)="deleteAlimentation(alimentation.idNutrition)" class="btn btn-outline-danger btn-sm">
+          <button class="btn btn-outline-danger btn-sm" (click)="alimentation.idNutrition && deleteAlimentation(alimentation.idNutrition)">
             🗑️ Supprimer
           </button>
         </div>
@@ -218,17 +34,89 @@
   </div>
 </div>
 
+<!-- Modal Form -->
+<div class="modal fade" id="alimentationModal" tabindex="-1" aria-labelledby="alimentationModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="alimentationModalLabel">
+          {{ isEditMode ? 'Modifier Alimentation' : 'Créer Nouvelle Alimentation' }}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="currentAlimentation">
+        <form (ngSubmit)="saveAlimentation()" #alimentationForm="ngForm">
+          <div class="form-group">
+            <label>Nom de l'utilisateur</label>
+            <select class="form-select" [(ngModel)]="currentAlimentation.userName" name="userName" required>
+              <option [ngValue]="null" disabled selected>Choisir un utilisateur</option>
+              <option *ngFor="let user of availableUsers" [value]="user.name">
+                {{ user.name }} ({{ user.email }})
+              </option>
+            </select>
+          </div>
 
-  <!-- No data message -->
-  <div *ngIf="filteredAlimentations.length === 0 && !error && !loading" class="">
-    Aucune donnée d'alimentation disponible avec les filtres actuels
-  </div>
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <label>Recommandation</label>
+              <input type="text" class="form-control" [(ngModel)]="currentAlimentation.recommendation" name="recommendation" required />
+            </div>
+            <div class="col-md-6">
+              <label>Abonnés</label>
+              <input type="number" class="form-control" [(ngModel)]="currentAlimentation.nbFollowers" name="nbFollowers" />
+            </div>
+          </div>
 
-  <!-- Loading Spinner -->
-  <div *ngIf="loading" class="text-center my-4">
-    <div class="spinner-border text-primary" role="status">
-      <span class="visually-hidden">Loading...</span>
+          <div class="form-group mt-3">
+            <label>Description</label>
+            <textarea class="form-control" [(ngModel)]="currentAlimentation.description" name="description" required></textarea>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-md-3">
+              <label>Calories</label>
+              <input type="number" class="form-control" [(ngModel)]="currentAlimentation.calories" name="calories" />
+            </div>
+            <div class="col-md-3">
+              <label>Protéines (g)</label>
+              <input type="number" class="form-control" [(ngModel)]="currentAlimentation.protein" name="protein" />
+            </div>
+            <div class="col-md-3">
+              <label>Glucides (g)</label>
+              <input type="number" class="form-control" [(ngModel)]="currentAlimentation.glucide" name="glucide" />
+            </div>
+            <div class="col-md-3">
+              <label>Lipides (g)</label>
+              <input type="number" class="form-control" [(ngModel)]="currentAlimentation.lipide" name="lipide" />
+            </div>
+          </div>
+
+          <div class="form-group mt-3">
+            <label>Vitamines</label>
+            <input type="number" class="form-control" [(ngModel)]="currentAlimentation.vitamin" name="vitamin" />
+          </div>
+
+          <div class="mt-4">
+            <button type="submit" class="btn btn-success" [disabled]="loading || !alimentationForm.form.valid">
+              {{ isEditMode ? 'Mettre à jour' : 'Créer' }}
+            </button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          </div>
+        </form>
+      </div>
     </div>
-    <p>Chargement des données...</p>
   </div>
+</div>
+
+<!-- No Data -->
+<div *ngIf="filteredAlimentations.length === 0 && !error && !loading" class="no-data alert alert-info">
+  Aucun aliment disponible avec les filtres actuels
+</div>
+
+<!-- Spinner -->
+<div *ngIf="loading" class="text-center my-4">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+  <p>Chargement des données...</p>
 </div>

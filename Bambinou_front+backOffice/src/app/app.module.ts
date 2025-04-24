@@ -32,6 +32,7 @@ import { PostComponent } from './post/post.component';
 import { BackofficeModule } from './backoffice/backoffice.module';
 import { FrontLayoutComponent } from './front-layout/front-layout.component';
 import { ViewpostsComponent } from './viewposts/viewposts.component';
+import { NutritionAiComponent } from './nutrition-ai/nutrition-ai.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { ViewpostsComponent } from './viewposts/viewposts.component';
     PostComponent,
     FrontLayoutComponent,
     ViewpostsComponent,
+    NutritionAiComponent,
   ],
   imports: [
     BrowserModule,

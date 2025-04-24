@@ -13,219 +13,128 @@
       <h3 class="mb-0">Filtres et Recherche</h3>
     </div>
     <div class="card-body">
-      <!-- Search -->
       <div class="mb-3">
         <label for="searchInput" class="form-label">Rechercher par recette ou type</label>
-        <input
-          id="searchInput"
-          type="text"
-          class="form-control"
-          [(ngModel)]="searchQuery"
-          (ngModelChange)="onSearchChange()"
-          placeholder="Entrez un terme de recherche..."
-        />
+        <input id="searchInput" type="text" class="form-control" [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange()" placeholder="Entrez un terme de recherche..." />
       </div>
-
-      <!-- Filters -->
       <div class="row">
         <div class="col-md-6 mb-3" *ngFor="let filter of ['nblike', 'nbcomment']">
           <label class="form-label text-capitalize">{{ filter === 'nblike' ? 'Likes' : 'Comments' }}</label>
           <div class="input-group">
-            <input
-              type="number"
-              class="form-control"
-              placeholder="Min"
-              [(ngModel)]="filters[filter].min"
-              (ngModelChange)="onFilterChange()"
-            />
+            <input type="number" class="form-control" placeholder="Min" [(ngModel)]="filters[filter].min" (ngModelChange)="onFilterChange()" />
             <span class="input-group-text">-</span>
-            <input
-              type="number"
-              class="form-control"
-              placeholder="Max"
-              [(ngModel)]="filters[filter].max"
-              (ngModelChange)="onFilterChange()"
-            />
+            <input type="number" class="form-control" placeholder="Max" [(ngModel)]="filters[filter].max" (ngModelChange)="onFilterChange()" />
           </div>
         </div>
       </div>
-
-      <!-- Sort -->
       <div class="mb-3">
         <label for="sortSelect" class="form-label">Trier par</label>
         <div class="input-group">
-          <select
-            id="sortSelect"
-            class="form-select"
-            [(ngModel)]="sortColumn"
-            (ngModelChange)="onSortChange($event)"
-          >
+          <select id="sortSelect" class="form-select" [(ngModel)]="sortColumn" (ngModelChange)="onSortChange($event)">
             <option *ngFor="let column of displayedColumns" [value]="column">
               {{ column === 'idPost' ? 'ID' : column === 'recipeType' ? 'Type' : column === 'nblike' ? 'Likes' : column === 'nbcomment' ? 'Comments' : (column | titlecase) }}
             </option>
           </select>
-         
         </div>
       </div>
-
-      <!-- Reset Button -->
       <button class="btn btn-secondary" (click)="resetFilters()">Réinitialiser</button>
     </div>
   </div>
-  
 
-  <!-- Edit/Create Form -->
-  <div *ngIf="showForm" class="edit-form card mb-4">
-    <div class="card-header">
-      {{ isEditMode ? 'Modifier Post' : 'Créer Nouveau Post' }}
-    </div>
-    <div class="card-body">
-      <form (ngSubmit)="savePost(postForm)" #postForm="ngForm">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label>Nutrition liée *</label>
-              <select class="form-select"
-                      [(ngModel)]="currentPost.nutritionDescription"
-                      name="nutritionDescription"
-                      required>
-                <option [ngValue]="null" disabled selected>Choisir une nutrition</option>
-                <option *ngFor="let nutrition of availableNutritions" [value]="nutrition.description">
-                  {{ nutrition.description }} ({{ nutrition.calories }} kcal)
-                </option>
-              </select>
-            </div>
-            
-            <div class="form-group">
-              <label>Recipe Type*</label>
-              <select
-                class="form-control"
-                [(ngModel)]="currentPost.recipeType"
-                name="recipeType"
-                required
-              >
-                <option *ngFor="let option of recipeTypeOptions" [ngValue]="option.value">
-                  {{ option.label }}
-                </option>
-              </select>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label>Date</label>
-              <input
-                type="datetime-local"
-                class="form-control"
-                [(ngModel)]="currentPost.date"
-                name="date"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Recipe*</label>
-          <textarea
-            class="form-control"
-            [(ngModel)]="currentPost.recipe"
-            name="recipe"
-            required
-          ></textarea>
-        </div>
-
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label>Likes</label>
-              <input
-                type="number"
-                class="form-control"
-                [(ngModel)]="currentPost.nblike"
-                name="nblike"
-              />
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label>Comments</label>
-              <input
-                type="number"
-                class="form-control"
-                [(ngModel)]="currentPost.nbcomment"
-                name="nbcomment"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div class="form-actions">
-          <button
-            type="submit"
-            class="btn btn-primary"
-            [disabled]="loading || !postForm.form.valid"
-          >
-            <i class="bi bi-check-circle me-1"></i>
-            {{ isEditMode ? 'Mettre à jour' : 'Créer' }}
-          </button>
-          <button
-            type="button"
-            class="btn btn-secondary"
-            (click)="cancelEdit()"
-            [disabled]="loading"
-          >
-            <i class="bi bi-x-circle me-1"></i> Annuler
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Action Buttons -->
-  <div class="mb-3">
-    <button (click)="initNewPost()" class="btn btn-no-bg">
+  <!-- Action Button -->
+  <div class="mb-3 text-end">
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postModal">
       <i class="bi bi-plus-circle me-1"></i> Ajouter un nouveau post
     </button>
   </div>
 
-  
-  <!-- Post Cards -->
-<div class="row" *ngIf="filteredPosts.length > 0">
-  <div class="col-md-6 col-lg-4 mb-4" *ngFor="let post of filteredPosts">
-    <div class="card shadow-sm border-0 h-100" style="border-radius: 20px; background-color: #fefefe;">
-      <div class="card-body">
-        <h5 class="card-title fw-bold text-primary">🧾 Post #{{ post.idPost }}</h5>
-        <p><span class="fw-semibold">📅 Date :</span> {{ post.date | date:'medium' }}</p>
-        <p><span class="fw-semibold">🍽️ Type :</span> {{ getRecipeTypeLabel(post.recipeType) }}</p>
-        <p><span class="fw-semibold">📖 Recette :</span> {{ post.recipe }}</p>
-        <hr>
-        <p><span class="fw-semibold">👍 Likes :</span> {{ post.nblike }}</p>
-        <p><span class="fw-semibold">💬 Commentaires :</span> {{ post.nbcomment }}</p>
-        <div class="text-end mt-3">
-          <button
-            (click)="editPost(post)"
-            class="btn btn-outline-warning btn-sm me-2"
-            title="Modifier Post">
-            ✏️ Modifier
-          </button>
-          <button
-            (click)="deletePost(post.idPost!)"
-            class="btn btn-outline-danger btn-sm"
-            title="Supprimer Post">
-            🗑️ Supprimer
-          </button>
+  <!-- Modal Form -->
+  <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="postModalLabel">{{ isEditMode ? 'Modifier Post' : 'Créer Nouveau Post' }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form (ngSubmit)="savePost(postForm)" #postForm="ngForm">
+            <div class="row">
+              <div class="col-md-6">
+                <label>Nutrition liée *</label>
+                <select class="form-select" [(ngModel)]="currentPost.nutritionDescription" name="nutritionDescription" required>
+                  <option [ngValue]="null" disabled selected>Choisir une nutrition</option>
+                  <option *ngFor="let nutrition of availableNutritions" [value]="nutrition.description">
+                    {{ nutrition.description }} ({{ nutrition.calories }} kcal)
+                  </option>
+                </select>
+                <label class="mt-3">Recipe Type*</label>
+                <select class="form-control" [(ngModel)]="currentPost.recipeType" name="recipeType" required>
+                  <option *ngFor="let option of recipeTypeOptions" [ngValue]="option.value">
+                    {{ option.label }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label>Date</label>
+                <input type="datetime-local" class="form-control" [(ngModel)]="currentPost.date" name="date" />
+              </div>
+            </div>
+            <div class="form-group mt-3">
+              <label>Recipe*</label>
+              <textarea class="form-control" [(ngModel)]="currentPost.recipe" name="recipe" required></textarea>
+            </div>
+            <div class="row mt-3">
+              <div class="col-md-6">
+                <label>Likes</label>
+                <input type="number" class="form-control" [(ngModel)]="currentPost.nblike" name="nblike" />
+              </div>
+              <div class="col-md-6">
+                <label>Comments</label>
+                <input type="number" class="form-control" [(ngModel)]="currentPost.nbcomment" name="nbcomment" />
+              </div>
+            </div>
+            <div class="mt-4">
+              <button type="submit" class="btn btn-success" [disabled]="loading || !postForm.form.valid">
+                {{ isEditMode ? 'Mettre à jour' : 'Créer' }}
+              </button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
   </div>
-</div>
 
+  <!-- Post Cards -->
+  <h3 class="mb-4 text-center text-primary">Liste des Posts</h3>
+  <div class="row" *ngIf="filteredPosts.length > 0">
+    <div class="col-md-6 col-lg-4 mb-4" *ngFor="let post of filteredPosts">
+      <div class="card shadow-sm border-0 h-100 animate-card" style="border-radius: 20px; background-color: #fdeff4;">
+        <div class="card-body" style="border-radius: 20px;">
+          <h5 class="card-title fw-bold text-primary">🧾 Post #{{ post.idPost }}</h5>
+          <p><span class="fw-semibold">📅 Date :</span> {{ post.date | date:'medium' }}</p>
+          <p><span class="fw-semibold">🍽️ Type :</span> {{ getRecipeTypeLabel(post.recipeType) }}</p>
+          <p><span class="fw-semibold">📖 Recette :</span> {{ post.recipe }}</p>
+          <hr>
+          <p><span class="fw-semibold">👍 Likes :</span> {{ post.nblike }}</p>
+          <p><span class="fw-semibold">💬 Commentaires :</span> {{ post.nbcomment }}</p>
+          <div class="text-end mt-3">
+            <button class="btn btn-outline-warning btn-sm me-2" data-bs-toggle="modal" data-bs-target="#postModal" (click)="editPost(post)">
+              ✏️ Modifier
+            </button>
+            <button class="btn btn-outline-danger btn-sm" (click)="deletePost(post.idPost!)">
+              🗑️ Supprimer
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <!-- No Data Message -->
   <div *ngIf="filteredPosts.length === 0 && !error && !loading" class="no-data alert alert-info">
     Aucun post disponible avec les filtres actuels
   </div>
 
-  <!-- Loading Spinner -->
   <div *ngIf="loading" class="text-center my-4">
     <div class="spinner-border text-primary" role="status">
       <span class="visually-hidden">Loading...</span>

@@ -253,12 +253,5 @@ viewPosts(nutritionId: number): void {
   this.router.navigate(['/poste'], { queryParams: { nutritionId } });
 }
 
-getRecommendation() {
-  if (this.nutritionRecommendationForm.valid) {
-    this.aiService.generateRecommendation(this.nutritionRecommendationForm.value).subscribe({
-      next: (res) => this.recommendation = res.recommendation,
-      error: (err) => console.error('Erreur IA:', err)
-    });
-  }
-}
+
 }

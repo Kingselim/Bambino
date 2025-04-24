@@ -11,7 +11,7 @@ import { CoachingComponent } from './coaching/coaching.component';
 import { PostComponent } from './post/post.component';
 import { FrontLayoutComponent } from './front-layout/front-layout.component';
 import { ViewpostsComponent } from './viewposts/viewposts.component';
-
+import { NutritionAiComponent } from './nutrition-ai/nutrition-ai.component';
 
 const routes: Routes = [
   {
@@ -29,7 +29,9 @@ const routes: Routes = [
   {path: 'Shop' , component:ShopComponent},
   {path :'Coaching' , component:CoachingComponent},
   {path:'poste' ,component:PostComponent},
-  { path: 'viewposts/:nutritionId', component: ViewpostsComponent }    ]
+  { path: 'viewposts/:nutritionId', component: ViewpostsComponent }  ,
+  { path: 'nutrition-ia', component: NutritionAiComponent }
+]
   },
   
   { 

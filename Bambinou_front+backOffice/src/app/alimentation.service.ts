@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Observable, catchError, throwError } from 'rxjs';
 
 export interface Alimentation {
-  idNutrition: number;
+  idNutrition?: number;
   recommendation: string;
   description: string;
   nbFollowers: number;
